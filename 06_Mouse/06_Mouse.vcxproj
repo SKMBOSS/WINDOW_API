@@ -20,9 +20,9 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
-    <ProjectGuid>{4010D5B8-FDA2-4B64-BEC5-C1D03BDD8417}</ProjectGuid>
+    <ProjectGuid>{B26A4A57-BA38-44DF-8E69-B7A2583F16E6}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>Input</RootNamespace>
+    <RootNamespace>My06Mouse</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -139,7 +139,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="key.cpp" />
     <ClCompile Include="Mouse.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
