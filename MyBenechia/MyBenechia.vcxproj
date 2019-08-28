@@ -139,13 +139,19 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Intro.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MainGame.cpp" />
     <ClCompile Include="MyBenechia.cpp" />
+    <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="TextBrick.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Intro.h" />
+    <ClInclude Include="MainGame.h" />
     <ClInclude Include="MyBenechia.h" />
+    <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="TextBrick.h" />
   </ItemGroup>

@@ -1,4 +1,6 @@
+#include <Windows.h>
 #include "MyBenechia.h"
+#include "SceneManager.h"
 
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
 HINSTANCE g_hInst;
@@ -39,31 +41,31 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmd
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 {
-	MyBenechia *mainGame;
-	mainGame = MyBenechia::GetInstance();
-
 	HDC hdc;
 	PAINTSTRUCT ps;
 
-	mainGame->Init();
 	switch (iMessage)
 	{
-	case WM_CREATE: //윈도우를 생성할 때 호출되는 메세지(초기화를 하기에 좋은 위치)
-		SetTimer(hWnd, 1, 10, NULL);
+	case WM_CREATE: 
+		SceneManager::GetInstance()->Init();
+		SetTimer(hWnd, 1, 1000/60, NULL);
+		return 0;
+	case WM_KEYDOWN:
+		SceneManager::GetInstance()->Input(wParam);
 		return 0;
 	case WM_TIMER:
-		InvalidateRect(hWnd, NULL, TRUE); //화면을 갱신하기위해
-		//mainGame->Update();
+		SceneManager::GetInstance()->Update();
+		InvalidateRect(hWnd, NULL, TRUE);
 		return 0;
 	case WM_PAINT:
 		hdc = BeginPaint(hWnd, &ps);
 		BeginPaint(hWnd, &ps);
-		mainGame->Render(hdc);
+		SceneManager::GetInstance()->Render(hdc);
 		EndPaint(hWnd, &ps);
 		return 0;
 	case WM_DESTROY:
-		//mainGame->Release();
 		PostQuitMessage(0);
+		SceneManager::GetInstance()->Release();
 		return 0;
 	}
 	return(DefWindowProc(hWnd, iMessage, wParam, lParam));

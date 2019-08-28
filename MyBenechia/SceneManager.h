@@ -1,27 +1,37 @@
 #pragma once
 #include <Windows.h>
-#include <string>
 #include <map>
-using namespace std;
+
+enum SCENE_STATE
+{
+	INTRO,
+	MAIN_GAME
+};
 
 class Scene;
 class SceneManager
 {
 private:
-	map<string, Scene*> sceneContainer;
-	Scene* currentScene;
-	Scene* reservedScene;
-public :
-	void RegisterScene(const string& sceneName, Scene* scene);
-	void ReserveChangeScene(const string& sceneName);
-public :
+	static SceneManager* sceneManagerInstance;
+	SceneManager();
+	std::map<SCENE_STATE, Scene*> sceneContainer;
+	SCENE_STATE currentSceneState;
+public:
+	static SceneManager* GetInstance();
+	void InitSceneContainer();
+	inline Scene* GetCurrentScene() 
+	{ 
+		return sceneContainer[currentSceneState];
+	}
+	void ChangeScene(SCENE_STATE state);
+public:
 	void Init();
+	void Input(WPARAM wParam);
 	void Update();
 	void Render(HDC hdc);
 	void Release();
 
 public:
-	SceneManager();
 	~SceneManager();
 
 };
