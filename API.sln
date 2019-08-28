@@ -11,6 +11,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "00_SKELETONE", "00_SKELETON
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "01_TextOut", "01_TextOut\01_TextOut.vcxproj", "{7D5B7BE4-35E9-43BF-9D90-33A78629E494}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "02_DrawText", "02_DrawText\02_DrawText.vcxproj", "{DD36831F-6098-4CBB-ADE8-056686A2792D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -51,6 +53,14 @@ Global
 		{7D5B7BE4-35E9-43BF-9D90-33A78629E494}.Release|x64.Build.0 = Release|x64
 		{7D5B7BE4-35E9-43BF-9D90-33A78629E494}.Release|x86.ActiveCfg = Release|Win32
 		{7D5B7BE4-35E9-43BF-9D90-33A78629E494}.Release|x86.Build.0 = Release|Win32
+		{DD36831F-6098-4CBB-ADE8-056686A2792D}.Debug|x64.ActiveCfg = Debug|x64
+		{DD36831F-6098-4CBB-ADE8-056686A2792D}.Debug|x64.Build.0 = Debug|x64
+		{DD36831F-6098-4CBB-ADE8-056686A2792D}.Debug|x86.ActiveCfg = Debug|Win32
+		{DD36831F-6098-4CBB-ADE8-056686A2792D}.Debug|x86.Build.0 = Debug|Win32
+		{DD36831F-6098-4CBB-ADE8-056686A2792D}.Release|x64.ActiveCfg = Release|x64
+		{DD36831F-6098-4CBB-ADE8-056686A2792D}.Release|x64.Build.0 = Release|x64
+		{DD36831F-6098-4CBB-ADE8-056686A2792D}.Release|x86.ActiveCfg = Release|Win32
+		{DD36831F-6098-4CBB-ADE8-056686A2792D}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
