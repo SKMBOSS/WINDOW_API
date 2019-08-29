@@ -52,10 +52,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 	case WM_KEYDOWN:
 		SceneManager::GetInstance()->Input(wParam);
 		return 0;
-	/*case WM_CHAR:
-		SceneManager::GetInstance()->InputChar(wParam);
-		InvalidateRect(hWnd, NULL, FALSE);
-		return 0;*/
 	case WM_TIMER:
 		SceneManager::GetInstance()->Update();
 		InvalidateRect(hWnd, NULL, TRUE);

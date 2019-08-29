@@ -16,9 +16,10 @@ private:
 	SceneManager();
 	std::map<SCENE_STATE, Scene*> sceneContainer;
 	SCENE_STATE currentSceneState;
+private:
+	void InitSceneContainer();
 public:
 	static SceneManager* GetInstance();
-	void InitSceneContainer();
 	inline Scene* GetCurrentScene() 
 	{ 
 		return sceneContainer[currentSceneState];
@@ -27,7 +28,6 @@ public:
 public:
 	void Init();
 	void Input(WPARAM wParam);
-	void InputChar(WPARAM wParam);
 	void Update();
 	void Render(HDC hdc);
 	void Release();

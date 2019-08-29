@@ -1,6 +1,7 @@
 #include "TextBrickSpawner.h"
 #include "TextBrick.h"
 #include <time.h>
+#include <algorithm>
 
 
 using namespace std;
@@ -36,7 +37,7 @@ string TextBrickSpanwner::GetNextWord()
 
 void TextBrickSpanwner::CreateBricks()
 {
-	tbBox.push_back(new TextBrick(GetRandomPos(), 6, GetNextWord()));
+	tbBox.push_back(new TextBrick(GetRandomPos(), 4, GetNextWord()));
 }
 
 void TextBrickSpanwner::DownBricks()
@@ -61,6 +62,25 @@ void TextBrickSpanwner::CrashBrickDelete(RECT _floor)
 		else
 			crashIter++;
 	}
+}
+
+bool TextBrickSpanwner::IsCorrectAnswer(string _inputStr)
+{
+	list<TextBrick*>::iterator iter = find_if(tbBox.begin(), tbBox.end(),
+		[_inputStr](TextBrick* tb) -> bool
+	{
+		return _inputStr == tb->GetTargetText();
+	});
+
+	if (iter != tbBox.end())
+	{
+		delete (*iter);
+		tbBox.erase(iter);
+		return true;
+	}
+
+	else
+		return false;
 }
 
 void TextBrickSpanwner::Init()

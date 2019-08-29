@@ -51,11 +51,6 @@ void SceneManager::Input(WPARAM wParam)
 	GetCurrentScene()->Input(wParam);
 }
 
-void SceneManager::InputChar(WPARAM wParam)
-{
-	GetCurrentScene()->InputChar(wParam);
-}
-
 void SceneManager::Update()
 {
 	GetCurrentScene()->Update();

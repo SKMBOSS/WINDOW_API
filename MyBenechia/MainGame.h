@@ -1,22 +1,27 @@
 #pragma once
 #include "Scene.h"
+#include <string>
 
 class TextBrickSpanwner;
 class MainGame :
 	public Scene
 {
 private:
-	RECT floor = { 2,700,1278,779 };
-	RECT inputBox = { 570,600,710,701 };
 	TextBrickSpanwner *textBrickSpanwer;
-	TCHAR inputStr[256]="";
-	int inputStrLength=0;
+	RECT floor = { 2,700,1261,779 };
+	RECT inputBox = { 570,600,710,701 };
+	std::string inputStr;
+	TCHAR scoreString[256];
+	int score = 0;
+private:
+	void UpdateCrash();
+	void RenderMainGameObject(HDC hdc);
+	void RenderFloor(HDC hdc);
+	void RenderInpuBox(HDC hdc);
+	void RenderScore(HDC hdc);
 public:
-
-public :
 	void Init();
 	void Input(WPARAM wParam);
-	void InputChar(WPARAM wParam);
 	void Update();
 	void Render(HDC hdc);
 	void Release();

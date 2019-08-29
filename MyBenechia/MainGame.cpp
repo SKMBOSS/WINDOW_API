@@ -21,35 +21,59 @@ void MainGame::Input(WPARAM wParam)
 	switch (wParam)
 	{
 	case VK_RETURN:
-		SceneManager::GetInstance()->ChangeScene(SCENE_STATE::INTRO);
+		if(textBrickSpanwer->IsCorrectAnswer(inputStr))
+		{
+			score += 100;
+		}
+		inputStr = "";
+		break;
+	case VK_BACK:
+		inputStr.pop_back();
 		break;
 	default:
-		inputStr[inputStrLength] = (TCHAR)wParam + 32; // ok
-		inputStr[inputStrLength + 1] = 0;
-		inputStrLength++;
+		inputStr += (TCHAR)wParam + 'a'-'A'; // ok
 	}
-}
-void MainGame::InputChar(WPARAM wParam)
-{
-	inputStr[inputStrLength] = (TCHAR)wParam;
-	inputStr[inputStrLength + 1] = 0;
-	inputStrLength++;
 }
 
 void MainGame::Update()
 {
 	textBrickSpanwer->Update();
-	textBrickSpanwer->CrashBrickDelete(floor);
-	textBrickSpanwer->CrashBrickDelete(inputBox);
+	UpdateCrash();
 }
 void MainGame::Render(HDC hdc)
 {
-	Rectangle(hdc, floor.left, floor.top, floor.right, floor.bottom);
-	Rectangle(hdc, inputBox.left, inputBox.top, inputBox.right, inputBox.bottom);
-	TextOut(hdc, 100, 100, inputStr, inputStrLength);
+	RenderMainGameObject(hdc);
 	textBrickSpanwer->Render(hdc);
 }
 void MainGame::Release()
 {
 	delete textBrickSpanwer;
+}
+
+void MainGame::UpdateCrash()
+{
+	textBrickSpanwer->CrashBrickDelete(floor);
+	textBrickSpanwer->CrashBrickDelete(inputBox);
+}
+
+void MainGame::RenderMainGameObject(HDC hdc)
+{
+	RenderFloor(hdc);
+	RenderInpuBox(hdc);
+	RenderScore(hdc);
+}
+
+void MainGame::RenderFloor(HDC hdc)
+{
+	Rectangle(hdc, floor.left, floor.top, floor.right, floor.bottom);
+}
+void MainGame::RenderInpuBox(HDC hdc)
+{
+	Rectangle(hdc, inputBox.left, inputBox.top, inputBox.right, inputBox.bottom);
+	DrawText(hdc, inputStr.c_str(), -1, &inputBox, DT_CENTER | DT_VCENTER | DT_SINGLELINE);
+}
+void MainGame::RenderScore(HDC hdc)
+{
+	sprintf(scoreString, TEXT("score : %d"), score);
+	TextOut(hdc, 1100, 50, scoreString, lstrlen(scoreString));
 }

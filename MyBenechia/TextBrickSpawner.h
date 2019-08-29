@@ -9,8 +9,8 @@ class TextBrickSpanwner
 {
 private:
 	std::list<TextBrick*> tbBox;
-	int cycleCount = 20;
-	int maxCycle = 20;
+	int cycleCount = 40;
+	int maxCycle = 40;
 	std::ifstream inFile;
 	std::string fileName;
 public:
@@ -37,7 +37,7 @@ public:
 	int GetRandomPos();
 	std::string GetNextWord();
 	void CrashBrickDelete(RECT _floor);
-	
+	bool IsCorrectAnswer(std::string _inputStr);
 public:
 	void Init();
 	void Input(WPARAM wParam);

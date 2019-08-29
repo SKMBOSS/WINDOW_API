@@ -22,10 +22,6 @@ void Intro::Input(WPARAM wParam)
 	}
 }
 
-void Intro::InputChar(WPARAM wParam)
-{
-}
-
 void Intro::Update()
 {
 	tb->Update();
