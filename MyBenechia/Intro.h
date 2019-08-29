@@ -6,7 +6,7 @@ class Intro :
 	public Scene
 {
 private:
-	RECT rt = { 50,50,200,300 };
+	RECT rt = { 50,0,100,50 };
 	TextBrick *tb;
 public:
 	void Init();

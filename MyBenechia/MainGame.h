@@ -1,12 +1,13 @@
 #pragma once
 #include "Scene.h"
-#include "TextBrick.h"
+
+class TextBrickSpanwner;
 class MainGame :
 	public Scene
 {
 private:
 	RECT rt = { 50,50,200,300 };
-	TextBrick *tb;
+	TextBrickSpanwner *tbF;
 public :
 	void Init();
 	void Input(WPARAM wParam);

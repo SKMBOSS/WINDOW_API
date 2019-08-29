@@ -8,19 +8,22 @@ TextBrick::~TextBrick()
 {
 }
 
-void TextBrick::Init()
+TextBrick::TextBrick(int _textPosX, int _speed, string _targetText)
 {
-	srand(time(nullptr));
-	SetPos();
-	SetSpeed(10);
+	textPosX = _textPosX;
+	SetSpeed(_speed);
+	targetText = _targetText;
+	SetRtCollider();
 }
 
-void TextBrick::SetPos()
+void TextBrick::SetRtCollider()
 {
-	rtPos.left = rand() % 539 +1;
-	rtPos.top = 10;
-	rtPos.right = rtPos.left + 100;
-	rtPos.bottom = 50;
+	int spaceArea = targetText.length();
+
+	rtCollider.left = textPosX - 5;
+	rtCollider.top = textPosY - 2;
+	rtCollider.right = textPosX + spaceArea/2 * 15 +10;
+	rtCollider.bottom = textPosY + 20;
 }
 
 void TextBrick::Update()
@@ -30,6 +33,6 @@ void TextBrick::Update()
 
 void TextBrick::Render(HDC _hdc)
 {
-	Rectangle(_hdc, rtPos.left, rtPos.top, rtPos.right, rtPos.bottom);
-	//Rectangle(_hdc, 100,100,200,200);
+	Rectangle(_hdc, rtCollider.left, rtCollider.top, rtCollider.right, rtCollider.bottom);
+	TextOut(_hdc, textPosX, textPosY, targetText.c_str(), targetText.length());
 }

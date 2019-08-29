@@ -11,8 +11,7 @@ Intro::~Intro()
 
 void Intro::Init()
 {
-	tb = new TextBrick();
-	tb->Init();
+	tb = new TextBrick(300,6,"test");
 }
 void Intro::Input(WPARAM wParam)
 {

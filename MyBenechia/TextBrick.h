@@ -7,26 +7,30 @@ using namespace std;
 class TextBrick
 {
 private:
-	RECT rtPos;
+	int textPosX;
+	int textPosY = 0;
+	RECT rtCollider;
 	int speed;
-
 	string targetText;
 public:
+	TextBrick(int _textPosX, int _speed, string _targetText);
+public:
 	void Init();
+	void Input(WPARAM wParam);
 	void Update();
 	void Render(HDC _hdc);
 	void Release();
-
-	void SetPos();
+public:
+	void SetRtCollider();
 	inline void SetSpeed(int _speed)
 	{
 		speed = _speed;
 	}
-
 	inline void DownBrick()
 	{
-		rtPos.top += speed;
-		rtPos.bottom += speed;
+		textPosY += speed;
+		rtCollider.bottom += speed;
+		rtCollider.top += speed;
 	}
 	bool isCrash();
 
