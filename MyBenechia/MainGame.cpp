@@ -13,8 +13,8 @@ MainGame::~MainGame()
 
 void MainGame::Init()
 {
-	tbF = new TextBrickSpanwner("LEVEL01.txt");
-	tbF->Init();
+	textBrickSpanwer = new TextBrickSpanwner("LEVEL01.txt");
+	textBrickSpanwer->Init();
 }
 void MainGame::Input(WPARAM wParam)
 {
@@ -26,13 +26,17 @@ void MainGame::Input(WPARAM wParam)
 }
 void MainGame::Update()
 {
-	tbF->Update();
+	textBrickSpanwer->Update();
+	textBrickSpanwer->CrashBrickDelete(floor);
+	textBrickSpanwer->CrashBrickDelete(inputBox);
 }
 void MainGame::Render(HDC hdc)
 {
-	tbF->Render(hdc);
+	Rectangle(hdc, floor.left, floor.top, floor.right, floor.bottom);
+	Rectangle(hdc, inputBox.left, inputBox.top, inputBox.right, inputBox.bottom);
+	textBrickSpanwer->Render(hdc);
 }
 void MainGame::Release()
 {
-	delete tbF;
+	delete textBrickSpanwer;
 }

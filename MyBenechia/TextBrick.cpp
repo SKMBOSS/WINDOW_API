@@ -8,22 +8,21 @@ TextBrick::~TextBrick()
 {
 }
 
-TextBrick::TextBrick(int _textPosX, int _speed, string _targetText)
+TextBrick::TextBrick(int rtPos, int _speed, string _targetText)
 {
-	textPosX = _textPosX;
 	SetSpeed(_speed);
 	targetText = _targetText;
-	SetRtCollider();
+	SetRtCollider(rtPos);
 }
 
-void TextBrick::SetRtCollider()
+void TextBrick::SetRtCollider(int rtPos)
 {
 	int spaceArea = targetText.length();
 
-	rtCollider.left = textPosX - 5;
-	rtCollider.top = textPosY - 2;
-	rtCollider.right = textPosX + spaceArea/2 * 15 +10;
-	rtCollider.bottom = textPosY + 20;
+	rtCollider.left = rtPos - spaceArea*5;
+	rtCollider.top = 0;
+	rtCollider.right = rtPos + spaceArea * 5;
+	rtCollider.bottom = 35;
 }
 
 void TextBrick::Update()
@@ -34,5 +33,5 @@ void TextBrick::Update()
 void TextBrick::Render(HDC _hdc)
 {
 	Rectangle(_hdc, rtCollider.left, rtCollider.top, rtCollider.right, rtCollider.bottom);
-	TextOut(_hdc, textPosX, textPosY, targetText.c_str(), targetText.length());
+	DrawText(_hdc, targetText.c_str(), -1, &rtCollider, DT_CENTER | DT_VCENTER | DT_SINGLELINE);
 }

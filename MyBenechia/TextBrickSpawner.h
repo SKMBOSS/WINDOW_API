@@ -31,9 +31,13 @@ public:
 		else
 			return false;
 	}
+	void CreateBricks();
+	void DownBricks();
 public:
 	int GetRandomPos();
 	std::string GetNextWord();
+	void CrashBrickDelete(RECT _floor);
+	
 public:
 	void Init();
 	void Input(WPARAM wParam);

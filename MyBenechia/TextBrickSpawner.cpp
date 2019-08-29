@@ -20,7 +20,7 @@ TextBrickSpanwner::TextBrickSpanwner(string _fileName)
 
 int TextBrickSpanwner::GetRandomPos()
 {
-	return rand() % 1050 + 60;
+	return rand() % 1000 + 100;
 }
 
 string TextBrickSpanwner::GetNextWord()
@@ -34,6 +34,35 @@ string TextBrickSpanwner::GetNextWord()
 	return tempStr;
 }
 
+void TextBrickSpanwner::CreateBricks()
+{
+	tbBox.push_back(new TextBrick(GetRandomPos(), 6, GetNextWord()));
+}
+
+void TextBrickSpanwner::DownBricks()
+{
+	for (auto iter = tbBox.begin(); iter != tbBox.end(); ++iter)
+	{
+		(*iter)->Update();
+	}
+}
+
+void TextBrickSpanwner::CrashBrickDelete(RECT _floor)
+{
+	RECT temp;
+	list<TextBrick*>::iterator crashIter = tbBox.begin();
+	for (crashIter; crashIter != tbBox.end();)
+	{
+		if (IntersectRect(&temp, &(*crashIter)->GetRtCollider(), &_floor))
+		{
+			delete (*crashIter);
+			crashIter = tbBox.erase(crashIter);
+		}
+		else
+			crashIter++;
+	}
+}
+
 void TextBrickSpanwner::Init()
 {
 	srand(time(nullptr));
@@ -44,14 +73,9 @@ void TextBrickSpanwner::Update()
 {
 	if (ResetCycleCount())
 	{
-		tbBox.push_back(new TextBrick(GetRandomPos(),6, GetNextWord()));
+		CreateBricks();
 	}
-		
-	for (auto iter = tbBox.begin(); iter != tbBox.end(); ++iter)
-	{
-		(*iter)->DownBrick();
-	}
-
+	DownBricks();
 	ReduceCycleCount();
 }
 void TextBrickSpanwner::Render(HDC hdc)

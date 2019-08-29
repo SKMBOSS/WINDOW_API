@@ -6,8 +6,11 @@ class MainGame :
 	public Scene
 {
 private:
-	RECT rt = { 50,50,200,300 };
-	TextBrickSpanwner *tbF;
+	RECT floor = { 2,700,1278,779 };
+	RECT inputBox = { 570,600,710,701 };
+	TextBrickSpanwner *textBrickSpanwer;
+public:
+
 public :
 	void Init();
 	void Input(WPARAM wParam);
