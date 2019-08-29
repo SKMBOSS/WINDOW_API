@@ -27,6 +27,7 @@ public:
 public:
 	void Init();
 	void Input(WPARAM wParam);
+	void InputChar(WPARAM wParam);
 	void Update();
 	void Render(HDC hdc);
 	void Release();

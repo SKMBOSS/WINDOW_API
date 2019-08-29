@@ -21,6 +21,11 @@ void Intro::Input(WPARAM wParam)
 		SceneManager::GetInstance()->ChangeScene(SCENE_STATE::MAIN_GAME);
 	}
 }
+
+void Intro::InputChar(WPARAM wParam)
+{
+}
+
 void Intro::Update()
 {
 	tb->Update();
