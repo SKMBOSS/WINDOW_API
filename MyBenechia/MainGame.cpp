@@ -3,6 +3,7 @@
 #include "TextBrick.h"
 #include "TextBrickSpawner.h"
 
+
 MainGame::MainGame()
 {
 }
@@ -14,6 +15,8 @@ MainGame::~MainGame()
 void MainGame::Init()
 {
 	textBrickSpanwer = new TextBrickSpanwner("LEVEL01.txt");
+	score = 0;
+	hp = 6;
 	textBrickSpanwer->Init();
 }
 void MainGame::Input(WPARAM wParam)
@@ -52,8 +55,8 @@ void MainGame::Release()
 
 void MainGame::UpdateCrash()
 {
-	textBrickSpanwer->CrashBrickDelete(floor);
-	textBrickSpanwer->CrashBrickDelete(inputBox);
+	textBrickSpanwer->CrashBrickDelete(floor,hp);
+	textBrickSpanwer->CrashBrickDelete(inputBox,hp);
 }
 
 void MainGame::RenderMainGameObject(HDC hdc)
@@ -67,10 +70,19 @@ void MainGame::RenderFloor(HDC hdc)
 {
 	Rectangle(hdc, floor.left, floor.top, floor.right, floor.bottom);
 }
+
 void MainGame::RenderInpuBox(HDC hdc)
 {
+	HBRUSH newBrush, oldBrush;
+
+	newBrush = CreateSolidBrush(RGB(color._RGB[hp].R, color._RGB[hp].G, color._RGB[hp].B));
+	oldBrush = (HBRUSH)SelectObject(hdc, newBrush);
+
 	Rectangle(hdc, inputBox.left, inputBox.top, inputBox.right, inputBox.bottom);
 	DrawText(hdc, inputStr.c_str(), -1, &inputBox, DT_CENTER | DT_VCENTER | DT_SINGLELINE);
+
+	SelectObject(hdc, oldBrush);
+	DeleteObject(newBrush);
 }
 void MainGame::RenderScore(HDC hdc)
 {

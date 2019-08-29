@@ -36,7 +36,7 @@ public:
 public:
 	int GetRandomPos();
 	std::string GetNextWord();
-	void CrashBrickDelete(RECT _floor);
+	void CrashBrickDelete(RECT _floor,int &_hp);
 	bool IsCorrectAnswer(std::string _inputStr);
 public:
 	void Init();

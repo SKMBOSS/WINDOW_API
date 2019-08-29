@@ -48,7 +48,7 @@ void TextBrickSpanwner::DownBricks()
 	}
 }
 
-void TextBrickSpanwner::CrashBrickDelete(RECT _floor)
+void TextBrickSpanwner::CrashBrickDelete(RECT _floor, int &_hp)
 {
 	RECT temp;
 	list<TextBrick*>::iterator crashIter = tbBox.begin();
@@ -56,6 +56,7 @@ void TextBrickSpanwner::CrashBrickDelete(RECT _floor)
 	{
 		if (IntersectRect(&temp, &(*crashIter)->GetRtCollider(), &_floor))
 		{
+			_hp--;
 			delete (*crashIter);
 			crashIter = tbBox.erase(crashIter);
 		}

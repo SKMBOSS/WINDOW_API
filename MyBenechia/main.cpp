@@ -1,5 +1,5 @@
 #include <Windows.h>
-#include "SceneManager.h"
+#include "MyBenechia.h"
 
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
 HINSTANCE g_hInst;
@@ -42,29 +42,30 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 {
 	HDC hdc;
 	PAINTSTRUCT ps;
-
+	MyBenechia* benechiaGame = new MyBenechia;
 	switch (iMessage)
 	{
 	case WM_CREATE: 
-		SceneManager::GetInstance()->Init();
+		benechiaGame->Init();
 		SetTimer(hWnd, 1, 1000/60, NULL);
 		return 0;
 	case WM_KEYDOWN:
-		SceneManager::GetInstance()->Input(wParam);
+		benechiaGame->Input(wParam);
 		return 0;
 	case WM_TIMER:
-		SceneManager::GetInstance()->Update();
+		benechiaGame->Update();
 		InvalidateRect(hWnd, NULL, TRUE);
 		return 0;
 	case WM_PAINT:
 		hdc = BeginPaint(hWnd, &ps);
 		BeginPaint(hWnd, &ps);
-		SceneManager::GetInstance()->Render(hdc);
+		benechiaGame->Render(hdc);
 		EndPaint(hWnd, &ps);
 		return 0;
 	case WM_DESTROY:
 		PostQuitMessage(0);
-		SceneManager::GetInstance()->Release();
+		benechiaGame->Release();
+		delete benechiaGame;
 		return 0;
 	}
 	return(DefWindowProc(hWnd, iMessage, wParam, lParam));
