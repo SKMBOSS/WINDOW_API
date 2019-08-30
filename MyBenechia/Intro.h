@@ -3,20 +3,22 @@
 #include "TextBrick.h"
 #include "HpColor.h"
 #include <fstream>
-
+#include "InputBox.h"
+#include "Floor.h"
 class Intro :
 	public Scene
 {
 private:
-	RECT floor = { 2,700,1261,779 };
-	RECT inputBox = { 570,600,710,701 };
-	RECT introTextBox = { 350,200,1050,700 };
 	std::ifstream inFile;
+	InputBox* inputBox;
+	Floor* floor;
+	RECT introTextBox = { 350,200,1050,700 };
 	std::string inputStr;
 	bool isTextEnd = false;
-	HpColor color;
+private:
 	int introCycleColor = 6;
 	int cycleColorchanger = -1;
+private:
 	int cycleCount = 40;
 	int maxCycle = 40;
 private:
@@ -36,8 +38,6 @@ private:
 			return false;
 	}
 	void RenderIntroObject(HDC hdc);
-	void RenderFloor(HDC hdc);
-	void RenderInpuBox(HDC hdc);
 	void RenderIntroText(HDC hdc);
 	void ChangeCycleColor();
 	void LoadText(std::ifstream& _inFile);

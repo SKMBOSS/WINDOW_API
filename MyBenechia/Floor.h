@@ -1,21 +1,21 @@
 #pragma once
 #include <Windows.h>
 #include "HpColor.h"
-class InputBox 
+class Floor
 {
 private:
-	RECT inputBox;
+	RECT floor;
 	HpColor color;
 public:
 	inline RECT GetRect()
 	{
-		return inputBox;
+		return floor;
 	}
-public :
+public:
 	void Init();
 	void Render(HDC hdc, int color);
 public:
-	InputBox();
-	~InputBox();
+	Floor();
+	~Floor();
 };
 

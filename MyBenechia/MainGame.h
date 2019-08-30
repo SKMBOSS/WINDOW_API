@@ -1,6 +1,8 @@
 #pragma once
 #include "Scene.h"
 #include "HpColor.h"
+#include "Floor.h"
+#include "InputBox.h"
 #include <string>
 
 class TextBrickSpanwner;
@@ -9,8 +11,8 @@ class MainGame :
 {
 private:
 	TextBrickSpanwner *textBrickSpanwer;
-	RECT floor = { 2,700,1261,779 };
-	RECT inputBox = { 570,600,710,701 };
+	Floor* floor;
+	InputBox* inputBox;
 	std::string inputStr;
 	TCHAR scoreString[256];
 	int score;
@@ -19,8 +21,6 @@ private:
 private:
 	void UpdateCrash();
 	void RenderMainGameObject(HDC hdc);
-	void RenderFloor(HDC hdc);
-	void RenderInpuBox(HDC hdc);
 	void RenderScore(HDC hdc);
 public:
 	void Init();

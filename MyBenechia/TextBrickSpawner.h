@@ -16,6 +16,13 @@ private:
 public:
 	TextBrickSpanwner(std::string _fileName);
 public:
+	void CreateBricks();
+	void DownBricks();
+	int GetRandomPos();
+	std::string GetNextWord();
+	void CrashBrickDelete(RECT _floor, int &_hp);
+	bool IsCorrectAnswer(std::string _inputStr);
+public:
 	inline void ReduceCycleCount()
 	{
 		cycleCount--;
@@ -31,13 +38,6 @@ public:
 		else
 			return false;
 	}
-	void CreateBricks();
-	void DownBricks();
-public:
-	int GetRandomPos();
-	std::string GetNextWord();
-	void CrashBrickDelete(RECT _floor,int &_hp);
-	bool IsCorrectAnswer(std::string _inputStr);
 public:
 	void Init();
 	void Input(WPARAM wParam);

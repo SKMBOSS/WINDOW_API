@@ -139,6 +139,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Floor.cpp" />
     <ClCompile Include="Hpcolor.cpp" />
     <ClCompile Include="InputBox.cpp" />
     <ClCompile Include="Intro.cpp" />
@@ -151,6 +152,7 @@
     <ClCompile Include="TextBrickSpawner.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Floor.h" />
     <ClInclude Include="HpColor.h" />
     <ClInclude Include="InputBox.h" />
     <ClInclude Include="Intro.h" />

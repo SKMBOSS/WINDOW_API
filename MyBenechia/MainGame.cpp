@@ -15,9 +15,14 @@ MainGame::~MainGame()
 void MainGame::Init()
 {
 	textBrickSpanwer = new TextBrickSpanwner("LEVEL01.txt");
+	floor = new Floor();
+	inputBox = new InputBox();
 	score = 0;
 	hp = 6;
+
 	textBrickSpanwer->Init();
+	floor->Init();
+	inputBox->Init();
 }
 void MainGame::Input(WPARAM wParam)
 {
@@ -51,47 +56,23 @@ void MainGame::Render(HDC hdc)
 void MainGame::Release()
 {
 	delete textBrickSpanwer;
+	delete floor;
+	delete inputBox;
 }
 
 void MainGame::UpdateCrash()
 {
-	textBrickSpanwer->CrashBrickDelete(floor,hp);
-	textBrickSpanwer->CrashBrickDelete(inputBox,hp);
+	textBrickSpanwer->CrashBrickDelete(floor->GetRect(),hp);
+	textBrickSpanwer->CrashBrickDelete(inputBox->GetRect(),hp);
 }
 
 void MainGame::RenderMainGameObject(HDC hdc)
 {
-	RenderFloor(hdc);
-	RenderInpuBox(hdc);
+	floor->Render(hdc, 7);
+	inputBox->Render(hdc,hp);
 	RenderScore(hdc);
 }
 
-void MainGame::RenderFloor(HDC hdc)
-{
-	HBRUSH newBrush, oldBrush;
-
-	newBrush = CreateSolidBrush(RGB(color._RGB[7].R, color._RGB[7].G, color._RGB[7].B));
-	oldBrush = (HBRUSH)SelectObject(hdc, newBrush);
-
-	Rectangle(hdc, floor.left, floor.top, floor.right, floor.bottom);
-
-	SelectObject(hdc, oldBrush);
-	DeleteObject(newBrush);
-}
-
-void MainGame::RenderInpuBox(HDC hdc)
-{
-	HBRUSH newBrush, oldBrush;
-
-	newBrush = CreateSolidBrush(RGB(color._RGB[hp].R, color._RGB[hp].G, color._RGB[hp].B));
-	oldBrush = (HBRUSH)SelectObject(hdc, newBrush);
-
-	Rectangle(hdc, inputBox.left, inputBox.top, inputBox.right, inputBox.bottom);
-	DrawText(hdc, inputStr.c_str(), -1, &inputBox, DT_CENTER | DT_VCENTER | DT_SINGLELINE);
-
-	SelectObject(hdc, oldBrush);
-	DeleteObject(newBrush);
-}
 void MainGame::RenderScore(HDC hdc)
 {
 	sprintf(scoreString, TEXT("score : %d"), score);

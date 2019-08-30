@@ -57,6 +57,9 @@
     <ClCompile Include="TextBrickSpawner.cpp">
       <Filter>소스 파일\object_cpp</Filter>
     </ClCompile>
+    <ClCompile Include="Floor.cpp">
+      <Filter>소스 파일\object_cpp</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MyBenechia.h">
@@ -84,6 +87,9 @@
       <Filter>헤더 파일\object_header</Filter>
     </ClInclude>
     <ClInclude Include="TextBrickSpawner.h">
+      <Filter>헤더 파일\object_header</Filter>
+    </ClInclude>
+    <ClInclude Include="Floor.h">
       <Filter>헤더 파일\object_header</Filter>
     </ClInclude>
   </ItemGroup>
