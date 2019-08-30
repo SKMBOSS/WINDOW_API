@@ -41,24 +41,45 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmd
 HDC hMemDC;
 HBITMAP hBitMap;
 HBITMAP hOLDBitMap;
+int count = 0;
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 {
 	HDC hdc;
 	PAINTSTRUCT ps;
 
+
 	switch (iMessage)
 	{
 	case WM_CREATE:
+		SetTimer(hWnd, 1, 100, NULL);
 		hdc = GetDC(hWnd);
 		hMemDC = CreateCompatibleDC(hdc); //메모리DC를 잡아주는역할
 		hBitMap = LoadBitmap(g_hInst, MAKEINTRESOURCE(IDB_BITMAP1));
 		hOLDBitMap = (HBITMAP)SelectObject(hMemDC, hBitMap);
 		ReleaseDC(hWnd, hdc);
 		return 0;
+	case WM_TIMER:
+		InvalidateRect(hWnd, NULL, TRUE);
+		if(count%4 == 0)
+			hBitMap = LoadBitmap(g_hInst, MAKEINTRESOURCE(IDB_BITMAP1));
+		else if(count % 4 == 1)
+			hBitMap = LoadBitmap(g_hInst, MAKEINTRESOURCE(IDB_BITMAP2));
+		else if (count % 4 == 2)
+			hBitMap = LoadBitmap(g_hInst, MAKEINTRESOURCE(IDB_BITMAP3));
+		else if (count % 4 == 3)
+			hBitMap = LoadBitmap(g_hInst, MAKEINTRESOURCE(IDB_BITMAP4));
+		count++;
+
+		return 0;
+
 	case WM_PAINT:
-		hdc = GetDC(hWnd);
-		BitBlt(hdc, 100, 100, 100, 100,hMemDC, 0,0, SRCCOPY);
+		hdc = BeginPaint(hWnd,&ps);
+		BitBlt(hdc, 100, 100, 100, 100, hMemDC, 0, 0, SRCCOPY);
+		hOLDBitMap = (HBITMAP)SelectObject(hMemDC, hBitMap);
+		SelectObject(hdc, hOLDBitMap);
+		DeleteObject(hBitMap);
+
 		EndPaint(hWnd, &ps);
 		return 0;
 	case WM_DESTROY:
