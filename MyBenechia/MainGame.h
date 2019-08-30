@@ -18,6 +18,7 @@ private:
 	int score;
 	int hp;
 	HpColor color;
+	bool gameEnd = false;
 private:
 	void UpdateCrash();
 	void RenderMainGameObject(HDC hdc);

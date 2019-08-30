@@ -47,6 +47,11 @@ void MainGame::Update()
 {
 	textBrickSpanwer->Update();
 	UpdateCrash();
+
+	if (gameEnd)
+	{
+		SceneManager::GetInstance()->ChangeScene(SCENE_STATE::INTRO);
+	}
 }
 void MainGame::Render(HDC hdc)
 {
@@ -64,6 +69,11 @@ void MainGame::UpdateCrash()
 {
 	textBrickSpanwer->CrashBrickDelete(floor->GetRect(),hp);
 	textBrickSpanwer->CrashBrickDelete(inputBox->GetRect(),hp);
+
+	if (hp == -1)
+	{
+		gameEnd = true;
+	}
 }
 
 void MainGame::RenderMainGameObject(HDC hdc)
@@ -71,6 +81,7 @@ void MainGame::RenderMainGameObject(HDC hdc)
 	floor->Render(hdc, 7);
 	inputBox->Render(hdc,hp);
 	RenderScore(hdc);
+	DrawText(hdc, inputStr.c_str(), -1, &inputBox->GetRect(), DT_CENTER | DT_VCENTER | DT_SINGLELINE);
 }
 
 void MainGame::RenderScore(HDC hdc)

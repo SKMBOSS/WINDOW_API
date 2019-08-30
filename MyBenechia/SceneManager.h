@@ -5,7 +5,8 @@
 enum SCENE_STATE
 {
 	INTRO,
-	MAIN_GAME
+	MAIN_GAME,
+	RANKING
 };
 
 class Scene;

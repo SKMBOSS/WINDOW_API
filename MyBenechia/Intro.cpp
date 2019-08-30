@@ -14,9 +14,11 @@ void Intro::Init()
 	inFile.open("IntroText.txt");
 
 	inputBox = new InputBox();
-	inputBox->Init();
-
 	floor = new Floor();
+	inputStr = "";
+	isTextEnd = false;
+
+	inputBox->Init();
 	floor->Init();
 }
 void Intro::Input(WPARAM wParam)
