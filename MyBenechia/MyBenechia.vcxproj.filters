@@ -13,27 +13,21 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="소스 파일\scene_cpp">
+      <UniqueIdentifier>{be48d9f0-2ded-45e8-8134-4b6ded61a319}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일\scene_header">
+      <UniqueIdentifier>{2c4f7c17-d623-49f1-8c90-6e248f39e522}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\object_cpp">
+      <UniqueIdentifier>{6c5b2492-dfc8-4dde-a6f6-199b4b7656c1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일\object_header">
+      <UniqueIdentifier>{652a6bce-73bb-4a5f-8c1d-5ab3f2e83578}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="TextBrick.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="SceneManager.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Scene.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Intro.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="MainGame.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="TextBrickSpawner.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="MyBenechia.cpp">
@@ -42,35 +36,62 @@
     <ClCompile Include="Hpcolor.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>소스 파일\scene_cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="Intro.cpp">
+      <Filter>소스 파일\scene_cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="MainGame.cpp">
+      <Filter>소스 파일\scene_cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneManager.cpp">
+      <Filter>소스 파일\scene_cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="InputBox.cpp">
+      <Filter>소스 파일\object_cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="TextBrick.cpp">
+      <Filter>소스 파일\object_cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="TextBrickSpawner.cpp">
+      <Filter>소스 파일\object_cpp</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="TextBrick.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="SceneManager.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Scene.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Intro.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="MainGame.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="TextBrickSpawner.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="MyBenechia.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="HpColor.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="SceneManager.h">
+      <Filter>헤더 파일\scene_header</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>헤더 파일\scene_header</Filter>
+    </ClInclude>
+    <ClInclude Include="Intro.h">
+      <Filter>헤더 파일\scene_header</Filter>
+    </ClInclude>
+    <ClInclude Include="MainGame.h">
+      <Filter>헤더 파일\scene_header</Filter>
+    </ClInclude>
+    <ClInclude Include="InputBox.h">
+      <Filter>헤더 파일\object_header</Filter>
+    </ClInclude>
+    <ClInclude Include="TextBrick.h">
+      <Filter>헤더 파일\object_header</Filter>
+    </ClInclude>
+    <ClInclude Include="TextBrickSpawner.h">
+      <Filter>헤더 파일\object_header</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="LEVEL01.txt">
+      <Filter>리소스 파일</Filter>
+    </Text>
+    <Text Include="IntroText.txt">
       <Filter>리소스 파일</Filter>
     </Text>
   </ItemGroup>

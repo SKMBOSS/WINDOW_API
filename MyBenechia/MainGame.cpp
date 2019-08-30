@@ -68,7 +68,15 @@ void MainGame::RenderMainGameObject(HDC hdc)
 
 void MainGame::RenderFloor(HDC hdc)
 {
+	HBRUSH newBrush, oldBrush;
+
+	newBrush = CreateSolidBrush(RGB(color._RGB[7].R, color._RGB[7].G, color._RGB[7].B));
+	oldBrush = (HBRUSH)SelectObject(hdc, newBrush);
+
 	Rectangle(hdc, floor.left, floor.top, floor.right, floor.bottom);
+
+	SelectObject(hdc, oldBrush);
+	DeleteObject(newBrush);
 }
 
 void MainGame::RenderInpuBox(HDC hdc)

@@ -10,10 +10,14 @@ struct MyRGB
 class HpColor
 {
 public:
-	MyRGB _RGB[7];
+	MyRGB _RGB[8];
 public:
 	void SetRGB()
 	{
+		//¹Ù´Ù
+		_RGB[7].R = 051;
+		_RGB[7].G = 051;
+		_RGB[7].B = 204;
 		//»¡
 		_RGB[6].R = 255;
 		_RGB[6].G = 051;

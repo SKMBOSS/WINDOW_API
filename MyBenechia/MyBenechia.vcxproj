@@ -140,6 +140,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Hpcolor.cpp" />
+    <ClCompile Include="InputBox.cpp" />
     <ClCompile Include="Intro.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainGame.cpp" />
@@ -151,6 +152,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="HpColor.h" />
+    <ClInclude Include="InputBox.h" />
     <ClInclude Include="Intro.h" />
     <ClInclude Include="MainGame.h" />
     <ClInclude Include="MyBenechia.h" />
@@ -160,6 +162,7 @@
     <ClInclude Include="TextBrickSpawner.h" />
   </ItemGroup>
   <ItemGroup>
+    <Text Include="IntroText.txt" />
     <Text Include="LEVEL01.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
