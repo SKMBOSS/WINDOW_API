@@ -39,9 +39,23 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmd
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 {
+	HDC hdc;
+	PAINTSTRUCT ps;
+
 	switch (iMessage)
 	{
+	case WM_CREATE:
+		hdc = GetDC(hWnd);
+		//SetTimer(hWnd, 1, 10, NULL);
+		ReleaseDC(hWnd, hdc);
+		return 0;
+	case  WM_PAINT:
+		hdc = BeginPaint(hWnd, &ps);
+		MainGame::GetInstance()->Draw(hdc);
+		EndPaint(hWnd, &ps);
+		return 0;
 	case WM_DESTROY:
+		//KillTimer(hWnd, 1);
 		PostQuitMessage(0);
 		return 0;
 	}
