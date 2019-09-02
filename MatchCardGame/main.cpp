@@ -38,11 +38,6 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmd
 
 }
 
-HDC hMemDC;
-HBITMAP hBitMap;
-HBITMAP hOLDBitMap;
-int count = 0;
-
 LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 {
 	HDC hdc;
