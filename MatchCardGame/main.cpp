@@ -1,7 +1,9 @@
 #include <Windows.h>
 #include "MainGame.h"
+#include "resource.h"
 
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
+INT_PTR CALLBACK SettingDlg(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam); //새콜백 선언
 HINSTANCE g_hInst;
 LPCTSTR lpszClass = TEXT("MatchCardGame");
 
@@ -20,7 +22,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmd
 	WndClass.hInstance = hInstance;
 	WndClass.lpfnWndProc = WndProc;
 	WndClass.lpszClassName = lpszClass;
-	WndClass.lpszMenuName = NULL;
+	WndClass.lpszMenuName = MAKEINTRESOURCE(IDR_MENU1); // 메뉴 연동
 	WndClass.style = CS_HREDRAW | CS_VREDRAW;
 	RegisterClass(&WndClass);
 
@@ -52,6 +54,14 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 		MainGame::GetInstance()->Init(hWnd, hdc, g_hInst);
 		ReleaseDC(hWnd, hdc);
 		return 0;
+	case WM_COMMAND: //메뉴바만
+		switch (LOWORD(wParam))
+		{
+		case ID_FILE_SETTING:
+			DialogBox(g_hInst, MAKEINTRESOURCE(IDD_DIALOG1)
+				, hWnd, SettingDlg);
+			break;
+		}
 	case WM_TIMER:
 		MainGame::GetInstance()->Update();
 		return 0;
@@ -73,4 +83,31 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 	}
 
 	return(DefWindowProc(hWnd, iMessage, wParam, lParam));
+}
+
+INT_PTR CALLBACK SettingDlg(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+	HWND hRadio;
+	switch (message)
+	{
+	case WM_INITDIALOG: // 처음난이도 설정한거고
+		hRadio = GetDlgItem(hDlg, IDC_RADIO1);
+		SendMessage(hRadio, BM_SETCHECK, BST_CHECKED, 0);
+		break;
+	case WM_COMMAND:
+		if (LOWORD(wParam) == IDOK) //얘가확인
+		{
+			if (IsDlgButtonChecked(hDlg, IDC_RADIO1) == BST_CHECKED)
+				//GameManager::GetInstance()->SetGameMode(GAME_MODE_EASY);
+
+				EndDialog(hDlg, LOWORD(wParam));
+		}
+		else if (LOWORD(wParam) == IDCANCEL)
+		{
+			EndDialog(hDlg, LOWORD(wParam));
+		}
+		break;
+	}
+
+	return (INT_PTR)FALSE;
 }

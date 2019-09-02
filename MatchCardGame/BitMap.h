@@ -11,6 +11,7 @@ public:
 	void Init(HDC hdc, HINSTANCE hInst, int id);
 	void Draw(HDC hdc, int x, int y, int cx, int cy);
 	void Release();
+	/*SIZE m_size;*/
 public:
 	BitMap();
 	~BitMap();
