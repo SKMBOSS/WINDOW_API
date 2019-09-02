@@ -54,7 +54,7 @@ void ResManager::InitResPath()
 	resPath.push_back(basePath + "block_6.bmp");
 	resPath.push_back(basePath + "block_7.bmp");
 	resPath.push_back(basePath + "block_8.bmp");
-	resPath.push_back(basePath + "mine_0.bmp");
+	resPath.push_back(basePath + "mine.bmp");
 	resPath.push_back(basePath + "flag.bmp");
 	resPath.push_back(basePath + "block.bmp");
 	resPath.push_back(basePath + "back.bmp");

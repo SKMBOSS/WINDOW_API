@@ -42,8 +42,8 @@ void MainGame::SetVecBlock()
 		(
 			m_pResManager->GetBitMap(RES_TYPE_BLOCK_0),
 			m_pResManager->GetBitMap(RES_TYPE_BLOCK_BACK),
-			(i % m_iVecWidth) * m_pResManager->GetBitMapSize(RES_TYPE_BLOCK_BACK).cx+50,
-			(i / m_iVecHeight) * m_pResManager->GetBitMapSize(RES_TYPE_BLOCK_BACK).cy
+			(i % m_iVecWidth) * m_pResManager->GetBitMapSize(RES_TYPE_BLOCK_BACK).cx + 44,
+			(i / m_iVecHeight) * m_pResManager->GetBitMapSize(RES_TYPE_BLOCK_BACK).cy + 46
 		);
 
 		m_vecBlock.push_back(pNew);
@@ -67,7 +67,6 @@ void MainGame::Init(HWND hWnd, HDC hdc)
 	m_pResManager = new ResManager();
 	m_pResManager->Init(hdc);
 
-	m_pBackGround = new BitMap();
 	m_pBackGround = m_pResManager->GetBitMap(RES_TYPE_BACKGROUND);
 
 	/*int iArray[20];
@@ -123,7 +122,7 @@ void MainGame::Input(POINT pt)
 
 void MainGame::Draw(HDC hdc)
 {
-	m_pBackGround->Draw(hdc,0,0);
+	m_pBackGround->Draw(hdc, 0, 0);
 
 	for (auto iter = m_vecBlock.begin(); iter != m_vecBlock.end(); iter++)
 	{
@@ -134,7 +133,6 @@ void MainGame::Draw(HDC hdc)
 void MainGame::Release()
 {
 	DeleteVecBlock();
-	SAFE_DELETE(m_pBackGround);
 	SAFE_RELEASE(m_pResManager);
 	SAFE_DELETE(m_pResManager);
 	SAFE_DELETE(m_sThis);
