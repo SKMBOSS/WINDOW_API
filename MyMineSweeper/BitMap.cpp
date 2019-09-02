@@ -8,7 +8,7 @@ BitMap::~BitMap()
 {
 }
 
-void BitMap::Init(HDC hdc, HINSTANCE hInst, string path)
+void BitMap::Init(HDC hdc, string path)
 {
 	m_hMemDC = CreateCompatibleDC(hdc);
 	m_hBitMap = (HBITMAP)LoadImage(NULL, path.c_str(), IMAGE_BITMAP

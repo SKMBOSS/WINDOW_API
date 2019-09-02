@@ -16,7 +16,7 @@ public:
 		return m_size;
 	}
 public:
-	void Init(HDC hdc, HINSTANCE hInst, string path);
+	void Init(HDC hdc, string path);
 	void Draw(HDC hdc, int x, int y);
 	void Release();
 public:

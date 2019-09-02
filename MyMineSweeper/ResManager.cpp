@@ -14,9 +14,9 @@ ResManager::~ResManager()
 }
 
 
-void ResManager::Init(HDC hdc, HINSTANCE hInst)
+void ResManager::Init(HDC hdc)
 {
-	InitBitMap(hdc, hInst);
+	InitBitMap(hdc);
 }
 
 BitMap* ResManager::GetBitMap(int index)
@@ -24,6 +24,11 @@ BitMap* ResManager::GetBitMap(int index)
 	//배열 검사
 
 	return m_pBitMap[index];
+}
+
+SIZE ResManager::GetBitMapSize(int index)
+{
+	return m_pBitMap[index]->GetSize();
 }
 
 void ResManager::Release()
@@ -52,13 +57,14 @@ void ResManager::InitResPath()
 	resPath.push_back(basePath + "mine_0.bmp");
 	resPath.push_back(basePath + "flag.bmp");
 	resPath.push_back(basePath + "block.bmp");
+	resPath.push_back(basePath + "back.bmp");
 }
 
-void ResManager::InitBitMap(HDC hdc, HINSTANCE hInst)
+void ResManager::InitBitMap(HDC hdc)
 {
 	for (int i = 0; i < RES_TYPE_END; i++)
 	{
 		m_pBitMap[i] = new BitMap();
-		m_pBitMap[i]->Init(hdc, hInst, resPath[i]);
+		m_pBitMap[i]->Init(hdc, resPath[i]);
 	}
 }

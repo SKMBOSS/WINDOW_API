@@ -43,7 +43,7 @@
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
-    <CharacterSet>Unicode</CharacterSet>
+    <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -141,6 +141,7 @@
   <ItemGroup>
     <ClInclude Include="BitMap.h" />
     <ClInclude Include="Block.h" />
+    <ClInclude Include="GameManager.h" />
     <ClInclude Include="macro.h" />
     <ClInclude Include="MainGame.h" />
     <ClInclude Include="ResManager.h" />
@@ -152,6 +153,7 @@
   <ItemGroup>
     <ClCompile Include="BitMap.cpp" />
     <ClCompile Include="Block.cpp" />
+    <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="MainGame.cpp" />
     <ClCompile Include="MineSweeperMain.cpp" />
     <ClCompile Include="ResManager.cpp" />

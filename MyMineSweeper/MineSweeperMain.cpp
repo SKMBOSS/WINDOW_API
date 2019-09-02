@@ -1,12 +1,13 @@
 #include <windows.h>
 #include "MainGame.h"
+#include "GameManager.h"
 #include "resource.h"
 #include <crtdbg.h>
 
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
 INT_PTR CALLBACK SettingDlg(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam); //새콜백 선언
 HINSTANCE g_hInst;
-LPCTSTR lpszClass = TEXT("MatchCardGame");
+LPCTSTR lpszClass = TEXT("MyMineSweeper");
 
 int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmdParam, int nCmdShow)
 {
@@ -56,7 +57,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 	case WM_CREATE:
 		hdc = GetDC(hWnd);
 		SetTimer(hWnd, 1, 10, NULL);
-		MainGame::GetInstance()->Init(hWnd, hdc, g_hInst);
+		MainGame::GetInstance()->Init(hWnd, hdc);
 		ReleaseDC(hWnd, hdc);
 		return 0;
 	case WM_TIMER:
@@ -104,7 +105,11 @@ INT_PTR CALLBACK SettingDlg(HWND hDlg, UINT message, WPARAM wParam, LPARAM lPara
 		if (LOWORD(wParam) == IDOK) //얘가확인
 		{
 			if (IsDlgButtonChecked(hDlg, IDC_RADIO1) == BST_CHECKED)
-				//GameManager::GetInstance()->SetGameMode(GAME_MODE_EASY);
+				GameManager::GetInstance()->SetGameMode(GAME_MODE_EASY);
+			else if (IsDlgButtonChecked(hDlg, IDC_RADIO2) == BST_CHECKED)
+				GameManager::GetInstance()->SetGameMode(GAME_MODE_NOMAL);
+			else if (IsDlgButtonChecked(hDlg, IDC_RADIO3) == BST_CHECKED)
+				GameManager::GetInstance()->SetGameMode(GAME_MODE_HARD);
 		
 			EndDialog(hDlg, LOWORD(wParam));
 		}

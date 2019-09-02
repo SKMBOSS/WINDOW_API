@@ -2,31 +2,73 @@
 #include "macro.h"
 #include "ResManager.h"
 #include "Block.h"
+#include "BitMap.h"
 
 MainGame* MainGame::m_sThis = nullptr;
 
 MainGame::MainGame()
 {
 	m_pResManager = nullptr;
-	m_eState = GAME_STATE_WAIT;
-
-	m_pSelectOne = nullptr;
-	m_pSelectTwo = nullptr;
-
-	m_dwCount = 0;
+	m_pSelect = nullptr;
+	m_pBackGround = nullptr;
+	SetVecHeightAndWidth(10, 10);
+	//m_eState = GAME_STATE_WAIT;
 }
 
 MainGame::~MainGame()
 {
 }
 
-void MainGame::Init(HWND hWnd, HDC hdc, HINSTANCE hInst)
+MainGame* MainGame::GetInstance()
+{
+	if (m_sThis == nullptr)
+		m_sThis = new MainGame();
+
+	return m_sThis;
+}
+
+void MainGame::SetVecHeightAndWidth(int height, int width)
+{
+	m_iVecHeight = height;
+	m_iVecWidth = width;
+}
+
+void MainGame::SetVecBlock()
+{
+	for (int i = 0; i < m_iVecHeight * m_iVecWidth; i++)
+	{
+		Block* pNew = new Block();
+		pNew->Init
+		(
+			m_pResManager->GetBitMap(RES_TYPE_BLOCK_0),
+			m_pResManager->GetBitMap(RES_TYPE_BLOCK_BACK),
+			(i % m_iVecWidth) * m_pResManager->GetBitMapSize(RES_TYPE_BLOCK_BACK).cx+50,
+			(i / m_iVecHeight) * m_pResManager->GetBitMapSize(RES_TYPE_BLOCK_BACK).cy
+		);
+
+		m_vecBlock.push_back(pNew);
+	}
+}
+
+void MainGame::DeleteVecBlock()
+{
+	for (auto iter = m_vecBlock.begin(); iter != m_vecBlock.end(); iter++)
+	{
+		SAFE_DELETE(*iter);
+	}
+	m_vecBlock.clear();
+}
+
+void MainGame::Init(HWND hWnd, HDC hdc)
 {
 	m_hWnd = hWnd;
 	srand(GetTickCount());
 
 	m_pResManager = new ResManager();
-	m_pResManager->Init(hdc, hInst);
+	m_pResManager->Init(hdc);
+
+	m_pBackGround = new BitMap();
+	m_pBackGround = m_pResManager->GetBitMap(RES_TYPE_BACKGROUND);
 
 	/*int iArray[20];
 
@@ -43,16 +85,7 @@ void MainGame::Init(HWND hWnd, HDC hdc, HINSTANCE hInst)
 		iArray[randB] = iTemp;
 	}*/
 
-	for (int i = 0; i < 100; i++)
-	{
-		Block* pNew = new Block();
-		pNew->Init(m_pResManager->GetBitMap(RES_TYPE_00), m_pResManager->GetBitMap(RES_TYPE_BACK),
-			(i % 10) * 25 + 10 * (i % 10), 
-			(i / 10) * 25 + 10 * (i / 10)
-			);
-
-		m_vecBlock.push_back(pNew);
-	}
+	SetVecBlock();
 
 }
 
@@ -78,38 +111,20 @@ void MainGame::Update()
 
 void MainGame::Input(POINT pt)
 {
-	/*if (m_eState == GAME_STATE_SHOW)
-		return;
-
 	for (auto iter = m_vecBlock.begin(); iter != m_vecBlock.end(); iter++)
 	{
 		if ((*iter)->Input(pt))
 		{
-			if (m_eState == GAME_STATE_WAIT)
-			{
-				m_pSelectOne = *iter;
-				m_eState = GAME_STATE_ONE;
-			}
-			else if (m_eState == GAME_STATE_ONE)
-			{
-				m_pSelectTwo = *iter;
-				if (m_pSelectTwo->GetID() == m_pSelectOne->GetID())
-				{
-					m_eState = GAME_STATE_WAIT;
-				}
-				else
-				{
-					m_eState = GAME_STATE_SHOW;
-				}
-			}
-
+			m_pSelect = *iter;
 			InvalidateRect(m_hWnd, NULL, true);
 		}
-	}*/
+	}
 }
 
 void MainGame::Draw(HDC hdc)
 {
+	m_pBackGround->Draw(hdc,0,0);
+
 	for (auto iter = m_vecBlock.begin(); iter != m_vecBlock.end(); iter++)
 	{
 		(*iter)->Draw(hdc);
@@ -118,12 +133,9 @@ void MainGame::Draw(HDC hdc)
 
 void MainGame::Release()
 {
-	for (auto iter = m_vecBlock.begin(); iter != m_vecBlock.end(); iter++)
-	{
-		SAFE_DELETE(*iter);
-	}
-	m_vecBlock.clear();
-
+	DeleteVecBlock();
+	SAFE_DELETE(m_pBackGround);
+	SAFE_RELEASE(m_pResManager);
 	SAFE_DELETE(m_pResManager);
 	SAFE_DELETE(m_sThis);
 }

@@ -6,18 +6,19 @@ using namespace std;
 
 enum RES_TYPE
 {
-	RES_TYPE_00,
-	RES_TYPE_01,
-	RES_TYPE_02,
-	RES_TYPE_03,
-	RES_TYPE_04,
-	RES_TYPE_05,
-	RES_TYPE_06,
-	RES_TYPE_07,
-	RES_TYPE_08,
-	RES_TYPE_MINE,
-	RES_TYPE_FLAG,
-	RES_TYPE_BACK,
+	RES_TYPE_BLOCK_0,
+	RES_TYPE_BLOCK_1,
+	RES_TYPE_BLOCK_2,
+	RES_TYPE_BLOCK_3,
+	RES_TYPE_BLOCK_4,
+	RES_TYPE_BLOCK_5,
+	RES_TYPE_BLOCK_6,
+	RES_TYPE_BLOCK_7,
+	RES_TYPE_BLOCK_8,
+	RES_TYPE_BLOCK_MINE,
+	RES_TYPE_BLOCK_FLAG,
+	RES_TYPE_BLOCK_BACK,
+	RES_TYPE_BACKGROUND,
 	RES_TYPE_END
 };
 
@@ -29,11 +30,12 @@ private:
 	vector<string> resPath;
 private:
 	void InitResPath();
-	void InitBitMap(HDC hdc, HINSTANCE hInst);
+	void InitBitMap(HDC hdc);
 public:
-	void Init(HDC hdc, HINSTANCE hInst);
+	void Init(HDC hdc);
 	void Release();
 	BitMap* GetBitMap(int index);
+	SIZE GetBitMapSize(int index);
 public:
 	ResManager();
 	~ResManager();

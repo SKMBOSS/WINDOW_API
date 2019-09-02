@@ -13,36 +13,34 @@ enum GAME_STATE
 
 class ResManager;
 class Block;
+class BitMap;
 class MainGame
 {
 private:
 	static MainGame* m_sThis;
 	ResManager*		m_pResManager;
+	BitMap*			m_pBackGround;
 	vector<Block*>	m_vecBlock;
+	int				m_iVecHeight;
+	int				m_iVecWidth;
 	HWND			m_hWnd;
-	GAME_STATE		m_eState;
-	Block*			m_pSelectOne;
-	Block*			m_pSelectTwo;
-	DWORD			m_dwCount;
+	//GAME_STATE		m_eState;
+	Block*			m_pSelect;
 
-	MainGame();
 public:
-
-	static MainGame* GetInstance()
-	{
-		if (m_sThis == nullptr)
-			m_sThis = new MainGame();
-
-		return m_sThis;
-	}
-
-	void Init(HWND hWnd, HDC hdc, HINSTANCE hInst);
+	static MainGame* GetInstance();
+	void SetVecHeightAndWidth(int height, int width);
+	void SetVecBlock();
+	void DeleteVecBlock();
+public:
+	void Init(HWND hWnd, HDC hdc);
 	void Draw(HDC hdc);
 	void Update();
 	void Input(POINT pt);
-
 	void Release();
-
+private:
+	MainGame();
+public:
 	~MainGame();
 };
 
