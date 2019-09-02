@@ -18,7 +18,7 @@ class MainGame
 private:
 	static MainGame* m_sThis;
 	ResManager*		m_pResManager;
-	vector<Card*>	m_vecCard;
+	vector<Card*>	m_vecCard;// 덱으로 뺄 수 있지 않을까
 	HWND			m_hWnd;
 	GAME_STATE		m_eState;
 	Card*			m_pSelectOne;
@@ -40,7 +40,6 @@ public:
 	void Draw(HDC hdc);
 	void Update();
 	void Input(POINT pt);
-
 	void Release();
 
 	~MainGame();

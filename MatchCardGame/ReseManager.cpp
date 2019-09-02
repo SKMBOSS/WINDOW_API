@@ -31,6 +31,7 @@ void ResManager::Release()
 BitMap* ResManager::GetBitMap(int index)
 {
 	//배열 검사 하는게 올바름
+	//assert 연습해보자
 
 	return m_pBitMap[index];
 }
