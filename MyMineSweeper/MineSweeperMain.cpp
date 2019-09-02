@@ -56,7 +56,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 	{
 	case WM_CREATE:
 		hdc = GetDC(hWnd);
-		SetTimer(hWnd, 1, 10, NULL);
+		SetTimer(hWnd, 1, 100, NULL);
 		MainGame::GetInstance()->Init(hWnd, hdc);
 		ReleaseDC(hWnd, hdc);
 		return 0;

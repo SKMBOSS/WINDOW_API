@@ -12,6 +12,7 @@ MainGame::MainGame()
 	m_pSelect = nullptr;
 	m_pBackGround = nullptr;
 	SetVecHeightAndWidth(10, 10);
+	SetMineNum(10);
 	//m_eState = GAME_STATE_WAIT;
 }
 
@@ -25,38 +26,6 @@ MainGame* MainGame::GetInstance()
 		m_sThis = new MainGame();
 
 	return m_sThis;
-}
-
-void MainGame::SetVecHeightAndWidth(int height, int width)
-{
-	m_iVecHeight = height;
-	m_iVecWidth = width;
-}
-
-void MainGame::SetVecBlock()
-{
-	for (int i = 0; i < m_iVecHeight * m_iVecWidth; i++)
-	{
-		Block* pNew = new Block();
-		pNew->Init
-		(
-			m_pResManager->GetBitMap(RES_TYPE_BLOCK_0),
-			m_pResManager->GetBitMap(RES_TYPE_BLOCK_BACK),
-			(i % m_iVecWidth) * m_pResManager->GetBitMapSize(RES_TYPE_BLOCK_BACK).cx + 44,
-			(i / m_iVecHeight) * m_pResManager->GetBitMapSize(RES_TYPE_BLOCK_BACK).cy + 46
-		);
-
-		m_vecBlock.push_back(pNew);
-	}
-}
-
-void MainGame::DeleteVecBlock()
-{
-	for (auto iter = m_vecBlock.begin(); iter != m_vecBlock.end(); iter++)
-	{
-		SAFE_DELETE(*iter);
-	}
-	m_vecBlock.clear();
 }
 
 void MainGame::Init(HWND hWnd, HDC hdc)
@@ -105,7 +74,7 @@ void MainGame::Update()
 	//	m_eState = GAME_STATE_WAIT;
 	//	InvalidateRect(m_hWnd, NULL, true);
 	//}
-	InvalidateRect(m_hWnd, NULL, true);
+	//InvalidateRect(m_hWnd, NULL, true);
 }
 
 void MainGame::Input(POINT pt)
@@ -136,4 +105,43 @@ void MainGame::Release()
 	SAFE_RELEASE(m_pResManager);
 	SAFE_DELETE(m_pResManager);
 	SAFE_DELETE(m_sThis);
+}
+
+void MainGame::SetVecHeightAndWidth(int height, int width)
+{
+	m_iVecHeight = height;
+	m_iVecWidth = width;
+}
+
+void MainGame::SetVecBlock()
+{
+	for (int i = 0; i < m_iVecHeight; i++)
+	{
+		for (int j = 0; j < m_iVecWidth; j++)
+		{
+			Block* pNew = new Block();
+			pNew->Init
+			(
+				m_pResManager->GetBitMap(RES_TYPE_BLOCK_0),
+				m_pResManager->GetBitMap(RES_TYPE_BLOCK_BACK),
+				i * m_pResManager->GetBitMapSize(RES_TYPE_BLOCK_BACK).cx + 44,
+				j * m_pResManager->GetBitMapSize(RES_TYPE_BLOCK_BACK).cy + 46
+			);
+			m_vecBlock.push_back(pNew);
+		}
+	}
+}
+
+void MainGame::DeleteVecBlock()
+{
+	for (auto iter = m_vecBlock.begin(); iter != m_vecBlock.end(); iter++)
+	{
+		SAFE_DELETE(*iter);
+	}
+	m_vecBlock.clear();
+}
+
+void MainGame::SetMineNum(int num)
+{
+	m_iMineNum = num;
 }

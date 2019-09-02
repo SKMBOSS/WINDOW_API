@@ -22,11 +22,20 @@ GameManager* GameManager::GetInstance()
 void GameManager::SetGameMode(GAME_MODE eMode)
 {
 	if (eMode == GAME_MODE_EASY)
-		MainGame::GetInstance()->SetVecHeightAndWidth(10,10);
+	{
+		MainGame::GetInstance()->SetVecHeightAndWidth(10, 10);
+		MainGame::GetInstance()->SetMineNum(10);
+	}
 	else if (eMode == GAME_MODE_NOMAL)
-		MainGame::GetInstance()->SetVecHeightAndWidth(15,15);
+	{
+		MainGame::GetInstance()->SetVecHeightAndWidth(30, 16);
+		MainGame::GetInstance()->SetMineNum(30);
+	}
 	else if (eMode == GAME_MODE_HARD)
-		MainGame::GetInstance()->SetVecHeightAndWidth(20,20);
+	{
+		MainGame::GetInstance()->SetVecHeightAndWidth(30, 16);
+		MainGame::GetInstance()->SetMineNum(60);
+	}
 
 	MainGame::GetInstance()->DeleteVecBlock();
 	MainGame::GetInstance()->SetVecBlock();

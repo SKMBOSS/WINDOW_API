@@ -48,8 +48,14 @@ void MainGame::Init(HWND hWnd, HDC hdc, HINSTANCE hInst)
 	for (int i = 0; i < 20; i++)
 	{
 		Card* pNew = new Card();
-		pNew->Init(m_pResManager->GetBitMap(iArray[i]), m_pResManager->GetBitMap(RES_TYPE_BACK),
-			(i % 10) * CARD_WIDTH + 10 * (i % 10), (i / 10) * CARD_HEIGHT + 10 * (i / 10), iArray[i]);
+		pNew->Init
+		(
+			m_pResManager->GetBitMap(iArray[i]), 
+			m_pResManager->GetBitMap(RES_TYPE_BACK),
+			(i % 10) * CARD_WIDTH + 10 * (i % 10), 
+			(i / 10) * CARD_HEIGHT + 10 * (i / 10), 
+			iArray[i]
+		);
 
 		m_vecCard.push_back(pNew);
 	}

@@ -21,17 +21,20 @@ private:
 	ResManager*		m_pResManager;
 	BitMap*			m_pBackGround;
 	vector<Block*>	m_vecBlock;
+	Block*			m_pSelect;
 	int				m_iVecHeight;
 	int				m_iVecWidth;
+	int				m_iMineNum;
 	HWND			m_hWnd;
+	
 	//GAME_STATE		m_eState;
-	Block*			m_pSelect;
 
 public:
 	static MainGame* GetInstance();
 	void SetVecHeightAndWidth(int height, int width);
 	void SetVecBlock();
 	void DeleteVecBlock();
+	void SetMineNum(int num);
 public:
 	void Init(HWND hWnd, HDC hdc);
 	void Draw(HDC hdc);
