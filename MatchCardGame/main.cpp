@@ -1,5 +1,5 @@
 #include <Windows.h>
-#include "resource.h"
+#include "MainGame.h"
 
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
 HINSTANCE g_hInst;
@@ -47,45 +47,35 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 {
 	HDC hdc;
 	PAINTSTRUCT ps;
-
+	POINT pt;
 
 	switch (iMessage)
 	{
 	case WM_CREATE:
-		SetTimer(hWnd, 1, 100, NULL);
 		hdc = GetDC(hWnd);
-		hMemDC = CreateCompatibleDC(hdc); //메모리DC를 잡아주는역할
-		hBitMap = LoadBitmap(g_hInst, MAKEINTRESOURCE(IDB_BITMAP1));
-		hOLDBitMap = (HBITMAP)SelectObject(hMemDC, hBitMap);
+		SetTimer(hWnd, 1, 10, NULL);
+		MainGame::GetInstance()->Init(hWnd, hdc, g_hInst);
 		ReleaseDC(hWnd, hdc);
 		return 0;
 	case WM_TIMER:
-		InvalidateRect(hWnd, NULL, TRUE);
-		if (count % 4 == 0)
-			hBitMap = LoadBitmap(g_hInst, MAKEINTRESOURCE(IDB_BITMAP1));
-		else if (count % 4 == 1)
-			hBitMap = LoadBitmap(g_hInst, MAKEINTRESOURCE(IDB_BITMAP2));
-		else if (count % 4 == 2)
-			hBitMap = LoadBitmap(g_hInst, MAKEINTRESOURCE(IDB_BITMAP3));
-		else if (count % 4 == 3)
-			hBitMap = LoadBitmap(g_hInst, MAKEINTRESOURCE(IDB_BITMAP4));
-		count++;
-
+		MainGame::GetInstance()->Update();
 		return 0;
-
-	case WM_PAINT:
+	case WM_LBUTTONDOWN:
+		pt.x = LOWORD(lParam);
+		pt.y = HIWORD(lParam);
+		MainGame::GetInstance()->Input(pt);
+		return 0;
+	case  WM_PAINT:
 		hdc = BeginPaint(hWnd, &ps);
-		StretchBlt(hdc, 0, 0, 246, 320, hMemDC, 0, 0, 123, 160, SRCCOPY);
-		//BitBlt(hdc, 500, 500, 500, 500, hMemDC, 0, 0, SRCCOPY);
-		hOLDBitMap = (HBITMAP)SelectObject(hMemDC, hBitMap);
-		SelectObject(hdc, hOLDBitMap);
-		DeleteObject(hBitMap);
-
+		MainGame::GetInstance()->Draw(hdc);
 		EndPaint(hWnd, &ps);
 		return 0;
 	case WM_DESTROY:
+		KillTimer(hWnd, 1);
+		MainGame::GetInstance()->Release();
 		PostQuitMessage(0);
 		return 0;
 	}
+
 	return(DefWindowProc(hWnd, iMessage, wParam, lParam));
 }

@@ -139,16 +139,19 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="BitMap.cpp" />
     <ClCompile Include="Card.cpp" />
-    <ClCompile Include="Deck.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainGame.cpp" />
+    <ClCompile Include="ReseManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BitMap.h" />
     <ClInclude Include="Card.h" />
-    <ClInclude Include="Deck.h" />
+    <ClInclude Include="macro.h" />
     <ClInclude Include="MainGame.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="ResManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="MatchCardGame.rc" />
