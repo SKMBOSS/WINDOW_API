@@ -62,7 +62,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 		return 0;
 	case WM_TIMER:
 		//InvalidateRect(hWnd, NULL, TRUE);
-		MainGame::GetInstance()->Update(hWnd);
+		MainGame::GetInstance()->Update();
 		return 0;
 	case WM_LBUTTONDOWN:
 		pt.x = LOWORD(lParam);
@@ -80,6 +80,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 		case ID_FILE_SETTING:
 			DialogBox(g_hInst, MAKEINTRESOURCE(IDD_DIALOG1)
 				, hWnd, SettingDlg);
+			InvalidateRect(hWnd, NULL, true);
 			break;
 		}
 	case  WM_PAINT:

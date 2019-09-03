@@ -44,18 +44,19 @@ void MainGame::Init(HWND hWnd, HDC hdc)
 	SetBlockNumber();
 }
 
-void MainGame::Update(HWND hWnd)
+void MainGame::Update()
 {
 	if (m_eState == GAME_STATE_PLAY)
 	{
-
+		//InvalidateRect(hWnd, NULL, true);
 	}
 
 	else if (m_eState == GAME_STATE_LOSE)
 	{
 		m_eState = GAME_STATE_WAIT;
-		if (MessageBox(hWnd, "당신은 졌습니다", "YOU DIE", MB_OK))
+		if (MessageBox(m_hWnd, "당신은 졌습니다", "YOU DIE", MB_OK))
 		{
+			m_iFlagNum = m_iMineNum;
 			DeleteVecBlock();
 			SetVecBlock();
 			ShuffleMine();
@@ -109,13 +110,13 @@ void MainGame::RbInput(POINT pt)
 					if (m_pSelect->IsFlag())
 					{
 						m_pSelect->SetBlockBack(m_pResManager->GetBitMap(RES_TYPE_BLOCK_FLAG));
-						m_iMineNum--;
+						m_iFlagNum--;
 					}
 
 					else
 					{
 						m_pSelect->SetBlockBack(m_pResManager->GetBitMap(RES_TYPE_BLOCK_BACK));
-						m_iMineNum++;
+						m_iFlagNum++;
 					}
 					InvalidateRect(m_hWnd, NULL, true);
 				}
@@ -181,6 +182,7 @@ void MainGame::DeleteVecBlock()
 void MainGame::SetMineNum(int num)
 {
 	m_iMineNum = num;
+	m_iFlagNum = num;
 }
 
 void MainGame::ShuffleMine()
@@ -368,6 +370,6 @@ void MainGame::ClickBlockEmpty(int i, int j)
 void MainGame::DrawMineNum(HDC hdc)
 {
 	TCHAR szBuf[128];
-	wsprintf(szBuf, TEXT("%d"), m_iMineNum);
+	wsprintf(szBuf, TEXT("%d"), m_iFlagNum);
 	TextOut(hdc, 675, 480, szBuf, lstrlen(szBuf));
 }

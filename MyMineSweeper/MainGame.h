@@ -26,6 +26,7 @@ private:
 	int				m_iVecHeight;
 	int				m_iVecWidth;
 	int				m_iMineNum;
+	int				m_iFlagNum;
 	HWND			m_hWnd;
 	GAME_STATE		m_eState;
 
@@ -46,7 +47,7 @@ public:
 public:
 	void Init(HWND hWnd, HDC hdc);
 	void Draw(HDC hdc);
-	void Update(HWND hWnd);
+	void Update();
 	void LBInput(POINT pt);
 	void RbInput(POINT pt);
 	void Release();
