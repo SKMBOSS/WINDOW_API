@@ -10,6 +10,16 @@ Block::~Block()
 {
 }
 
+void Block::SetBlockFront(BitMap* pBitMap)
+{
+	m_pBitMap = pBitMap;
+}
+
+BitMap* Block::GetBlockFront()
+{
+	return m_pBitMap;
+}
+
 void Block::Init(BitMap* pBitMap, BitMap* pBackBitMap, int x, int y)
 {
 	m_pBitMap = pBitMap;

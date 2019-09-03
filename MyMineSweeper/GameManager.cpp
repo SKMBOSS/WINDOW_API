@@ -39,4 +39,6 @@ void GameManager::SetGameMode(GAME_MODE eMode)
 
 	MainGame::GetInstance()->DeleteVecBlock();
 	MainGame::GetInstance()->SetVecBlock();
+	MainGame::GetInstance()->ShuffleMine();
+	MainGame::GetInstance()->SetBlockNumber();
 }

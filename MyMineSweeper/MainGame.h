@@ -35,6 +35,9 @@ public:
 	void SetVecBlock();
 	void DeleteVecBlock();
 	void SetMineNum(int num);
+	void ShuffleMine();
+	void SetBlockNumber();
+	void ClickBlockEmpty(int i, int j);
 public:
 	void Init(HWND hWnd, HDC hdc);
 	void Draw(HDC hdc);

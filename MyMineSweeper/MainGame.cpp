@@ -3,16 +3,12 @@
 #include "ResManager.h"
 #include "Block.h"
 #include "BitMap.h"
+#include "MyUtility.h"
 
 MainGame* MainGame::m_sThis = nullptr;
 
 MainGame::MainGame()
 {
-	m_pResManager = nullptr;
-	m_pSelect = nullptr;
-	m_pBackGround = nullptr;
-	SetVecHeightAndWidth(10, 10);
-	SetMineNum(10);
 	//m_eState = GAME_STATE_WAIT;
 }
 
@@ -38,53 +34,127 @@ void MainGame::Init(HWND hWnd, HDC hdc)
 
 	m_pBackGround = m_pResManager->GetBitMap(RES_TYPE_BACKGROUND);
 
-	/*int iArray[20];
+	SetVecHeightAndWidth(10, 10);
+	SetMineNum(10);
 
-	for (int i = 0; i < 20; i++)
-		iArray[i] = i % 10;
-
-	for (int i = 0; i < 100; i++)
-	{
-		int randA = rand() % 20;
-		int randB = rand() % 20;
-
-		int iTemp = iArray[randA];
-		iArray[randA] = iArray[randB];
-		iArray[randB] = iTemp;
-	}*/
+	m_pSelect = nullptr;
 
 	SetVecBlock();
-
+	ShuffleMine();
+	SetBlockNumber();
 }
 
 void MainGame::Update()
 {
-	//if (m_eState != GAME_STATE_SHOW)
-	//	return;
-
-	//m_dwCount++;
-
-	//if (m_dwCount == 100)
-	//{
-	//	m_dwCount = 0;
-	//	m_pSelectOne->SetClose();
-	//	m_pSelectTwo->SetClose();
-	//	m_pSelectOne = nullptr;
-	//	m_pSelectTwo = nullptr;
-	//	m_eState = GAME_STATE_WAIT;
-	//	InvalidateRect(m_hWnd, NULL, true);
-	//}
 	//InvalidateRect(m_hWnd, NULL, true);
 }
 
 void MainGame::Input(POINT pt)
 {
-	for (auto iter = m_vecBlock.begin(); iter != m_vecBlock.end(); iter++)
+	for (int i = 0; i < m_iVecHeight; i++)
 	{
-		if ((*iter)->Input(pt))
+		for (int j = 0; j < m_iVecWidth; j++)
 		{
-			m_pSelect = *iter;
-			InvalidateRect(m_hWnd, NULL, true);
+			Block *targetBlock = m_vecBlock.at((m_iVecWidth * (i)) + (j));
+
+			if (targetBlock->Input(pt))
+			{
+				m_pSelect = targetBlock;
+
+				if (targetBlock->GetBlockFront() == m_pResManager->GetBitMap(RES_TYPE_BLOCK_0))
+				{
+					ClickBlockEmpty(i, j);
+				}
+				InvalidateRect(m_hWnd, NULL, true);
+			}
+		}
+	}
+}
+
+void MainGame::ClickBlockEmpty(int i, int j)
+{
+	//공통동작 : open
+
+
+	//종료조건 : 호출한곳이 빈곳이 아닐때
+	if (!IsOutOfRangeIndex(((m_iVecWidth * (i)) + (j)), m_vecBlock.size()))
+	{
+		if (m_vecBlock.at((m_iVecWidth * (i)) + (j))
+			->GetBlockFront() != m_pResManager->GetBitMap(RES_TYPE_BLOCK_0))
+		{
+			if (m_vecBlock.at((m_iVecWidth * (i)) + (j))
+				->GetBlockFront() != m_pResManager->GetBitMap(RES_TYPE_BLOCK_MINE))
+			{
+				//지뢰가 아니라면 오픈하고
+				m_vecBlock.at((m_iVecWidth * (i)) + (j))->SetOpen();
+			}
+			return;
+		}
+	}
+
+	//누른곳이 빈곳이면
+	if (m_vecBlock.at((m_iVecWidth * (i)) + (j))
+		->GetBlockFront() == m_pResManager->GetBitMap(RES_TYPE_BLOCK_0))
+	{
+		m_vecBlock.at((m_iVecWidth * (i)) + (j))->SetOpen();
+
+
+		//재귀 8방향
+		if (!IsOutOfRangeIndex(((m_iVecWidth * (i - 1)) + (j - 1)), m_vecBlock.size()))
+		{
+			if (!m_vecBlock.at((m_iVecWidth * (i - 1)) + (j - 1))->IsOpen())
+			{
+				ClickBlockEmpty(i - 1, j - 1);
+			}
+		}
+		if (!IsOutOfRangeIndex(((m_iVecWidth * (i - 1)) + (j)), m_vecBlock.size()))
+		{
+			if (!m_vecBlock.at((m_iVecWidth * (i - 1)) + (j))->IsOpen())
+			{
+				ClickBlockEmpty(i - 1, j - 1);
+			}
+		}
+		if (!IsOutOfRangeIndex(((m_iVecWidth * (i - 1)) + (j + 1)), m_vecBlock.size()))
+		{
+			if (!m_vecBlock.at((m_iVecWidth * (i - 1)) + (j + 1))->IsOpen())
+			{
+				ClickBlockEmpty(i - 1, j + 1);
+			}
+		}
+		if (!IsOutOfRangeIndex(((m_iVecWidth * (i)) + (j - 1)), m_vecBlock.size()))
+		{
+			if (!m_vecBlock.at((m_iVecWidth * (i)) + (j - 1))->IsOpen())
+			{
+				ClickBlockEmpty(i, j - 1);
+			}
+		}
+		if (!IsOutOfRangeIndex(((m_iVecWidth * (i)) + (j + 1)), m_vecBlock.size()))
+		{
+			if (!m_vecBlock.at((m_iVecWidth * (i)) + (j + 1))->IsOpen())
+			{
+				ClickBlockEmpty(i, j + 1);
+			}
+		}
+		if (!IsOutOfRangeIndex(((m_iVecWidth * (i + 1)) + (j - 1)), m_vecBlock.size()))
+		{
+			if (!m_vecBlock.at((m_iVecWidth * (i + 1)) + (j - 1))->IsOpen())
+			{
+				ClickBlockEmpty(i + 1, j - 1);
+			}
+		}
+		if (!IsOutOfRangeIndex(((m_iVecWidth * (i + 1)) + (j)), m_vecBlock.size()))
+		{
+			if (!m_vecBlock.at((m_iVecWidth * (i + 1)) + (j))->IsOpen())
+			{
+				ClickBlockEmpty(i + 1, j);
+			}
+		}
+		if (!IsOutOfRangeIndex(((m_iVecWidth * (i + 1)) + (j + 1)), m_vecBlock.size()))
+		{
+			if (m_vecBlock.at((m_iVecWidth * (i + 1)) + (j + 1))->IsOpen())
+			{
+				ClickBlockEmpty(i + 1, j + 1);
+			}
 		}
 	}
 }
@@ -122,7 +192,7 @@ void MainGame::SetVecBlock()
 			Block* pNew = new Block();
 			pNew->Init
 			(
-				m_pResManager->GetBitMap(RES_TYPE_BLOCK_0),
+				nullptr,
 				m_pResManager->GetBitMap(RES_TYPE_BLOCK_BACK),
 				i * m_pResManager->GetBitMapSize(RES_TYPE_BLOCK_BACK).cx + 44,
 				j * m_pResManager->GetBitMapSize(RES_TYPE_BLOCK_BACK).cy + 46
@@ -145,3 +215,110 @@ void MainGame::SetMineNum(int num)
 {
 	m_iMineNum = num;
 }
+
+void MainGame::ShuffleMine()
+{
+	int shuffleCount = m_iMineNum;
+	while (shuffleCount > 0)
+	{
+		int randomMinePos = rand() % (m_iVecWidth * m_iVecHeight);
+
+		if (m_vecBlock[randomMinePos]
+			->GetBlockFront() != m_pResManager->GetBitMap(RES_TYPE_BLOCK_MINE))
+		{
+			m_vecBlock[randomMinePos]
+				->SetBlockFront(m_pResManager->GetBitMap(RES_TYPE_BLOCK_MINE));
+
+			shuffleCount--;
+		}
+	}
+}
+
+void MainGame::SetBlockNumber()
+{
+	int number = 0;
+	for (int i = 0; i < m_iVecHeight; i++)
+	{
+		for (int j = 0; j < m_iVecWidth; j++)
+		{
+			if (!IsOutOfRangeIndex(((m_iVecWidth * (i)) + (j)), m_vecBlock.size()))
+			{
+				if (m_vecBlock.at((m_iVecWidth * (i)) + (j))
+					->GetBlockFront() == m_pResManager->GetBitMap(RES_TYPE_BLOCK_MINE))
+				{
+					continue;
+				}
+			}
+			if (!IsOutOfRangeIndex(((m_iVecWidth * (i - 1)) + (j - 1)), m_vecBlock.size()))
+			{
+				if (m_vecBlock.at((m_iVecWidth * (i - 1)) + (j - 1))
+					->GetBlockFront() == m_pResManager->GetBitMap(RES_TYPE_BLOCK_MINE))
+				{
+					number++;
+				}
+			}
+			if (!IsOutOfRangeIndex(((m_iVecWidth * (i - 1)) + (j)), m_vecBlock.size()))
+			{
+				if (m_vecBlock.at((m_iVecWidth * (i - 1)) + (j))
+					->GetBlockFront() == m_pResManager->GetBitMap(RES_TYPE_BLOCK_MINE))
+				{
+					number++;
+				}
+			}
+			if (!IsOutOfRangeIndex(((m_iVecWidth * (i - 1)) + (j + 1)), m_vecBlock.size()))
+			{
+				if (m_vecBlock.at((m_iVecWidth * (i - 1)) + (j + 1))
+					->GetBlockFront() == m_pResManager->GetBitMap(RES_TYPE_BLOCK_MINE))
+				{
+					number++;
+				}
+			}
+			if (!IsOutOfRangeIndex(((m_iVecWidth * (i)) + (j - 1)), m_vecBlock.size()))
+			{
+				if (m_vecBlock.at((m_iVecWidth * (i)) + (j - 1))
+					->GetBlockFront() == m_pResManager->GetBitMap(RES_TYPE_BLOCK_MINE))
+				{
+					number++;
+				}
+			}
+			if (!IsOutOfRangeIndex(((m_iVecWidth * (i)) + (j + 1)), m_vecBlock.size()))
+			{
+				if (m_vecBlock.at((m_iVecWidth * (i)) + (j + 1))
+					->GetBlockFront() == m_pResManager->GetBitMap(RES_TYPE_BLOCK_MINE))
+				{
+					number++;
+				}
+			}
+			if (!IsOutOfRangeIndex(((m_iVecWidth * (i + 1)) + (j - 1)), m_vecBlock.size()))
+			{
+				if (m_vecBlock.at((m_iVecWidth * (i + 1)) + (j - 1))
+					->GetBlockFront() == m_pResManager->GetBitMap(RES_TYPE_BLOCK_MINE))
+				{
+					number++;
+				}
+			}
+			if (!IsOutOfRangeIndex(((m_iVecWidth * (i + 1)) + (j)), m_vecBlock.size()))
+			{
+				if (m_vecBlock.at((m_iVecWidth * (i + 1)) + (j))
+					->GetBlockFront() == m_pResManager->GetBitMap(RES_TYPE_BLOCK_MINE))
+				{
+					number++;
+				}
+			}
+			if (!IsOutOfRangeIndex(((m_iVecWidth * (i + 1)) + (j + 1)), m_vecBlock.size()))
+			{
+				if (m_vecBlock.at((m_iVecWidth * (i + 1)) + (j + 1))
+					->GetBlockFront() == m_pResManager->GetBitMap(RES_TYPE_BLOCK_MINE))
+				{
+					number++;
+				}
+			}
+
+			m_vecBlock.at((m_iVecWidth * (i)) + (j))
+				->SetBlockFront(m_pResManager->GetBitMap(number));
+
+			number = 0;
+		}
+	}
+}
+

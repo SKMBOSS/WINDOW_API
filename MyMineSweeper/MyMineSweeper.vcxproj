@@ -146,6 +146,7 @@
     <ClInclude Include="MainGame.h" />
     <ClInclude Include="ResManager.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="MyUtility.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="MyMineSweeper.rc" />
