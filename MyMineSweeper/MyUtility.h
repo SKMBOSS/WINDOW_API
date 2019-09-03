@@ -1,10 +1,14 @@
 #pragma once
 
-bool IsOutOfRangeIndex(int index, int vecSize)
+bool IsOutOfRangeIndex(int x, int y, int maxX, int maxY)
 {
-	if (index < 0)
+	if (x < 0)
 		return true;
-	if (index >= vecSize)
+	if (y < 0)
+		return true;
+	if (x >= maxX)
+		return true;
+	if (y >= maxY)
 		return true;
 
 	return false;

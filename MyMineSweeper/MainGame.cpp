@@ -77,7 +77,7 @@ void MainGame::ClickBlockEmpty(int i, int j)
 
 
 	//종료조건 : 호출한곳이 빈곳이 아닐때
-	if (!IsOutOfRangeIndex(((m_iVecWidth * (i)) + (j)), m_vecBlock.size()))
+	if (!IsOutOfRangeIndex(j, i, m_iVecWidth, m_iVecHeight))
 	{
 		if (m_vecBlock.at((m_iVecWidth * (i)) + (j))
 			->GetBlockFront() != m_pResManager->GetBitMap(RES_TYPE_BLOCK_0))
@@ -100,56 +100,56 @@ void MainGame::ClickBlockEmpty(int i, int j)
 
 
 		//재귀 8방향
-		if (!IsOutOfRangeIndex(((m_iVecWidth * (i - 1)) + (j - 1)), m_vecBlock.size()))
+		if (!IsOutOfRangeIndex(j - 1, i - 1, m_iVecWidth, m_iVecHeight))
 		{
 			if (!m_vecBlock.at((m_iVecWidth * (i - 1)) + (j - 1))->IsOpen())
 			{
 				ClickBlockEmpty(i - 1, j - 1);
 			}
 		}
-		if (!IsOutOfRangeIndex(((m_iVecWidth * (i - 1)) + (j)), m_vecBlock.size()))
+		if (!IsOutOfRangeIndex(j, i -1, m_iVecWidth, m_iVecHeight))
 		{
 			if (!m_vecBlock.at((m_iVecWidth * (i - 1)) + (j))->IsOpen())
 			{
 				ClickBlockEmpty(i - 1, j - 1);
 			}
 		}
-		if (!IsOutOfRangeIndex(((m_iVecWidth * (i - 1)) + (j + 1)), m_vecBlock.size()))
+		if (!IsOutOfRangeIndex(j + 1, i - 1, m_iVecWidth, m_iVecHeight))
 		{
 			if (!m_vecBlock.at((m_iVecWidth * (i - 1)) + (j + 1))->IsOpen())
 			{
 				ClickBlockEmpty(i - 1, j + 1);
 			}
 		}
-		if (!IsOutOfRangeIndex(((m_iVecWidth * (i)) + (j - 1)), m_vecBlock.size()))
+		if (!IsOutOfRangeIndex(j - 1, i, m_iVecWidth, m_iVecHeight))
 		{
 			if (!m_vecBlock.at((m_iVecWidth * (i)) + (j - 1))->IsOpen())
 			{
 				ClickBlockEmpty(i, j - 1);
 			}
 		}
-		if (!IsOutOfRangeIndex(((m_iVecWidth * (i)) + (j + 1)), m_vecBlock.size()))
+		if (!IsOutOfRangeIndex(j + 1, i, m_iVecWidth, m_iVecHeight))
 		{
 			if (!m_vecBlock.at((m_iVecWidth * (i)) + (j + 1))->IsOpen())
 			{
 				ClickBlockEmpty(i, j + 1);
 			}
 		}
-		if (!IsOutOfRangeIndex(((m_iVecWidth * (i + 1)) + (j - 1)), m_vecBlock.size()))
+		if (!IsOutOfRangeIndex(j - 1, i + 1, m_iVecWidth, m_iVecHeight))
 		{
 			if (!m_vecBlock.at((m_iVecWidth * (i + 1)) + (j - 1))->IsOpen())
 			{
 				ClickBlockEmpty(i + 1, j - 1);
 			}
 		}
-		if (!IsOutOfRangeIndex(((m_iVecWidth * (i + 1)) + (j)), m_vecBlock.size()))
+		if (!IsOutOfRangeIndex(j, i + 1, m_iVecWidth, m_iVecHeight))
 		{
 			if (!m_vecBlock.at((m_iVecWidth * (i + 1)) + (j))->IsOpen())
 			{
 				ClickBlockEmpty(i + 1, j);
 			}
 		}
-		if (!IsOutOfRangeIndex(((m_iVecWidth * (i + 1)) + (j + 1)), m_vecBlock.size()))
+		if (!IsOutOfRangeIndex(j + 1, i + 1, m_iVecWidth, m_iVecHeight))
 		{
 			if (m_vecBlock.at((m_iVecWidth * (i + 1)) + (j + 1))->IsOpen())
 			{
@@ -241,7 +241,7 @@ void MainGame::SetBlockNumber()
 	{
 		for (int j = 0; j < m_iVecWidth; j++)
 		{
-			if (!IsOutOfRangeIndex(((m_iVecWidth * (i)) + (j)), m_vecBlock.size()))
+			if (!IsOutOfRangeIndex(j,i, m_iVecWidth, m_iVecHeight))
 			{
 				if (m_vecBlock.at((m_iVecWidth * (i)) + (j))
 					->GetBlockFront() == m_pResManager->GetBitMap(RES_TYPE_BLOCK_MINE))
@@ -249,7 +249,7 @@ void MainGame::SetBlockNumber()
 					continue;
 				}
 			}
-			if (!IsOutOfRangeIndex(((m_iVecWidth * (i - 1)) + (j - 1)), m_vecBlock.size()))
+			if (!IsOutOfRangeIndex(j - 1, i - 1, m_iVecWidth, m_iVecHeight))
 			{
 				if (m_vecBlock.at((m_iVecWidth * (i - 1)) + (j - 1))
 					->GetBlockFront() == m_pResManager->GetBitMap(RES_TYPE_BLOCK_MINE))
@@ -257,7 +257,7 @@ void MainGame::SetBlockNumber()
 					number++;
 				}
 			}
-			if (!IsOutOfRangeIndex(((m_iVecWidth * (i - 1)) + (j)), m_vecBlock.size()))
+			if (!IsOutOfRangeIndex(j, i - 1, m_iVecWidth, m_iVecHeight))
 			{
 				if (m_vecBlock.at((m_iVecWidth * (i - 1)) + (j))
 					->GetBlockFront() == m_pResManager->GetBitMap(RES_TYPE_BLOCK_MINE))
@@ -265,7 +265,7 @@ void MainGame::SetBlockNumber()
 					number++;
 				}
 			}
-			if (!IsOutOfRangeIndex(((m_iVecWidth * (i - 1)) + (j + 1)), m_vecBlock.size()))
+			if (!IsOutOfRangeIndex(j + 1, i -1, m_iVecWidth, m_iVecHeight))
 			{
 				if (m_vecBlock.at((m_iVecWidth * (i - 1)) + (j + 1))
 					->GetBlockFront() == m_pResManager->GetBitMap(RES_TYPE_BLOCK_MINE))
@@ -273,7 +273,7 @@ void MainGame::SetBlockNumber()
 					number++;
 				}
 			}
-			if (!IsOutOfRangeIndex(((m_iVecWidth * (i)) + (j - 1)), m_vecBlock.size()))
+			if (!IsOutOfRangeIndex(j - 1, i, m_iVecWidth, m_iVecHeight))
 			{
 				if (m_vecBlock.at((m_iVecWidth * (i)) + (j - 1))
 					->GetBlockFront() == m_pResManager->GetBitMap(RES_TYPE_BLOCK_MINE))
@@ -281,7 +281,7 @@ void MainGame::SetBlockNumber()
 					number++;
 				}
 			}
-			if (!IsOutOfRangeIndex(((m_iVecWidth * (i)) + (j + 1)), m_vecBlock.size()))
+			if (!IsOutOfRangeIndex(j + 1, i, m_iVecWidth, m_iVecHeight))
 			{
 				if (m_vecBlock.at((m_iVecWidth * (i)) + (j + 1))
 					->GetBlockFront() == m_pResManager->GetBitMap(RES_TYPE_BLOCK_MINE))
@@ -289,7 +289,7 @@ void MainGame::SetBlockNumber()
 					number++;
 				}
 			}
-			if (!IsOutOfRangeIndex(((m_iVecWidth * (i + 1)) + (j - 1)), m_vecBlock.size()))
+			if (!IsOutOfRangeIndex(j - 1, i+ 1, m_iVecWidth, m_iVecHeight))
 			{
 				if (m_vecBlock.at((m_iVecWidth * (i + 1)) + (j - 1))
 					->GetBlockFront() == m_pResManager->GetBitMap(RES_TYPE_BLOCK_MINE))
@@ -297,7 +297,7 @@ void MainGame::SetBlockNumber()
 					number++;
 				}
 			}
-			if (!IsOutOfRangeIndex(((m_iVecWidth * (i + 1)) + (j)), m_vecBlock.size()))
+			if (!IsOutOfRangeIndex(j, i + 1, m_iVecWidth, m_iVecHeight))
 			{
 				if (m_vecBlock.at((m_iVecWidth * (i + 1)) + (j))
 					->GetBlockFront() == m_pResManager->GetBitMap(RES_TYPE_BLOCK_MINE))
@@ -305,7 +305,7 @@ void MainGame::SetBlockNumber()
 					number++;
 				}
 			}
-			if (!IsOutOfRangeIndex(((m_iVecWidth * (i + 1)) + (j + 1)), m_vecBlock.size()))
+			if (!IsOutOfRangeIndex(j + 1, i + 1, m_iVecWidth, m_iVecHeight))
 			{
 				if (m_vecBlock.at((m_iVecWidth * (i + 1)) + (j + 1))
 					->GetBlockFront() == m_pResManager->GetBitMap(RES_TYPE_BLOCK_MINE))
