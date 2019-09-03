@@ -73,88 +73,76 @@ void MainGame::Input(POINT pt)
 
 void MainGame::ClickBlockEmpty(int i, int j)
 {
-	//공통동작 : open
+	if (m_vecBlock.at((m_iVecWidth * (i)) + (j))
+		->GetBlockFront() != m_pResManager->GetBitMap(RES_TYPE_BLOCK_MINE))
+	{//지뢰가 아니라면 오픈하고
+		m_vecBlock.at((m_iVecWidth * (i)) + (j))->SetOpen();
 
-
-	//종료조건 : 호출한곳이 빈곳이 아닐때
-	if (!IsOutOfRangeIndex(j, i, m_iVecWidth, m_iVecHeight))
-	{
-		if (m_vecBlock.at((m_iVecWidth * (i)) + (j))
-			->GetBlockFront() != m_pResManager->GetBitMap(RES_TYPE_BLOCK_0))
+		for (int numberBlockIndex = 1; numberBlockIndex <= 8; numberBlockIndex++)
 		{
 			if (m_vecBlock.at((m_iVecWidth * (i)) + (j))
-				->GetBlockFront() != m_pResManager->GetBitMap(RES_TYPE_BLOCK_MINE))
-			{
-				//지뢰가 아니라면 오픈하고
-				m_vecBlock.at((m_iVecWidth * (i)) + (j))->SetOpen();
+				->GetBlockFront() == m_pResManager->GetBitMap(numberBlockIndex))
+			{//종료조건 : 호출한곳이 1~8일때
+				return;
 			}
-			return;
 		}
 	}
 
-	//누른곳이 빈곳이면
-	if (m_vecBlock.at((m_iVecWidth * (i)) + (j))
-		->GetBlockFront() == m_pResManager->GetBitMap(RES_TYPE_BLOCK_0))
+	//재귀 8방향
+	if (!IsOutOfRangeIndex(j - 1, i - 1, m_iVecWidth, m_iVecHeight))
 	{
-		m_vecBlock.at((m_iVecWidth * (i)) + (j))->SetOpen();
-
-
-		//재귀 8방향
-		if (!IsOutOfRangeIndex(j - 1, i - 1, m_iVecWidth, m_iVecHeight))
+		if (!m_vecBlock.at((m_iVecWidth * (i - 1)) + (j - 1))->IsOpen())
 		{
-			if (!m_vecBlock.at((m_iVecWidth * (i - 1)) + (j - 1))->IsOpen())
-			{
-				ClickBlockEmpty(i - 1, j - 1);
-			}
+			ClickBlockEmpty(i - 1, j - 1);
 		}
-		if (!IsOutOfRangeIndex(j, i -1, m_iVecWidth, m_iVecHeight))
+	}
+	if (!IsOutOfRangeIndex(j, i - 1, m_iVecWidth, m_iVecHeight))
+	{
+		if (!m_vecBlock.at((m_iVecWidth * (i - 1)) + (j))->IsOpen())
 		{
-			if (!m_vecBlock.at((m_iVecWidth * (i - 1)) + (j))->IsOpen())
-			{
-				ClickBlockEmpty(i - 1, j - 1);
-			}
+			ClickBlockEmpty(i - 1, j);
 		}
-		if (!IsOutOfRangeIndex(j + 1, i - 1, m_iVecWidth, m_iVecHeight))
+	}
+	if (!IsOutOfRangeIndex(j + 1, i - 1, m_iVecWidth, m_iVecHeight))
+	{
+		if (!m_vecBlock.at((m_iVecWidth * (i - 1)) + (j + 1))->IsOpen())
 		{
-			if (!m_vecBlock.at((m_iVecWidth * (i - 1)) + (j + 1))->IsOpen())
-			{
-				ClickBlockEmpty(i - 1, j + 1);
-			}
+			ClickBlockEmpty(i - 1, j + 1);
 		}
-		if (!IsOutOfRangeIndex(j - 1, i, m_iVecWidth, m_iVecHeight))
+	}
+	if (!IsOutOfRangeIndex(j - 1, i, m_iVecWidth, m_iVecHeight))
+	{
+		if (!m_vecBlock.at((m_iVecWidth * (i)) + (j - 1))->IsOpen())
 		{
-			if (!m_vecBlock.at((m_iVecWidth * (i)) + (j - 1))->IsOpen())
-			{
-				ClickBlockEmpty(i, j - 1);
-			}
+			ClickBlockEmpty(i, j - 1);
 		}
-		if (!IsOutOfRangeIndex(j + 1, i, m_iVecWidth, m_iVecHeight))
+	}
+	if (!IsOutOfRangeIndex(j + 1, i, m_iVecWidth, m_iVecHeight))
+	{
+		if (!m_vecBlock.at((m_iVecWidth * (i)) + (j + 1))->IsOpen())
 		{
-			if (!m_vecBlock.at((m_iVecWidth * (i)) + (j + 1))->IsOpen())
-			{
-				ClickBlockEmpty(i, j + 1);
-			}
+			ClickBlockEmpty(i, j + 1);
 		}
-		if (!IsOutOfRangeIndex(j - 1, i + 1, m_iVecWidth, m_iVecHeight))
+	}
+	if (!IsOutOfRangeIndex(j - 1, i + 1, m_iVecWidth, m_iVecHeight))
+	{
+		if (!m_vecBlock.at((m_iVecWidth * (i + 1)) + (j - 1))->IsOpen())
 		{
-			if (!m_vecBlock.at((m_iVecWidth * (i + 1)) + (j - 1))->IsOpen())
-			{
-				ClickBlockEmpty(i + 1, j - 1);
-			}
+			ClickBlockEmpty(i + 1, j - 1);
 		}
-		if (!IsOutOfRangeIndex(j, i + 1, m_iVecWidth, m_iVecHeight))
+	}
+	if (!IsOutOfRangeIndex(j, i + 1, m_iVecWidth, m_iVecHeight))
+	{
+		if (!m_vecBlock.at((m_iVecWidth * (i + 1)) + (j))->IsOpen())
 		{
-			if (!m_vecBlock.at((m_iVecWidth * (i + 1)) + (j))->IsOpen())
-			{
-				ClickBlockEmpty(i + 1, j);
-			}
+			ClickBlockEmpty(i + 1, j);
 		}
-		if (!IsOutOfRangeIndex(j + 1, i + 1, m_iVecWidth, m_iVecHeight))
+	}
+	if (!IsOutOfRangeIndex(j + 1, i + 1, m_iVecWidth, m_iVecHeight))
+	{
+		if (!m_vecBlock.at((m_iVecWidth * (i + 1)) + (j + 1))->IsOpen())
 		{
-			if (m_vecBlock.at((m_iVecWidth * (i + 1)) + (j + 1))->IsOpen())
-			{
-				ClickBlockEmpty(i + 1, j + 1);
-			}
+			ClickBlockEmpty(i + 1, j + 1);
 		}
 	}
 }
@@ -241,7 +229,7 @@ void MainGame::SetBlockNumber()
 	{
 		for (int j = 0; j < m_iVecWidth; j++)
 		{
-			if (!IsOutOfRangeIndex(j,i, m_iVecWidth, m_iVecHeight))
+			if (!IsOutOfRangeIndex(j, i, m_iVecWidth, m_iVecHeight))
 			{
 				if (m_vecBlock.at((m_iVecWidth * (i)) + (j))
 					->GetBlockFront() == m_pResManager->GetBitMap(RES_TYPE_BLOCK_MINE))
@@ -265,7 +253,7 @@ void MainGame::SetBlockNumber()
 					number++;
 				}
 			}
-			if (!IsOutOfRangeIndex(j + 1, i -1, m_iVecWidth, m_iVecHeight))
+			if (!IsOutOfRangeIndex(j + 1, i - 1, m_iVecWidth, m_iVecHeight))
 			{
 				if (m_vecBlock.at((m_iVecWidth * (i - 1)) + (j + 1))
 					->GetBlockFront() == m_pResManager->GetBitMap(RES_TYPE_BLOCK_MINE))
@@ -289,7 +277,7 @@ void MainGame::SetBlockNumber()
 					number++;
 				}
 			}
-			if (!IsOutOfRangeIndex(j - 1, i+ 1, m_iVecWidth, m_iVecHeight))
+			if (!IsOutOfRangeIndex(j - 1, i + 1, m_iVecWidth, m_iVecHeight))
 			{
 				if (m_vecBlock.at((m_iVecWidth * (i + 1)) + (j - 1))
 					->GetBlockFront() == m_pResManager->GetBitMap(RES_TYPE_BLOCK_MINE))
