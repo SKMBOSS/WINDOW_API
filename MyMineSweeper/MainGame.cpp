@@ -9,7 +9,6 @@ MainGame* MainGame::m_sThis = nullptr;
 
 MainGame::MainGame()
 {
-	//m_eState = GAME_STATE_WAIT;
 }
 
 MainGame::~MainGame()
@@ -32,117 +31,95 @@ void MainGame::Init(HWND hWnd, HDC hdc)
 	m_pResManager = new ResManager();
 	m_pResManager->Init(hdc);
 
+	m_pSelect = nullptr;
+
 	m_pBackGround = m_pResManager->GetBitMap(RES_TYPE_BACKGROUND);
 
 	SetVecHeightAndWidth(10, 10);
 	SetMineNum(10);
 
-	m_pSelect = nullptr;
-
+	m_eState = GAME_STATE_PLAY;
 	SetVecBlock();
 	ShuffleMine();
 	SetBlockNumber();
 }
 
-void MainGame::Update()
+void MainGame::Update(HWND hWnd)
 {
-	//InvalidateRect(m_hWnd, NULL, true);
+	if (m_eState == GAME_STATE_PLAY)
+	{
+
+	}
+
+	else if (m_eState == GAME_STATE_LOSE)
+	{
+		m_eState = GAME_STATE_WAIT;
+		if (MessageBox(hWnd, "당신은 졌습니다", "YOU DIE", MB_OK))
+		{
+			DeleteVecBlock();
+			SetVecBlock();
+			ShuffleMine();
+			SetBlockNumber();
+			m_eState = GAME_STATE_PLAY;
+			InvalidateRect(m_hWnd, NULL, true);
+		}
+	}
 }
 
-void MainGame::Input(POINT pt)
+void MainGame::LBInput(POINT pt)
 {
-	for (int i = 0; i < m_iVecHeight; i++)
+	if (m_eState == GAME_STATE_PLAY)
 	{
-		for (int j = 0; j < m_iVecWidth; j++)
+		for (int i = 0; i < m_iVecHeight; i++)
 		{
-			Block *targetBlock = m_vecBlock.at((m_iVecWidth * (i)) + (j));
-
-			if (targetBlock->Input(pt))
+			for (int j = 0; j < m_iVecWidth; j++)
 			{
-				m_pSelect = targetBlock;
+				m_pSelect = m_vecBlock.at((m_iVecWidth * (i)) + (j));
 
-				if (targetBlock->GetBlockFront() == m_pResManager->GetBitMap(RES_TYPE_BLOCK_0))
+				if (m_pSelect->LBInput(pt))
 				{
-					ClickBlockEmpty(i, j);
+					if (m_pSelect->GetBlockFront() == m_pResManager->GetBitMap(RES_TYPE_BLOCK_0))
+					{
+						ClickBlockEmpty(i, j);
+					}
+
+					else if (m_pSelect->GetBlockFront() == m_pResManager->GetBitMap(RES_TYPE_BLOCK_MINE))
+					{
+						m_eState = GAME_STATE_LOSE;
+					}
+					InvalidateRect(m_hWnd, NULL, true);
 				}
-				InvalidateRect(m_hWnd, NULL, true);
 			}
 		}
 	}
 }
 
-void MainGame::ClickBlockEmpty(int i, int j)
+void MainGame::RbInput(POINT pt)
 {
-	if (m_vecBlock.at((m_iVecWidth * (i)) + (j))
-		->GetBlockFront() != m_pResManager->GetBitMap(RES_TYPE_BLOCK_MINE))
-	{//지뢰가 아니라면 오픈하고
-		m_vecBlock.at((m_iVecWidth * (i)) + (j))->SetOpen();
-
-		for (int numberBlockIndex = 1; numberBlockIndex <= 8; numberBlockIndex++)
+	if (m_eState == GAME_STATE_PLAY)
+	{
+		for (int i = 0; i < m_iVecHeight; i++)
 		{
-			if (m_vecBlock.at((m_iVecWidth * (i)) + (j))
-				->GetBlockFront() == m_pResManager->GetBitMap(numberBlockIndex))
-			{//종료조건 : 호출한곳이 1~8일때
-				return;
+			for (int j = 0; j < m_iVecWidth; j++)
+			{
+				m_pSelect = m_vecBlock.at((m_iVecWidth * (i)) + (j));
+
+				if (m_pSelect->RbInput(pt))
+				{
+					if (m_pSelect->IsFlag())
+					{
+						m_pSelect->SetBlockBack(m_pResManager->GetBitMap(RES_TYPE_BLOCK_FLAG));
+						m_iMineNum--;
+					}
+
+					else
+					{
+						m_pSelect->SetBlockBack(m_pResManager->GetBitMap(RES_TYPE_BLOCK_BACK));
+						m_iMineNum++;
+					}
+					InvalidateRect(m_hWnd, NULL, true);
+				}
 			}
-		}
-	}
-
-	//재귀 8방향
-	if (!IsOutOfRangeIndex(j - 1, i - 1, m_iVecWidth, m_iVecHeight))
-	{
-		if (!m_vecBlock.at((m_iVecWidth * (i - 1)) + (j - 1))->IsOpen())
-		{
-			ClickBlockEmpty(i - 1, j - 1);
-		}
-	}
-	if (!IsOutOfRangeIndex(j, i - 1, m_iVecWidth, m_iVecHeight))
-	{
-		if (!m_vecBlock.at((m_iVecWidth * (i - 1)) + (j))->IsOpen())
-		{
-			ClickBlockEmpty(i - 1, j);
-		}
-	}
-	if (!IsOutOfRangeIndex(j + 1, i - 1, m_iVecWidth, m_iVecHeight))
-	{
-		if (!m_vecBlock.at((m_iVecWidth * (i - 1)) + (j + 1))->IsOpen())
-		{
-			ClickBlockEmpty(i - 1, j + 1);
-		}
-	}
-	if (!IsOutOfRangeIndex(j - 1, i, m_iVecWidth, m_iVecHeight))
-	{
-		if (!m_vecBlock.at((m_iVecWidth * (i)) + (j - 1))->IsOpen())
-		{
-			ClickBlockEmpty(i, j - 1);
-		}
-	}
-	if (!IsOutOfRangeIndex(j + 1, i, m_iVecWidth, m_iVecHeight))
-	{
-		if (!m_vecBlock.at((m_iVecWidth * (i)) + (j + 1))->IsOpen())
-		{
-			ClickBlockEmpty(i, j + 1);
-		}
-	}
-	if (!IsOutOfRangeIndex(j - 1, i + 1, m_iVecWidth, m_iVecHeight))
-	{
-		if (!m_vecBlock.at((m_iVecWidth * (i + 1)) + (j - 1))->IsOpen())
-		{
-			ClickBlockEmpty(i + 1, j - 1);
-		}
-	}
-	if (!IsOutOfRangeIndex(j, i + 1, m_iVecWidth, m_iVecHeight))
-	{
-		if (!m_vecBlock.at((m_iVecWidth * (i + 1)) + (j))->IsOpen())
-		{
-			ClickBlockEmpty(i + 1, j);
-		}
-	}
-	if (!IsOutOfRangeIndex(j + 1, i + 1, m_iVecWidth, m_iVecHeight))
-	{
-		if (!m_vecBlock.at((m_iVecWidth * (i + 1)) + (j + 1))->IsOpen())
-		{
-			ClickBlockEmpty(i + 1, j + 1);
 		}
 	}
 }
@@ -155,6 +132,8 @@ void MainGame::Draw(HDC hdc)
 	{
 		(*iter)->Draw(hdc);
 	}
+
+	DrawMineNum(hdc);
 }
 
 void MainGame::Release()
@@ -310,3 +289,85 @@ void MainGame::SetBlockNumber()
 	}
 }
 
+void MainGame::ClickBlockEmpty(int i, int j)
+{
+	if (m_vecBlock.at((m_iVecWidth * (i)) + (j))
+		->GetBlockFront() != m_pResManager->GetBitMap(RES_TYPE_BLOCK_MINE))
+	{//지뢰가 아니라면 오픈하고
+		m_vecBlock.at((m_iVecWidth * (i)) + (j))->SetOpen();
+
+		for (int numberBlockIndex = 1; numberBlockIndex <= 8; numberBlockIndex++)
+		{
+			if (m_vecBlock.at((m_iVecWidth * (i)) + (j))
+				->GetBlockFront() == m_pResManager->GetBitMap(numberBlockIndex))
+			{//종료조건 : 호출한곳이 1~8일때
+				return;
+			}
+		}
+	}
+
+	//재귀 8방향
+	if (!IsOutOfRangeIndex(j - 1, i - 1, m_iVecWidth, m_iVecHeight))
+	{
+		if (!m_vecBlock.at((m_iVecWidth * (i - 1)) + (j - 1))->IsOpen())
+		{
+			ClickBlockEmpty(i - 1, j - 1);
+		}
+	}
+	if (!IsOutOfRangeIndex(j, i - 1, m_iVecWidth, m_iVecHeight))
+	{
+		if (!m_vecBlock.at((m_iVecWidth * (i - 1)) + (j))->IsOpen())
+		{
+			ClickBlockEmpty(i - 1, j);
+		}
+	}
+	if (!IsOutOfRangeIndex(j + 1, i - 1, m_iVecWidth, m_iVecHeight))
+	{
+		if (!m_vecBlock.at((m_iVecWidth * (i - 1)) + (j + 1))->IsOpen())
+		{
+			ClickBlockEmpty(i - 1, j + 1);
+		}
+	}
+	if (!IsOutOfRangeIndex(j - 1, i, m_iVecWidth, m_iVecHeight))
+	{
+		if (!m_vecBlock.at((m_iVecWidth * (i)) + (j - 1))->IsOpen())
+		{
+			ClickBlockEmpty(i, j - 1);
+		}
+	}
+	if (!IsOutOfRangeIndex(j + 1, i, m_iVecWidth, m_iVecHeight))
+	{
+		if (!m_vecBlock.at((m_iVecWidth * (i)) + (j + 1))->IsOpen())
+		{
+			ClickBlockEmpty(i, j + 1);
+		}
+	}
+	if (!IsOutOfRangeIndex(j - 1, i + 1, m_iVecWidth, m_iVecHeight))
+	{
+		if (!m_vecBlock.at((m_iVecWidth * (i + 1)) + (j - 1))->IsOpen())
+		{
+			ClickBlockEmpty(i + 1, j - 1);
+		}
+	}
+	if (!IsOutOfRangeIndex(j, i + 1, m_iVecWidth, m_iVecHeight))
+	{
+		if (!m_vecBlock.at((m_iVecWidth * (i + 1)) + (j))->IsOpen())
+		{
+			ClickBlockEmpty(i + 1, j);
+		}
+	}
+	if (!IsOutOfRangeIndex(j + 1, i + 1, m_iVecWidth, m_iVecHeight))
+	{
+		if (!m_vecBlock.at((m_iVecWidth * (i + 1)) + (j + 1))->IsOpen())
+		{
+			ClickBlockEmpty(i + 1, j + 1);
+		}
+	}
+}
+
+void MainGame::DrawMineNum(HDC hdc)
+{
+	TCHAR szBuf[128];
+	wsprintf(szBuf, TEXT("%d"), m_iMineNum);
+	TextOut(hdc, 675, 480, szBuf, lstrlen(szBuf));
+}

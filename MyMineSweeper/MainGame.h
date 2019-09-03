@@ -6,9 +6,10 @@ using namespace std;
 
 enum GAME_STATE
 {
-	GAME_STATE_WAIT,
-	GAME_STATE_ONE,
-	GAME_STATE_SHOW
+	GAME_STATE_PLAY,
+	GAME_STATE_LOSE,
+	GAME_STATE_WIN,
+	GAME_STATE_WAIT
 };
 
 class ResManager;
@@ -26,8 +27,7 @@ private:
 	int				m_iVecWidth;
 	int				m_iMineNum;
 	HWND			m_hWnd;
-	
-	//GAME_STATE		m_eState;
+	GAME_STATE		m_eState;
 
 public:
 	static MainGame* GetInstance();
@@ -38,11 +38,17 @@ public:
 	void ShuffleMine();
 	void SetBlockNumber();
 	void ClickBlockEmpty(int i, int j);
+	void DrawMineNum(HDC hdc);
+	inline void SetGameStatePlay()
+	{
+		m_eState = GAME_STATE_PLAY;
+	}
 public:
 	void Init(HWND hWnd, HDC hdc);
 	void Draw(HDC hdc);
-	void Update();
-	void Input(POINT pt);
+	void Update(HWND hWnd);
+	void LBInput(POINT pt);
+	void RbInput(POINT pt);
 	void Release();
 private:
 	MainGame();

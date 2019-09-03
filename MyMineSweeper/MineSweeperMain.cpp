@@ -61,13 +61,18 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 		ReleaseDC(hWnd, hdc);
 		return 0;
 	case WM_TIMER:
-		InvalidateRect(hWnd, NULL, TRUE);
-		//MainGame::GetInstance()->Update();
+		//InvalidateRect(hWnd, NULL, TRUE);
+		MainGame::GetInstance()->Update(hWnd);
 		return 0;
 	case WM_LBUTTONDOWN:
 		pt.x = LOWORD(lParam);
 		pt.y = HIWORD(lParam);
-		MainGame::GetInstance()->Input(pt);
+		MainGame::GetInstance()->LBInput(pt);
+		return 0;
+	case WM_RBUTTONDOWN:
+		pt.x = LOWORD(lParam);
+		pt.y = HIWORD(lParam);
+		MainGame::GetInstance()->RbInput(pt);
 		return 0;
 	case WM_COMMAND: //메뉴바만
 		switch (LOWORD(wParam))
