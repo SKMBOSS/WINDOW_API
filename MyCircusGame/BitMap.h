@@ -17,7 +17,6 @@ public:
 	}
 public:
 	void Init(HDC hdc, string path);
-	void TransDraw(HDC hdc, int x, int y);
 	void Draw(HDC hdc, int x, int y);
 
 	void Release();

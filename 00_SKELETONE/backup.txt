@@ -48,7 +48,11 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmd
 HDC g_MemDc;
 HBITMAP g_hBitMap;
 HBITMAP g_hOld;
-
+int x = 50;
+int y = 50;
+BitMap* back = new BitMap;
+BitMap* back2 = new BitMap;
+BitMap* player = new BitMap;
 LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 {
 	HDC hdc;
@@ -57,29 +61,52 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 	switch (iMessage)
 	{
 	case WM_CREATE:
-		hdc = GetDC(hWnd);
 		SetTimer(hWnd, 1, 10, NULL);
-		/****************더블버퍼********************/
+		hdc = GetDC(hWnd);
 		g_MemDc = CreateCompatibleDC(hdc);
 		g_hBitMap = CreateCompatibleBitmap(hdc, 512, 450);
 		g_hOld = (HBITMAP)SelectObject(g_MemDc, g_hBitMap);
-		/****************************************************/
-		CircusGame::GetInstance()->Init(hWnd, g_MemDc);
+
+		back->Init(g_MemDc, "Resource\\Circus\\back.bmp");
+		back2->Init(g_MemDc, "Resource\\Circus\\back.bmp");
+		player->Init(g_MemDc, "Resource\\Circus\\win.bmp");
+
 		ReleaseDC(hWnd, hdc);
 		return 0;
 	case WM_TIMER:
-		CircusGame::GetInstance()->Update();
+		InvalidateRect(hWnd, NULL, FALSE);
 		return 0;
 	case WM_KEYDOWN:
-		CircusGame::GetInstance()->Input(wParam);
+		switch (wParam)
+		{
+		case VK_LEFT:
+			x -= 8;
+			break;
+		case VK_RIGHT:
+			x += 8;
+			break;
+		case VK_UP:
+			y -= 8;
+			break;
+		case VK_DOWN:
+			y += 8;
+			break;
+		}
 	case  WM_PAINT:
 		hdc = BeginPaint(hWnd, &ps);
-		CircusGame::GetInstance()->Draw(g_MemDc);
+		
+		back->TransDraw(g_MemDc, 0, 0);
+		back2->TransDraw(g_MemDc, 0, 180);
+		player->TransDraw(g_MemDc, x, y);
+
 		BitBlt(hdc, 0, 0, 512, 450, g_MemDc, 0, 0, SRCCOPY);
 		EndPaint(hWnd, &ps);
 		return 0;
 	case WM_DESTROY:
-		KillTimer(hWnd, 1);
+		delete player;
+		delete back;
+		delete back2;
+		//KillTimer(hWnd, 1);
 		PostQuitMessage(0);
 		return 0;
 	}

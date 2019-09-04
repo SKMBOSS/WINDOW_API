@@ -142,18 +142,18 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="BitMap.cpp" />
+    <ClCompile Include="CircusGame.cpp" />
     <ClCompile Include="CircusGameMain.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Stage01.cpp" />
-    <ClCompile Include="Title.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BitMap.h" />
+    <ClInclude Include="CircusGame.h" />
     <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Stage01.h" />
-    <ClInclude Include="Title.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
