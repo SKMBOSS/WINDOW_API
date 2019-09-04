@@ -48,13 +48,28 @@ void MainGame::Update()
 {
 	if (m_eState == GAME_STATE_PLAY)
 	{
-		//InvalidateRect(hWnd, NULL, true);
+		if(IsWin())
+			m_eState = GAME_STATE_WIN;
 	}
 
 	else if (m_eState == GAME_STATE_LOSE)
 	{
 		m_eState = GAME_STATE_WAIT;
 		if (MessageBox(m_hWnd, "당신은 졌습니다", "YOU DIE", MB_OK))
+		{
+			m_iFlagNum = m_iMineNum;
+			DeleteVecBlock();
+			SetVecBlock();
+			ShuffleMine();
+			SetBlockNumber();
+			m_eState = GAME_STATE_PLAY;
+			InvalidateRect(m_hWnd, NULL, true);
+		}
+	}
+	else if (m_eState == GAME_STATE_WIN)
+	{
+		m_eState = GAME_STATE_WAIT;
+		if (MessageBox(m_hWnd, "축하합니다!", "YOU WIN", MB_OK))
 		{
 			m_iFlagNum = m_iMineNum;
 			DeleteVecBlock();
@@ -83,9 +98,10 @@ void MainGame::LBInput(POINT pt)
 					{
 						ClickBlockEmpty(i, j);
 					}
-
 					else if (m_pSelect->GetBlockFront() == m_pResManager->GetBitMap(RES_TYPE_BLOCK_MINE))
 					{
+						AllOpen();
+						InvalidateRect(m_hWnd, NULL, true);
 						m_eState = GAME_STATE_LOSE;
 					}
 					InvalidateRect(m_hWnd, NULL, true);
@@ -297,6 +313,12 @@ void MainGame::ClickBlockEmpty(int i, int j)
 		->GetBlockFront() != m_pResManager->GetBitMap(RES_TYPE_BLOCK_MINE))
 	{//지뢰가 아니라면 오픈하고
 		m_vecBlock.at((m_iVecWidth * (i)) + (j))->SetOpen();
+		//플래그세워있으면 회수하고
+		if (m_vecBlock.at((m_iVecWidth * (i)) + (j))
+			->GetBlockBack() == m_pResManager->GetBitMap(RES_TYPE_BLOCK_FLAG))
+		{
+			m_iFlagNum++;
+		}
 
 		for (int numberBlockIndex = 1; numberBlockIndex <= 8; numberBlockIndex++)
 		{
@@ -372,4 +394,27 @@ void MainGame::DrawMineNum(HDC hdc)
 	TCHAR szBuf[128];
 	wsprintf(szBuf, TEXT("%d"), m_iFlagNum);
 	TextOut(hdc, 675, 480, szBuf, lstrlen(szBuf));
+}
+
+bool MainGame::IsWin()
+{
+	int count = m_vecBlock.size() - m_iMineNum;
+
+	for (auto iter = m_vecBlock.begin(); iter != m_vecBlock.end(); ++iter)
+	{
+		if ((*iter)->IsOpen() == true)
+			count--;
+	}
+	if (count == 0)
+		return true;
+
+	return false;
+}
+
+void MainGame::AllOpen()
+{
+	for (auto iter = m_vecBlock.begin(); iter != m_vecBlock.end(); ++iter)
+	{
+		(*iter)->SetOpen();
+	}
 }

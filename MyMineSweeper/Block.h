@@ -34,6 +34,7 @@ public:
 	void SetBlockFront(BitMap* pBitMap);
 	void SetBlockBack(BitMap* pBitMap);
 	BitMap* GetBlockFront();
+	BitMap* GetBlockBack();
 	void Init(BitMap* pBitMap, BitMap* pBackBitMap, int x, int y);
 	void Draw(HDC hdc);
 	bool LBInput(POINT pt);

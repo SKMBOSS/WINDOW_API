@@ -30,6 +30,7 @@ private:
 	HWND			m_hWnd;
 	GAME_STATE		m_eState;
 
+
 public:
 	static MainGame* GetInstance();
 	void SetVecHeightAndWidth(int height, int width);
@@ -44,6 +45,8 @@ public:
 	{
 		m_eState = GAME_STATE_PLAY;
 	}
+	bool IsWin();
+	void AllOpen();
 public:
 	void Init(HWND hWnd, HDC hdc);
 	void Draw(HDC hdc);

@@ -21,6 +21,11 @@ BitMap* Block::GetBlockFront()
 	return m_pBitMap;
 }
 
+BitMap* Block::GetBlockBack()
+{
+	return m_pBackBitMap;
+}
+
 void Block::SetBlockBack(BitMap* pBitMap)
 {
 	m_pBackBitMap = pBitMap;
