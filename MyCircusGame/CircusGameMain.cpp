@@ -44,12 +44,13 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmd
 
 }
 
-HDC g_MemDc[3];
-HBITMAP g_hBitMap[3];
-HBITMAP g_hOld[3];
+HDC g_MemDc;
+HBITMAP g_hBitMap;
+HBITMAP g_hOld;
 int x = 50;
 int y = 50;
 BitMap* back = new BitMap;
+BitMap* back2 = new BitMap;
 BitMap* player = new BitMap;
 LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 {
@@ -59,27 +60,15 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 	switch (iMessage)
 	{
 	case WM_CREATE:
-		//1. 백버퍼는 CreateCompatibleBitmap 으로 만든다
-		//2. 다른 이미지는 백버퍼의 hdc를 기준으로 생각한다
-
 		SetTimer(hWnd, 1, 10, NULL);
 		hdc = GetDC(hWnd);
-		g_MemDc[0] = CreateCompatibleDC(hdc);
-		g_hBitMap[0] = CreateCompatibleBitmap(hdc, 512, 450);
-		g_hOld[0] = (HBITMAP)SelectObject(g_MemDc[0], g_hBitMap[0]);
+		g_MemDc = CreateCompatibleDC(hdc);
+		g_hBitMap = CreateCompatibleBitmap(hdc, 512, 450);
+		g_hOld = (HBITMAP)SelectObject(g_MemDc, g_hBitMap);
 
-		
-		back->Init(g_MemDc[0], "Resource\\Circus\\back.bmp");
-		player->Init(g_MemDc[0], "Resource\\Circus\\win.bmp");
-		/*g_MemDc[1] = CreateCompatibleDC(g_MemDc[0]);
-		g_hBitMap[1] = (HBITMAP)LoadImage(NULL, "Resource\\Circus\\back.bmp", IMAGE_BITMAP, 0, 0
-			, LR_CREATEDIBSECTION | LR_DEFAULTSIZE | LR_LOADFROMFILE);
-		g_hOld[1] = (HBITMAP)SelectObject(g_MemDc[1], g_hBitMap[1]);
-
-		g_MemDc[2] = CreateCompatibleDC(g_MemDc[0]);
-		g_hBitMap[2] = (HBITMAP)LoadImage(NULL, "Resource\\Circus\\win.bmp", IMAGE_BITMAP, 0, 0
-			, LR_CREATEDIBSECTION | LR_DEFAULTSIZE | LR_LOADFROMFILE);
-		g_hOld[1] = (HBITMAP)SelectObject(g_MemDc[2], g_hBitMap[2]);*/
+		back->Init(g_MemDc, "Resource\\Circus\\back.bmp");
+		back2->Init(g_MemDc, "Resource\\Circus\\back.bmp");
+		player->Init(g_MemDc, "Resource\\Circus\\win.bmp");
 
 		ReleaseDC(hWnd, hdc);
 		return 0;
@@ -104,22 +93,18 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 		}
 	case  WM_PAINT:
 		hdc = BeginPaint(hWnd, &ps);
-
-		back->Draw(g_MemDc[0], 0, 0);
-		player->TransDraw(g_MemDc[0], x, y);
-
-		BitBlt(hdc, 0, 180, 512, 270, g_MemDc[0], 0, 0, SRCCOPY);
-		//BitBlt(g_MemDc[0], 0, 0, 512, 450, g_MemDc[1], 0, 0, SRCCOPY);
 		
+		back->TransDraw(g_MemDc, 0, 0);
+		back2->TransDraw(g_MemDc, 0, 180);
+		player->TransDraw(g_MemDc, x, y);
 
-		////TransparentBlt(g_MemDc[0], 0, 0, 100, 100, g_MemDc[1], 0, 0, 240, 192, RGB(255, 0, 255));
-		//TransparentBlt(g_MemDc[0], x, y, 76, 75, g_MemDc[2], 0, 0, 76, 75, RGB(255, 0, 255));
-		//BitBlt(hdc, 0, 180, 512, 270, g_MemDc[0], 0, 0, SRCCOPY);
+		BitBlt(hdc, 0, 0, 512, 450, g_MemDc, 0, 0, SRCCOPY);
 		EndPaint(hWnd, &ps);
 		return 0;
 	case WM_DESTROY:
 		delete player;
 		delete back;
+		delete back2;
 		//KillTimer(hWnd, 1);
 		PostQuitMessage(0);
 		return 0;
