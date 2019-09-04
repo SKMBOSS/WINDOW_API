@@ -15,18 +15,22 @@ class BitMap;
 class ResourceManager
 {
 private:
+	static ResourceManager* m_sThis;
 	BitMap* m_pBitMap[RES_TYPE_END];
 	vector<string> resPath;
+public:
+	static ResourceManager* GetInstance();
+	BitMap* GetBitMap(int index);
+	SIZE GetBitMapSize(int index);
 private:
 	void InitResPath();
 	void InitBitMap(HDC hdc);
 public:
 	void Init(HDC hdc);
 	void Release();
-	BitMap* GetBitMap(int index);
-	SIZE GetBitMapSize(int index);
-public:
+private:
 	ResourceManager();
+public:
 	~ResourceManager();
 };
 

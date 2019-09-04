@@ -1,6 +1,9 @@
 #include "CircusGame.h"
+#include "SceneManager.h"
+#include "ResourceManager.h"
 #include "BitMap.h"
 #include "Stage01.h"
+#include "Macro.h"
 
 CircusGame* CircusGame::m_sThis = nullptr;
 
@@ -22,22 +25,28 @@ CircusGame* CircusGame::GetInstance()
 
 void CircusGame::Init(HWND hWnd, HDC hdc)
 {
-	test = new Stage01();
-	test->Init(hWnd, hdc);
+	ResourceManager::GetInstance()->Init(hdc);
+	SceneManager::GetInstance()->Init(hWnd, hdc);
 }
+
 void CircusGame::Input(WPARAM wParam)
 {
-	test->Input(wParam);
+	SceneManager::GetInstance()->Input(wParam);
 }
+
 void CircusGame::Update()
 {
-	test->Update();
+	SceneManager::GetInstance()->Update();
 }
+
 void CircusGame::Draw(HDC hdc)
 {
-	test->Draw(hdc);
+	SceneManager::GetInstance()->Draw(hdc);
 }
+
 void CircusGame::Release()
 {
-	delete test;
+	ResourceManager::GetInstance()->Release();
+	SceneManager::GetInstance()->Release();
+	SAFE_DELETE(m_sThis);
 }

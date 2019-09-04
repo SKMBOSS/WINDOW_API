@@ -16,45 +16,72 @@
     <Filter Include="소스 파일\Scene">
       <UniqueIdentifier>{6f87c916-9f51-4821-81c0-b189653ba02b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="헤더 파일\Scene">
-      <UniqueIdentifier>{1abcc2b3-a62a-44ed-a1eb-445c3461cd36}</UniqueIdentifier>
+    <Filter Include="소스 파일\Scene\cpp">
+      <UniqueIdentifier>{3199d802-8bf4-464b-8780-f84638d8af65}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Scene\header">
+      <UniqueIdentifier>{c1e0c84b-e783-4218-9009-5c9925768944}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Manager">
+      <UniqueIdentifier>{d71acfd2-dd30-44c0-9e27-23856dd340fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Manager\cpp">
+      <UniqueIdentifier>{27bb1131-5e84-45ff-8b74-7bdcb87de925}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Manager\header">
+      <UniqueIdentifier>{d873e132-552b-47e3-a170-158dbf12f8fe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\BitMap">
+      <UniqueIdentifier>{74cba761-9c57-4be9-9c37-e33898b58e4f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\CircusGame">
+      <UniqueIdentifier>{5f6d9f20-d0d9-43b9-b03e-97cef8dc0d22}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CircusGameMain.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="BitMap.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="ResourceManager.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="Scene.cpp">
-      <Filter>소스 파일\Scene</Filter>
+      <Filter>소스 파일\Scene\cpp</Filter>
     </ClCompile>
     <ClCompile Include="Stage01.cpp">
-      <Filter>소스 파일\Scene</Filter>
+      <Filter>소스 파일\Scene\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneManager.cpp">
+      <Filter>소스 파일\Manager\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="ResourceManager.cpp">
+      <Filter>소스 파일\Manager\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="BitMap.cpp">
+      <Filter>소스 파일\BitMap</Filter>
     </ClCompile>
     <ClCompile Include="CircusGame.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>소스 파일\CircusGame</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="BitMap.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="ResourceManager.h">
-      <Filter>헤더 파일</Filter>
+    <ClInclude Include="Scene.h">
+      <Filter>소스 파일\Scene\header</Filter>
     </ClInclude>
     <ClInclude Include="Stage01.h">
-      <Filter>헤더 파일\Scene</Filter>
+      <Filter>소스 파일\Scene\header</Filter>
     </ClInclude>
-    <ClInclude Include="Scene.h">
-      <Filter>헤더 파일\Scene</Filter>
+    <ClInclude Include="ResourceManager.h">
+      <Filter>소스 파일\Manager\header</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneManager.h">
+      <Filter>소스 파일\Manager\header</Filter>
+    </ClInclude>
+    <ClInclude Include="BitMap.h">
+      <Filter>소스 파일\BitMap</Filter>
+    </ClInclude>
+    <ClInclude Include="Macro.h">
+      <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="CircusGame.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>소스 파일\CircusGame</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

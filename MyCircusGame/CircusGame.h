@@ -6,7 +6,7 @@ class CircusGame
 {
 private:
 	static CircusGame* m_sThis;
-	Stage01* test;
+	
 public:
 	static CircusGame* GetInstance();
 public:

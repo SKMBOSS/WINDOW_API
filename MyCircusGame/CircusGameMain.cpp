@@ -45,7 +45,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmd
 
 }
 
-HDC g_MemDc;
+HDC g_MemDC;
 HBITMAP g_hBitMap;
 HBITMAP g_hOld;
 
@@ -60,11 +60,12 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 		hdc = GetDC(hWnd);
 		SetTimer(hWnd, 1, 10, NULL);
 		/****************더블버퍼********************/
-		g_MemDc = CreateCompatibleDC(hdc);
+		g_MemDC = CreateCompatibleDC(hdc);
 		g_hBitMap = CreateCompatibleBitmap(hdc, 512, 450);
-		g_hOld = (HBITMAP)SelectObject(g_MemDc, g_hBitMap);
+		g_hOld = (HBITMAP)SelectObject(g_MemDC, g_hBitMap);
 		/****************************************************/
-		CircusGame::GetInstance()->Init(hWnd, g_MemDc);
+		CircusGame::GetInstance()->Init(hWnd, g_MemDC);
+		ReleaseDC(hWnd, g_MemDC);
 		ReleaseDC(hWnd, hdc);
 		return 0;
 	case WM_TIMER:
@@ -74,8 +75,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 		CircusGame::GetInstance()->Input(wParam);
 	case  WM_PAINT:
 		hdc = BeginPaint(hWnd, &ps);
-		CircusGame::GetInstance()->Draw(g_MemDc);
-		BitBlt(hdc, 0, 0, 512, 450, g_MemDc, 0, 0, SRCCOPY);
+		CircusGame::GetInstance()->Draw(g_MemDC);
+		BitBlt(hdc, 0, 0, 512, 450, g_MemDC, 0, 0, SRCCOPY);
 		EndPaint(hWnd, &ps);
 		return 0;
 	case WM_DESTROY:

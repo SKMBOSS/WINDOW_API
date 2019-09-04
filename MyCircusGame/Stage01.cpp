@@ -1,5 +1,6 @@
 #include "Stage01.h"
 #include "BitMap.h"
+#include "ResourceManager.h"
 
 Stage01::Stage01()
 {
@@ -17,12 +18,12 @@ void Stage01::Init(HWND hWnd, HDC hdc)
 	back2 = new BitMap();
 	player = new BitMap();
 
-	back->Init(hdc, "Resource\\Circus\\back.bmp");
-	back2->Init(hdc, "Resource\\Circus\\back.bmp");
-	player->Init(hdc, "Resource\\Circus\\win.bmp");
+	back = ResourceManager::GetInstance()->GetBitMap(RES_TYPE_BACK);
+	back2 = ResourceManager::GetInstance()->GetBitMap(RES_TYPE_BACK);
+	player = ResourceManager::GetInstance()->GetBitMap(RES_TYPE_PLAYER);
 
-	x = 50;
-	y = 50;
+	x = 1;
+	y = 325;
 }
 
 void Stage01::Input(WPARAM wParam)
@@ -35,12 +36,12 @@ void Stage01::Input(WPARAM wParam)
 	case VK_RIGHT:
 		x += 8;
 		break;
-	case VK_UP:
-		y -= 8;
-		break;
-	case VK_DOWN:
-		y += 8;
-		break;
+	//case VK_UP:
+	//	y -= 8;
+	//	break;
+	//case VK_DOWN:
+	//	y += 8;
+	//	break;
 	}
 }
 
