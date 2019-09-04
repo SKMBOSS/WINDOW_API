@@ -20,9 +20,9 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
-    <ProjectGuid>{1951812F-0FFE-4768-B080-6FDA7DAF2BF8}</ProjectGuid>
+    <ProjectGuid>{B0F4EE91-73D3-4E16-84EC-9BFC057A2B8B}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>MyMineSweeper</RootNamespace>
+    <RootNamespace>MyCircusGame</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -43,7 +43,7 @@
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
-    <CharacterSet>MultiByte</CharacterSet>
+    <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -140,25 +140,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="BitMap.h" />
-    <ClInclude Include="Block.h" />
-    <ClInclude Include="GameManager.h" />
-    <ClInclude Include="macro.h" />
-    <ClInclude Include="MainGame.h" />
-    <ClInclude Include="ResManager.h" />
-    <ClInclude Include="resource.h" />
-    <ClInclude Include="MyUtility.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="MyMineSweeper.rc" />
-  </ItemGroup>
-  <ItemGroup>
     <ClCompile Include="BitMap.cpp" />
-    <ClCompile Include="Block.cpp" />
-    <ClCompile Include="GameManager.cpp" />
-    <ClCompile Include="MainGame.cpp" />
-    <ClCompile Include="MineSweeperMain.cpp" />
-    <ClCompile Include="ResManager.cpp" />
+    <ClCompile Include="CircusGameMain.cpp" />
+    <ClCompile Include="ResourceManager.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="BitMap.h" />
+    <ClInclude Include="ResourceManager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
