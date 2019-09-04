@@ -37,6 +37,7 @@ void MainGame::Init(HWND hWnd, HDC hdc)
 
 	SetVecHeightAndWidth(10, 10);
 	SetMineNum(10);
+	SetTime();
 
 	m_eState = GAME_STATE_PLAY;
 	SetVecBlock();
@@ -50,6 +51,14 @@ void MainGame::Update()
 	{
 		if(IsWin())
 			m_eState = GAME_STATE_WIN;
+
+		if (m_iTimeCount == 0)
+		{
+			m_iTime++;
+			m_iTimeCount = 10;
+			InvalidateRect(m_hWnd, NULL, true);
+		}
+		m_iTimeCount--;
 	}
 
 	else if (m_eState == GAME_STATE_LOSE)
@@ -151,6 +160,7 @@ void MainGame::Draw(HDC hdc)
 	}
 
 	DrawMineNum(hdc);
+	DrawTime(hdc);
 }
 
 void MainGame::Release()
@@ -199,6 +209,11 @@ void MainGame::SetMineNum(int num)
 {
 	m_iMineNum = num;
 	m_iFlagNum = num;
+}
+
+void MainGame::SetTime()
+{
+	m_iTime = 0;
 }
 
 void MainGame::ShuffleMine()
@@ -396,6 +411,13 @@ void MainGame::DrawMineNum(HDC hdc)
 	TextOut(hdc, 675, 480, szBuf, lstrlen(szBuf));
 }
 
+void MainGame::DrawTime(HDC hdc)
+{
+	TCHAR szBuf[128];
+	wsprintf(szBuf, TEXT("%d"), m_iTime);
+	TextOut(hdc, 170, 480, szBuf, lstrlen(szBuf));
+}
+
 bool MainGame::IsWin()
 {
 	int count = m_vecBlock.size() - m_iMineNum;
@@ -418,3 +440,4 @@ void MainGame::AllOpen()
 		(*iter)->SetOpen();
 	}
 }
+
