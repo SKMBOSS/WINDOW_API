@@ -5,8 +5,13 @@ class BackGround :
 	public CircusObject
 {
 private:
-	
+	POINT		m_topPos;
+	POINT		m_bottomPos;
+	BitMap*		m_pTopBitMap;
+	BitMap*		m_pBottomBitMap;
 
+
+	static int  m_sBackGroundNumber;
 public:
 	virtual void Init();
 	virtual void Input(WPARAM wParam);

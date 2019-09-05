@@ -14,6 +14,7 @@ class Player :
 	public CircusObject
 {
 private:
+	BitMap*			m_pBitMap;
 	PLAYER_STATE	m_eState;
 	DWORD			m_inputStartTime;
 	bool			m_bMove;

@@ -6,7 +6,6 @@ class CircusObject
 {
 protected:
 	POINT		m_Pos;
-	BitMap*		m_pBitMap;
 protected:
 	void SetObjectPos(int x, int y);
 public:
