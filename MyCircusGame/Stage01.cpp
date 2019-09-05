@@ -18,8 +18,11 @@ void Stage01::Init(HWND hWnd, HDC hdc)
 {
 	m_hWnd = hWnd;
 	
-	CircusObject* m_pBackGround = new BackGround();
-	m_vecObj.push_back(m_pBackGround);
+	for (int i = 0; i < 5; i++)
+	{
+		CircusObject* m_pBackGround = new BackGround();
+		m_vecObj.push_back(m_pBackGround);
+	}
 
 	CircusObject* pPlayer = new Player();
 	m_vecObj.push_back(pPlayer);
@@ -36,7 +39,6 @@ void Stage01::Input(WPARAM wParam)
 	{
 		(*iter)->Input(wParam);
 	}
-	InvalidateRect(m_hWnd, NULL, FALSE);
 }
 
 void Stage01::TerminateInput(WPARAM wParam)
@@ -45,7 +47,6 @@ void Stage01::TerminateInput(WPARAM wParam)
 	{
 		(*iter)->TerminateInput(wParam);
 	}
-	InvalidateRect(m_hWnd, NULL, FALSE);
 }
 
 void Stage01::Update()

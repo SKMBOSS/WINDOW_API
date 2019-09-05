@@ -9,6 +9,7 @@ private:
 	POINT		m_bottomPos;
 	BitMap*		m_pTopBitMap;
 	BitMap*		m_pBottomBitMap;
+	int			m_iThisNum;
 
 
 	static int  m_sBackGroundNumber;

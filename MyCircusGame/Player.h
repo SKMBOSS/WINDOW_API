@@ -18,10 +18,11 @@ private:
 	PLAYER_STATE	m_eState;
 	DWORD			m_inputStartTime;
 	bool			m_bMove;
+
 private:
 	void SetStateBitMap();
-	void DelaySetBitMap(int time);
 	void SetInputStartTime();
+	bool DelayEnd(DWORD time);
 public:
 	virtual void Init();
 	virtual void Input(WPARAM wParam);

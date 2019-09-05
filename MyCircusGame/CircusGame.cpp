@@ -41,6 +41,7 @@ void CircusGame::TerminateInput(WPARAM wParam)
 
 void CircusGame::Update()
 {
+
 	SceneManager::GetInstance()->Update();
 }
 

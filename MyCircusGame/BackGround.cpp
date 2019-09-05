@@ -3,11 +3,11 @@
 #include "ResourceManager.h"
 #include "BitMap.h"
 
-int BackGround::m_sBackGroundNumber = -1;
+int BackGround::m_sBackGroundNumber = 0;
 
 BackGround::BackGround()
 {
-	m_sBackGroundNumber++;
+	m_iThisNum =m_sBackGroundNumber++;
 }
 
 BackGround::~BackGround()
@@ -19,11 +19,11 @@ void BackGround::Init()
 	CircusObject::SetObjectPos(0, 180);
 
 	m_pTopBitMap = ResourceManager::GetInstance()->GetBitMap(RES_TYPE_BACK_NORMAL);
-	m_topPos.x= m_sBackGroundNumber * 64;
+	m_topPos.x= m_iThisNum * 64;
 	m_topPos.y = 116;
 
 	m_pBottomBitMap = ResourceManager::GetInstance()->GetBitMap(RES_TYPE_BACK);
-	m_bottomPos.x = m_sBackGroundNumber * 64;
+	m_bottomPos.x = m_iThisNum * 64;
 	m_bottomPos.y = 180;
 }
 
