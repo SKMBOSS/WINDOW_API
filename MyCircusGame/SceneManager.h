@@ -30,6 +30,7 @@ private:
 public:
 	void Init(HWND hWnd, HDC hdc);
 	void Input(WPARAM wParam);
+	void TerminateInput(WPARAM wParam);
 	void Update();
 	void Draw(HDC hdc);
 	void Release();

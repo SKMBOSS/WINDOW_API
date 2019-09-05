@@ -73,6 +73,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 		return 0;
 	case WM_KEYDOWN:
 		CircusGame::GetInstance()->Input(wParam);
+		return 0;
+	case WM_KEYUP:
+		CircusGame::GetInstance()->TerminateInput(wParam);
+		return 0;
 	case  WM_PAINT:
 		hdc = BeginPaint(hWnd, &ps);
 		CircusGame::GetInstance()->Draw(g_MemDC);

@@ -6,10 +6,10 @@ using namespace std;
 class BitMap
 {
 private:
-	HDC m_hMemDC;
-	HBITMAP m_hBitMap;
-	HBITMAP m_hOldBitMap;
-	SIZE	m_size;
+	HDC			m_hMemDC;
+	HBITMAP		m_hBitMap;
+	HBITMAP		m_hOldBitMap;
+	SIZE		m_size;
 public:
 	inline SIZE GetSize()
 	{
@@ -17,7 +17,7 @@ public:
 	}
 public:
 	void Init(HDC hdc, string path);
-	void Draw(HDC hdc, int x, int y);
+	void Draw(HDC hdc, POINT pos);
 
 	void Release();
 public:

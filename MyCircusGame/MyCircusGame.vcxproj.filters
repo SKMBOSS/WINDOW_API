@@ -37,6 +37,15 @@
     <Filter Include="소스 파일\CircusGame">
       <UniqueIdentifier>{5f6d9f20-d0d9-43b9-b03e-97cef8dc0d22}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\CircusObject">
+      <UniqueIdentifier>{3123f76b-11bf-43c0-b088-991e29a7468a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\CircusObject\cpp">
+      <UniqueIdentifier>{925c212f-2d7a-4117-873f-9fce38bc4a55}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\CircusObject\header">
+      <UniqueIdentifier>{fc233078-a68f-4599-b8fe-6241adaf4f10}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CircusGameMain.cpp">
@@ -60,6 +69,15 @@
     <ClCompile Include="CircusGame.cpp">
       <Filter>소스 파일\CircusGame</Filter>
     </ClCompile>
+    <ClCompile Include="CircusObject.cpp">
+      <Filter>소스 파일\CircusObject\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>소스 파일\CircusObject\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="BackGround.cpp">
+      <Filter>소스 파일\CircusObject\cpp</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scene.h">
@@ -77,11 +95,20 @@
     <ClInclude Include="BitMap.h">
       <Filter>소스 파일\BitMap</Filter>
     </ClInclude>
-    <ClInclude Include="Macro.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="CircusGame.h">
       <Filter>소스 파일\CircusGame</Filter>
+    </ClInclude>
+    <ClInclude Include="CircusObject.h">
+      <Filter>소스 파일\CircusObject\header</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>소스 파일\CircusObject\header</Filter>
+    </ClInclude>
+    <ClInclude Include="BackGround.h">
+      <Filter>소스 파일\CircusObject\header</Filter>
+    </ClInclude>
+    <ClInclude Include="Macro.h">
+      <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

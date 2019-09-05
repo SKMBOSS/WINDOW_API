@@ -141,18 +141,24 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="BackGround.cpp" />
     <ClCompile Include="BitMap.cpp" />
     <ClCompile Include="CircusGame.cpp" />
     <ClCompile Include="CircusGameMain.cpp" />
+    <ClCompile Include="CircusObject.cpp" />
+    <ClCompile Include="Player.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="Stage01.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BackGround.h" />
     <ClInclude Include="BitMap.h" />
     <ClInclude Include="CircusGame.h" />
+    <ClInclude Include="CircusObject.h" />
     <ClInclude Include="Macro.h" />
+    <ClInclude Include="Player.h" />
     <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManager.h" />

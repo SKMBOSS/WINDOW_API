@@ -43,7 +43,9 @@ void ResourceManager::InitResPath()
 	string basePath = "Resource\\Circus\\";
 	
 	resPath.push_back(basePath + "back.bmp");
-	resPath.push_back(basePath + "win.bmp");
+	resPath.push_back(basePath + "Player0.bmp");
+	resPath.push_back(basePath + "Player1.bmp");
+	resPath.push_back(basePath + "Player2.bmp");
 }
 
 void ResourceManager::InitBitMap(HDC hdc)
