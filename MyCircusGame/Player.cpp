@@ -14,7 +14,7 @@ Player::~Player()
 
 void Player::Init()
 {
-	CircusObject::SetObjectPos(50, 325);
+	CircusObject::SetObjectPos(70, 325);
 	m_eState = WAIT;
 	SetStateBitMap();
 	m_inputStartTime = 0;
@@ -27,9 +27,9 @@ void Player::Input(WPARAM wParam)
 	{
 	case VK_LEFT:
 		SetInputStartTime();
-		if (DelayEnd(50))
+		if (DelayEnd(100))
 		{
-			m_Pos.x -= 8;
+			//m_Pos.x -= 8;
 			if (m_eState == WAIT)
 			{
 				m_eState = BACK;
@@ -44,7 +44,7 @@ void Player::Input(WPARAM wParam)
 		SetInputStartTime();
 		if (DelayEnd(50))
 		{
-			m_Pos.x += 8;
+			//m_Pos.x += 8;
 			if (m_eState == WAIT)
 			{
 				m_eState = FRONT;
@@ -81,6 +81,7 @@ void Player::Update()
 
 void Player::Draw(HDC hdc)
 {
+
 	m_pBitMap->Draw(hdc, CircusObject::m_Pos);
 }
 

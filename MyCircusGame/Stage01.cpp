@@ -5,6 +5,7 @@
 #include "CircusObject.h"
 #include "Player.h"
 #include "BackGround.h"
+#include "FireRing.h"
 
 Stage01::Stage01()
 {
@@ -18,11 +19,14 @@ void Stage01::Init(HWND hWnd, HDC hdc)
 {
 	m_hWnd = hWnd;
 	
-	for (int i = 0; i < 5; i++)
+	for (int i = 0; i < 9; i++)
 	{
 		CircusObject* m_pBackGround = new BackGround();
 		m_vecObj.push_back(m_pBackGround);
 	}
+
+	CircusObject* pFireRing = new FireRing();
+	m_vecObj.push_back(pFireRing);
 
 	CircusObject* pPlayer = new Player();
 	m_vecObj.push_back(pPlayer);

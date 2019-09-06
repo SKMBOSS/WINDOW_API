@@ -78,6 +78,9 @@
     <ClCompile Include="BackGround.cpp">
       <Filter>소스 파일\CircusObject\cpp</Filter>
     </ClCompile>
+    <ClCompile Include="FireRing.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scene.h">
@@ -104,10 +107,13 @@
     <ClInclude Include="Player.h">
       <Filter>소스 파일\CircusObject\header</Filter>
     </ClInclude>
+    <ClInclude Include="Macro.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
     <ClInclude Include="BackGround.h">
       <Filter>소스 파일\CircusObject\header</Filter>
     </ClInclude>
-    <ClInclude Include="Macro.h">
+    <ClInclude Include="FireRing.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
