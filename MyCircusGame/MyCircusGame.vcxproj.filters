@@ -81,6 +81,9 @@
     <ClCompile Include="FireRing.cpp">
       <Filter>소스 파일\CircusObject\cpp</Filter>
     </ClCompile>
+    <ClCompile Include="Miter.cpp">
+      <Filter>소스 파일\CircusObject\cpp</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scene.h">
@@ -114,6 +117,9 @@
       <Filter>소스 파일\CircusObject\header</Filter>
     </ClInclude>
     <ClInclude Include="FireRing.h">
+      <Filter>소스 파일\CircusObject\header</Filter>
+    </ClInclude>
+    <ClInclude Include="Miter.h">
       <Filter>소스 파일\CircusObject\header</Filter>
     </ClInclude>
   </ItemGroup>

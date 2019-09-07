@@ -4,6 +4,8 @@
 enum BG_STATE
 {
 	BG_IDLE,
+	BG_START,
+	BG_END,
 	BG_FRONT,
 	BG_BACK
 };

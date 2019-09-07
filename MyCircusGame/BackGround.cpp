@@ -26,7 +26,7 @@ void BackGround::Init()
 	m_iTopBackPosY = 100;
 	m_iBottomBackPosY = 180;
 	m_speed = 2;
-	m_eState = BG_IDLE;
+	m_eState = BG_START;
 }
 
 void BackGround::Input(WPARAM wParam)
@@ -34,9 +34,11 @@ void BackGround::Input(WPARAM wParam)
 	switch (wParam)
 	{
 	case VK_LEFT:
-		m_eState = BG_BACK;
+		if (m_eState != BG_START) // 초기지점 문제 해결
+			m_eState = BG_BACK;
 		break;
 	case VK_RIGHT:
+		if (m_eState != BG_END)
 		m_eState = BG_FRONT;
 		break;
 	}
@@ -47,8 +49,12 @@ void BackGround::TerminateInput(WPARAM wParam)
 	switch (wParam)
 	{
 	case VK_LEFT:
+		if (m_eState != BG_START) // 초기지점 문제 해결
+			m_eState = BG_IDLE;
+		break;
 	case VK_RIGHT:
-		m_eState = BG_IDLE;
+		if (m_eState != BG_END) // 초기지점 문제 해결
+			m_eState = BG_IDLE;
 		break;
 	}
 }
@@ -58,16 +64,24 @@ void BackGround::Update()
 	int iCheckSection = (m_iThisNum + 1) *  GetThisBackGroundSizeX();
 	int iCycle = (CircusObject::m_sScreenPosX / GetWholeBackGroundSizeX());
 
-	if (m_eState == BG_FRONT 
+	if (m_eState == BG_FRONT
 		&& CircusObject::m_sScreenPosX == iCheckSection + (iCycle * GetWholeBackGroundSizeX()))
 	{
 		m_iBackPosX += GetWholeBackGroundSizeX();
+
+
 	}
 
-	else if (m_eState == BG_BACK 
+	else if (m_eState == BG_BACK
 		&& CircusObject::m_sScreenPosX == iCheckSection + (iCycle * GetWholeBackGroundSizeX()))
 	{
 		m_iBackPosX -= GetWholeBackGroundSizeX();
+
+		if (CircusObject::m_sScreenPosX == 0)
+			m_eState = BG_START; // 구간지점 문제 해결위해
+		/*else if (CircusObject::m_sScreenPosX % GetThisBackGroundSizeX() == 0)
+			m_eState = BG_START;*/
+
 	}
 }
 

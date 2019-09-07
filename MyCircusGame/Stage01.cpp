@@ -6,6 +6,7 @@
 #include "Player.h"
 #include "BackGround.h"
 #include "FireRing.h"
+#include "Miter.h"
 
 Stage01::Stage01()
 {
@@ -25,12 +26,17 @@ void Stage01::Init(HWND hWnd, HDC hdc)
 		m_vecObj.push_back(m_pBackGround);
 	}
 
-	CircusObject* pFireRing = new FireRing();
-	m_vecObj.push_back(pFireRing);
+	
+
+	/*CircusObject* pFireRing = new FireRing();
+	m_vecObj.push_back(pFireRing);*/
 
 	CircusObject* pPlayer = new Player();
 	m_vecObj.push_back(pPlayer);
 	
+	/*CircusObject* pMiter = new Miter();
+	m_vecObj.push_back(pMiter);*/
+
 	for (auto iter = m_vecObj.begin(); iter != m_vecObj.end(); ++iter)
 	{
 		(*iter)->Init();
