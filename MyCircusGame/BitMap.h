@@ -17,7 +17,7 @@ public:
 	}
 public:
 	void Init(HDC hdc, string path);
-	void Draw(HDC hdc, POINT pos);
+	void Draw(HDC hdc, int x, int y);
 
 	void Release();
 public:

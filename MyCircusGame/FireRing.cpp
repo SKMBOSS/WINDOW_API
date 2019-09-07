@@ -61,7 +61,7 @@ void FireRing::Update()
 
 void FireRing::Draw(HDC hdc)
 {
-	m_pBitMap->Draw(hdc, m_Pos);
+	m_pBitMap->Draw(hdc, m_Pos.x, m_Pos.y);
 }
 
 void FireRing::Release()

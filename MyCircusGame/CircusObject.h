@@ -5,9 +5,12 @@ class BitMap;
 class CircusObject
 {
 protected:
-	POINT		m_Pos;
+	static int	m_sScreenPosX;
+	static int	m_sScreenSpeed;
+	static int  m_bMove;
 protected:
-	void SetObjectPos(int x, int y);
+	void MoveScreenRight();
+	void MoveScreenLeft();
 public:
 	virtual void Init() = 0;
 	virtual void Input(WPARAM wParam) = 0;

@@ -21,10 +21,10 @@ void BitMap::Init(HDC hdc, string path)
 	m_size.cy = bitmap.bmHeight;
 }
 
-void BitMap::Draw(HDC hdc, POINT pos)
+void BitMap::Draw(HDC hdc, int x, int y)
 {
 	//BitBlt(hdc, x, y, m_size.cx, m_size.cy, m_hMemDC, 0, 0, SRCCOPY);
-	TransparentBlt(hdc, pos.x, pos.y, m_size.cx, m_size.cy, m_hMemDC, 0, 0, m_size.cx, m_size.cy, RGB(255, 0, 255));
+	TransparentBlt(hdc, x, y, m_size.cx, m_size.cy, m_hMemDC, 0, 0, m_size.cx, m_size.cy, RGB(255, 0, 255));
 }
 
 void BitMap::Release()

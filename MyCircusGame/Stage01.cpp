@@ -19,7 +19,7 @@ void Stage01::Init(HWND hWnd, HDC hdc)
 {
 	m_hWnd = hWnd;
 	
-	for (int i = 0; i < 9; i++)
+	for (int i = 0; i < 10; i++)
 	{
 		CircusObject* m_pBackGround = new BackGround();
 		m_vecObj.push_back(m_pBackGround);

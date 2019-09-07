@@ -12,16 +12,19 @@ class BackGround :
 	public CircusObject
 {
 private:
-	POINT		m_topPos;
-	POINT		m_bottomPos;
+	static int  m_sBackGroundNumber;
+private:
 	BitMap*		m_pTopBitMap;
 	BitMap*		m_pBottomBitMap;
+	int			m_iBackPosX;
+	int			m_iTopBackPosY;
+	int			m_iBottomBackPosY;
 	int			m_iThisNum;
-	static int  m_sBackGroundNumber;
+	
 	int			m_speed;
 	BG_STATE	m_eState;
-	bool		m_bMove;
-
+private:
+	int			GetWholeBackGroundSizeX();
 public:
 	virtual void Init();
 	virtual void Input(WPARAM wParam);
