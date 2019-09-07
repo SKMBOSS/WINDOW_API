@@ -22,7 +22,7 @@ void BackGround::Init()
 		m_pTopBitMap = ResourceManager::GetInstance()->GetBitMap(RES_TYPE_BACK_DECO);
 	m_pBottomBitMap = ResourceManager::GetInstance()->GetBitMap(RES_TYPE_BACK);
 
-	m_iBackPosX = m_iThisNum * m_pTopBitMap->GetSize().cx;
+	m_iBackPosX = m_iThisNum * GetThisBackGroundSizeX();
 	m_iTopBackPosY = 100;
 	m_iBottomBackPosY = 180;
 	m_speed = 2;
@@ -55,7 +55,7 @@ void BackGround::TerminateInput(WPARAM wParam)
 
 void BackGround::Update()
 {
-	int iCheckSection = (m_iThisNum + 1) *  m_pTopBitMap->GetSize().cx;
+	int iCheckSection = (m_iThisNum + 1) *  GetThisBackGroundSizeX();
 	int iCycle = (CircusObject::m_sScreenPosX / GetWholeBackGroundSizeX());
 
 	if (m_eState == BG_FRONT 
@@ -73,15 +73,23 @@ void BackGround::Update()
 
 void BackGround::Draw(HDC hdc)
 {
-	m_pTopBitMap->Draw(hdc, m_iBackPosX - CircusObject::m_sScreenPosX, m_iTopBackPosY);
-	m_pBottomBitMap->Draw(hdc, m_iBackPosX - CircusObject::m_sScreenPosX, m_iBottomBackPosY);
+	int iActualOutputX = m_iBackPosX - CircusObject::m_sScreenPosX;
+
+	m_pTopBitMap->Draw(hdc, iActualOutputX, m_iTopBackPosY);
+	m_pBottomBitMap->Draw(hdc, iActualOutputX, m_iBottomBackPosY);
 }
 void BackGround::Release()
 {
+	SAFE_DELETE(m_pTopBitMap);
 	SAFE_DELETE(m_pBottomBitMap);
+}
+
+int BackGround::GetThisBackGroundSizeX()
+{
+	return m_pTopBitMap->GetSize().cx;
 }
 
 int BackGround::GetWholeBackGroundSizeX()
 {
-	return m_pTopBitMap->GetSize().cx * (m_sBackGroundNumber);
+	return GetThisBackGroundSizeX() * (m_sBackGroundNumber);
 }

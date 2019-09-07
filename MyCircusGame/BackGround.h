@@ -24,6 +24,7 @@ private:
 	int			m_speed;
 	BG_STATE	m_eState;
 private:
+	int			GetThisBackGroundSizeX();
 	int			GetWholeBackGroundSizeX();
 public:
 	virtual void Init();

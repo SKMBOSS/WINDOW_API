@@ -20,7 +20,6 @@ void Player::Init()
 	m_pBitMap = ResourceManager::GetInstance()->GetBitMap(RES_TYPE_PLAYER_00);
 	m_inputStartTime = 0;
 	m_speed = CircusObject::m_sScreenSpeed;
-	m_bMove = false;
 	m_bOnAnimator = false;
 }
 
@@ -29,17 +28,15 @@ void Player::Input(WPARAM wParam)
 	switch (wParam)
 	{
 	case VK_LEFT:
-		if (!m_bMove)
+		if (m_eState = PL_IDLE)
 		{
-			m_bMove = true;
 			m_inputStartTime = GetTickCount();
 		}
 		m_eState = PL_BACK;
 		break;
 	case VK_RIGHT:
-		if (!m_bMove)
+		if (m_eState = PL_IDLE)
 		{
-			m_bMove = true;
 			m_inputStartTime = GetTickCount();
 		}
 		m_eState = PL_FRONT;
@@ -53,7 +50,6 @@ void Player::TerminateInput(WPARAM wParam)
 	{
 	case VK_LEFT:
 	case VK_RIGHT:
-		m_bMove = false;
 		m_bOnAnimator = false;
 		m_eState = PL_IDLE;
 		m_pBitMap = ResourceManager::GetInstance()->GetBitMap(RES_TYPE_PLAYER_00);
@@ -101,7 +97,9 @@ void Player::Update()
 
 void Player::Draw(HDC hdc)
 {
-	m_pBitMap->Draw(hdc, (m_Pos.x - CircusObject::m_sScreenPosX), m_Pos.y);
+	int iActualOutputX = m_Pos.x - CircusObject::m_sScreenPosX;
+
+	m_pBitMap->Draw(hdc, iActualOutputX, m_Pos.y);
 
 	TCHAR szBuf[128];
 	wsprintf(szBuf, TEXT("플레이어 :%d"), m_Pos.x);

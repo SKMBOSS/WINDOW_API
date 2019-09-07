@@ -19,7 +19,6 @@ private:
 	BitMap*			m_pBitMap;
 	DWORD			m_inputStartTime;
 	int				m_speed;
-	bool			m_bMove;
 	bool			m_bOnAnimator;
 
 private:

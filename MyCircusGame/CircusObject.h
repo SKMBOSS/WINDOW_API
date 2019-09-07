@@ -7,7 +7,6 @@ class CircusObject
 protected:
 	static int	m_sScreenPosX;
 	static int	m_sScreenSpeed;
-	static int  m_bMove;
 protected:
 	void MoveScreenRight();
 	void MoveScreenLeft();

@@ -74,6 +74,7 @@ void Stage01::Release()
 {
 	for (auto iter = m_vecObj.begin(); iter != m_vecObj.end(); iter++)
 	{
+		SAFE_RELEASE(*iter);
 		SAFE_DELETE(*iter);
 	}
 	m_vecObj.clear();
