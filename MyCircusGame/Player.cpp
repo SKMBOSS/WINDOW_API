@@ -112,6 +112,10 @@ void Player::Draw(HDC hdc)
 	TCHAR szBuf3[128];
 	wsprintf(szBuf3, TEXT("실제위치 :%d"), m_Pos.x - CircusObject::m_sScreenPosX);
 	TextOut(hdc, 200, 160, szBuf3, lstrlen(szBuf3));
+
+	TCHAR szBuf4[128];
+	wsprintf(szBuf4, TEXT("64? :%d"), CircusObject::m_sScreenPosX % 64);
+	TextOut(hdc, 200, 180, szBuf4, lstrlen(szBuf4));
 }
 
 void Player::Release()
