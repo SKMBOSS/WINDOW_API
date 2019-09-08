@@ -1,15 +1,6 @@
 #pragma once
 #include "CircusObject.h"
 
-enum BG_STATE
-{
-	BG_IDLE,
-	BG_START,
-	BG_END,
-	BG_FRONT,
-	BG_BACK
-};
-
 class BackGround :
 	public CircusObject
 {
@@ -22,8 +13,6 @@ private:
 	int			m_iTopBackPosY;
 	int			m_iBottomBackPosY;
 	int			m_iThisNum;
-	int			m_speed;
-	BG_STATE	m_eState;
 private:
 	int			GetThisBackGroundSizeX();
 	int			GetWholeBackGroundSizeX();

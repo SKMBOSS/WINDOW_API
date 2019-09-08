@@ -25,7 +25,6 @@ void BackGround::Init()
 	m_iBackPosX = m_iThisNum * GetThisBackGroundSizeX();
 	m_iTopBackPosY = 100;
 	m_iBottomBackPosY = 180;
-	m_eState = BG_START;
 }
 
 void BackGround::Input(WPARAM wParam)

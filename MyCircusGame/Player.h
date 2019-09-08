@@ -13,6 +13,7 @@ enum PLAYER_STATE
 	PL_DIE
 };
 
+
 class Player :
 	public CircusObject
 {
@@ -25,7 +26,7 @@ private:
 	bool			m_bOnAnimator;
 	int				m_iJumpConut;
 	int				m_iMaxJumpCount;
-	bool			m_bIsHigh;
+	bool			m_bJump;
 
 public:
 	virtual void Init();
