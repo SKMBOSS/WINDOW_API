@@ -6,10 +6,12 @@ class CircusObject
 {
 protected:
 	static int	m_sScreenPosX;
+	static int	m_sSavedPosX;
 	static int	m_sScreenSpeed;
 protected:
 	void MoveScreenRight();
 	void MoveScreenLeft();
+	int	 GetDirection();
 public:
 	virtual void Init() = 0;
 	virtual void Input(WPARAM wParam) = 0;

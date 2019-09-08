@@ -25,63 +25,41 @@ void BackGround::Init()
 	m_iBackPosX = m_iThisNum * GetThisBackGroundSizeX();
 	m_iTopBackPosY = 100;
 	m_iBottomBackPosY = 180;
-	m_speed = 2;
 	m_eState = BG_START;
 }
 
 void BackGround::Input(WPARAM wParam)
 {
-	switch (wParam)
-	{
-	case VK_LEFT:
-		if (m_eState != BG_START) // 초기지점 문제 해결
-		{
-			m_eState = BG_BACK;
-		}
-		break;
-	case VK_RIGHT:
-		m_eState = BG_FRONT;
-		break;
-	}
+	//
 }
 
 void BackGround::TerminateInput(WPARAM wParam)
 {
-	switch (wParam)
-	{
-	case VK_LEFT:
-	case VK_RIGHT:
-		if (m_eState != BG_START) // 초기지점 문제 해결
-			m_eState = BG_IDLE;
-		m_savePosX = m_iBackPosX;
-		break;
-	}
+	//
 }
 
 void BackGround::Update()
 {
-	int iCheckSection = (m_iThisNum + 1) *  GetThisBackGroundSizeX();
-	int iCycle = (CircusObject::m_sScreenPosX / GetWholeBackGroundSizeX());
-
-	if (m_eState == BG_FRONT 
-		&& CircusObject::m_sScreenPosX == iCheckSection + (iCycle * GetWholeBackGroundSizeX()))
+	if (CircusObject::GetDirection() > 0)
 	{
-		m_iBackPosX += GetWholeBackGroundSizeX();
+		int iCheckSection = (m_iThisNum + 1) *  GetThisBackGroundSizeX();
+		int iCycle = (CircusObject::m_sScreenPosX / GetWholeBackGroundSizeX());
 
-		//if (m_iBackPosX == m_savePosX)//구간지점 문제 중복
-		//	m_iBackPosX -= GetWholeBackGroundSizeX();
+		if (CircusObject::m_sScreenPosX == iCheckSection + (iCycle * GetWholeBackGroundSizeX()))
+		{
+			m_iBackPosX += GetWholeBackGroundSizeX();
+		}
 	}
 
-	else if (m_eState == BG_BACK
-		&& CircusObject::m_sScreenPosX == iCheckSection + (iCycle * GetWholeBackGroundSizeX()))
+	if (CircusObject::GetDirection() < 0)
 	{
-		m_iBackPosX -= GetWholeBackGroundSizeX();
+		int iCheckSection = (m_iThisNum + 1) *  GetThisBackGroundSizeX();
+		int iCycle = (CircusObject::m_sScreenPosX / GetWholeBackGroundSizeX());
 
-		//if(m_iBackPosX == m_savePosX) // 구간지점 문제 중복
-		//	m_iBackPosX += GetWholeBackGroundSizeX();
-
-		if (CircusObject::m_sScreenPosX == 0)
-			m_eState = BG_START; // 시작지점 문제 해결위해
+		if (CircusObject::m_sScreenPosX == iCheckSection + (iCycle * GetWholeBackGroundSizeX()))
+		{
+			m_iBackPosX -= GetWholeBackGroundSizeX();
+		}
 	}
 }
 
@@ -105,5 +83,5 @@ int BackGround::GetThisBackGroundSizeX()
 
 int BackGround::GetWholeBackGroundSizeX()
 {
-	return GetThisBackGroundSizeX() * (m_sBackGroundNumber);
+	return GetThisBackGroundSizeX() * (m_sBackGroundNumber+1);
 }

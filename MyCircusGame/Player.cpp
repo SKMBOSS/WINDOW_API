@@ -21,6 +21,9 @@ void Player::Init()
 	m_inputStartTime = 0;
 	m_speed = CircusObject::m_sScreenSpeed;
 	m_bOnAnimator = false;
+	m_bIsHigh = false;
+	m_iMaxJumpCount = 60;
+	m_iJumpConut = m_iMaxJumpCount;
 }
 
 void Player::Input(WPARAM wParam)
@@ -41,6 +44,12 @@ void Player::Input(WPARAM wParam)
 		}
 		m_eState = PL_FRONT;
 		break;
+	case VK_SPACE:
+		if (m_eState = PL_IDLE)
+		{
+			m_inputStartTime = GetTickCount();
+		}
+		m_eState = PL_JUMPUP;
 	}
 }
 
@@ -59,10 +68,13 @@ void Player::TerminateInput(WPARAM wParam)
 
 void Player::Update()
 {
-	if (m_eState == PL_FRONT && m_Pos.x <= 3000)
+	if (m_eState == PL_FRONT && m_Pos.x <= 6500)
 	{
-		if (m_Pos.x <= 2798 + 70)
+		if (m_Pos.x <= 5758 + 246 + 70)
+		{
+			CircusObject::m_sSavedPosX = CircusObject::m_sScreenPosX;
 			CircusObject::MoveScreenRight();
+		}
 		m_Pos.x += m_speed;
 		
 		if (!m_bOnAnimator)
@@ -80,8 +92,13 @@ void Player::Update()
 
 	else if (m_eState == PL_BACK && m_Pos.x >= 72)
 	{
-		if (m_Pos.x <= 2800 + 70)
+
+		if (m_Pos.x <= 5760 + 246 + 70)
+		{
+			CircusObject::m_sSavedPosX = CircusObject::m_sScreenPosX;
 			CircusObject::MoveScreenLeft();
+		}
+			
 		m_Pos.x -= m_speed;
 		if (!m_bOnAnimator)
 		{
@@ -92,6 +109,28 @@ void Player::Update()
 			m_pBitMap = ResourceManager::GetInstance()->GetBitMap(RES_TYPE_PLAYER_01);
 		else if ((GetTickCount() - m_inputStartTime) % 20 == 10)
 			m_pBitMap = ResourceManager::GetInstance()->GetBitMap(RES_TYPE_PLAYER_00);
+	}
+
+	else if (m_eState == PL_JUMPUP && m_Pos.x >= 72)
+	{
+		if (m_Pos.x <= 5758 + 246 + 70)
+			CircusObject::MoveScreenRight();
+		if (m_iJumpConut >= 30)
+		{
+			m_Pos.y -= 3;
+			m_Pos.x += 2;
+		}
+		else if (m_iJumpConut < 30)
+		{
+			m_Pos.y += 3;
+			m_Pos.x += 2;
+			if (m_iJumpConut == 0)
+			{
+				m_eState = PL_IDLE;
+				m_iJumpConut = m_iMaxJumpCount;
+			}
+		}
+		m_iJumpConut--;
 	}
 }
 
@@ -123,14 +162,4 @@ void Player::Release()
 	SAFE_DELETE(m_pBitMap);
 }
 
-bool Player::DelayEnd(DWORD time)
-{
-	if ((GetTickCount() - m_inputStartTime) >= time)
-	{
-		m_inputStartTime = GetTickCount();
-		return true;
-	}
-	else
-		false;
-}
 

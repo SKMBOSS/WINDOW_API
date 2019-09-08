@@ -122,5 +122,8 @@
     <ClInclude Include="Miter.h">
       <Filter>소스 파일\CircusObject\header</Filter>
     </ClInclude>
+    <ClInclude Include="MyUtility.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

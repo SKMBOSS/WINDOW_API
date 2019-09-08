@@ -15,6 +15,10 @@ private:
 	POINT			m_Pos;
 	MITER_STATE		m_eState;
 	BitMap*			m_pBitMap;
+
+	BitMap*			m_pNumber[3];
+	int				m_iMiter;
+
 public:
 	virtual void Init();
 	virtual void Input(WPARAM wParam);

@@ -20,13 +20,11 @@ void Stage01::Init(HWND hWnd, HDC hdc)
 {
 	m_hWnd = hWnd;
 	
-	for (int i = 0; i < 10; i++)
+	for (int i = 0; i < 9; i++)
 	{
 		CircusObject* m_pBackGround = new BackGround();
 		m_vecObj.push_back(m_pBackGround);
 	}
-
-	
 
 	/*CircusObject* pFireRing = new FireRing();
 	m_vecObj.push_back(pFireRing);*/
@@ -34,8 +32,8 @@ void Stage01::Init(HWND hWnd, HDC hdc)
 	CircusObject* pPlayer = new Player();
 	m_vecObj.push_back(pPlayer);
 	
-	/*CircusObject* pMiter = new Miter();
-	m_vecObj.push_back(pMiter);*/
+	CircusObject* pMiter = new Miter();
+	m_vecObj.push_back(pMiter);
 
 	for (auto iter = m_vecObj.begin(); iter != m_vecObj.end(); ++iter)
 	{

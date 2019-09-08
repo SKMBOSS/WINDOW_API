@@ -23,7 +23,6 @@ private:
 	int			m_iBottomBackPosY;
 	int			m_iThisNum;
 	int			m_speed;
-	int			m_savePosX;
 	BG_STATE	m_eState;
 private:
 	int			GetThisBackGroundSizeX();

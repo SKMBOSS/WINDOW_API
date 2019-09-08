@@ -42,6 +42,17 @@ void ResourceManager::InitResPath()
 
 	string basePath = "Resource\\Circus\\";
 	
+	resPath.push_back(basePath + "number0.bmp");
+	resPath.push_back(basePath + "number1.bmp");
+	resPath.push_back(basePath + "number2.bmp");
+	resPath.push_back(basePath + "number3.bmp");
+	resPath.push_back(basePath + "number4.bmp");
+	resPath.push_back(basePath + "number5.bmp");
+	resPath.push_back(basePath + "number6.bmp");
+	resPath.push_back(basePath + "number7.bmp");
+	resPath.push_back(basePath + "number8.bmp");
+	resPath.push_back(basePath + "number9.bmp");
+
 	resPath.push_back(basePath + "back.bmp");
 	resPath.push_back(basePath + "back_deco.bmp");
 	resPath.push_back(basePath + "back_normal.bmp");

@@ -162,6 +162,7 @@
     <ClInclude Include="FireRing.h" />
     <ClInclude Include="Macro.h" />
     <ClInclude Include="Miter.h" />
+    <ClInclude Include="MyUtility.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="Scene.h" />
