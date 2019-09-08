@@ -7,6 +7,7 @@
 #include "BackGround.h"
 #include "FireRing.h"
 #include "Miter.h"
+#include "time.h"
 
 Stage01::Stage01()
 {
@@ -18,7 +19,11 @@ Stage01::~Stage01()
 
 void Stage01::Init(HWND hWnd, HDC hdc)
 {
+	srand(GetTickCount());
 	m_hWnd = hWnd;
+	m_eState = STAGE01_PLAYING;
+	m_bWaiting = false;
+	m_DeathTime = 44444;
 	
 	for (int i = 0; i < 110; i++)
 	{
@@ -26,9 +31,14 @@ void Stage01::Init(HWND hWnd, HDC hdc)
 		m_vecObj.push_back(m_pBackGround);
 	}
 
-	/*CircusObject* pFireRing = new FireRing();
-	m_vecObj.push_back(pFireRing);*/
+	m_FireStartIter = m_vecObj.end();
+	for (int i = 0; i < 3; i++)
+	{
+		CircusObject* pFireRing = new FireRing();
+		m_vecObj.push_back(pFireRing);
+	}
 
+	m_PlayerIter = m_vecObj.end();
 	CircusObject* pPlayer = new Player();
 	m_vecObj.push_back(pPlayer);
 	
@@ -36,42 +46,72 @@ void Stage01::Init(HWND hWnd, HDC hdc)
 	m_vecObj.push_back(pMiter);
 
 	for (auto iter = m_vecObj.begin(); iter != m_vecObj.end(); ++iter)
-	{
 		(*iter)->Init();
-	}
 }
 
 void Stage01::Input(WPARAM wParam)
 {
 	for (auto iter = m_vecObj.begin(); iter != m_vecObj.end(); ++iter)
-	{
 		(*iter)->Input(wParam);
-	}
 }
 
 void Stage01::TerminateInput(WPARAM wParam)
 {
 	for (auto iter = m_vecObj.begin(); iter != m_vecObj.end(); ++iter)
-	{
 		(*iter)->TerminateInput(wParam);
-	}
 }
 
 void Stage01::Update()
 {
-	for (auto iter = m_vecObj.begin(); iter != m_vecObj.end(); ++iter)
+	if (m_eState == STAGE01_PLAYING && !m_bWaiting)
 	{
-		(*iter)->Update();
+		for (auto iter = m_vecObj.begin(); iter != m_vecObj.end(); ++iter)
+			(*iter)->Update();
+
+		auto iter = m_PlayerIter;
+		for (int i = 0; i < 3; i++)
+		{
+			if ((*iter)->CollisionCheck(m_FireStartIter))
+			{
+				m_DeathTime = GetTickCount();
+				m_pScreenBitMap = ResourceManager::GetInstance()->GetBitMap(RES_TYPE_WAITING_SCENE);
+				m_bWaiting = true;
+				iter++;
+			}
+		}	
+	}
+
+	if (GetTickCount() - m_DeathTime >= 2000 && m_bWaiting)
+	{
+		m_eState = STAGE01_WATING;
+		m_bWaiting = false;
+		m_DeathTime = GetTickCount();
+	}
+		
+	if (GetTickCount() - m_DeathTime >= 2000 && m_eState == STAGE01_WATING)
+	{
+		(*m_PlayerIter)->ReStart();
+		auto iter = m_FireStartIter;
+		for (int i = 0; i < 3; i++)
+		(*iter++) ->ReStart();
+
+		m_eState = STAGE01_PLAYING;
 	}
 	InvalidateRect(m_hWnd, NULL, FALSE);
 }
 
 void Stage01::Draw(HDC hdc)
 {
-	for (auto iter = m_vecObj.begin(); iter != m_vecObj.end(); ++iter)
+	
+	if (m_eState == STAGE01_PLAYING)
 	{
-		(*iter)->Draw(hdc);
+		for (auto iter = m_vecObj.begin(); iter != m_vecObj.end(); ++iter)
+			(*iter)->Draw(hdc);
 	}
+	else if (m_eState == STAGE01_WATING)
+		m_pScreenBitMap->Draw(hdc, 0, 0);
+	
+	
 }
 
 void Stage01::Release()

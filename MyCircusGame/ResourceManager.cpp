@@ -57,10 +57,16 @@ void ResourceManager::InitResPath()
 	resPath.push_back(basePath + "back_deco.bmp");
 	resPath.push_back(basePath + "back_normal.bmp");
 	resPath.push_back(basePath + "miter.bmp");
+
 	resPath.push_back(basePath + "enemy.bmp");
+	resPath.push_back(basePath + "enemy1.bmp");
+
 	resPath.push_back(basePath + "Player0.bmp");
 	resPath.push_back(basePath + "Player1.bmp");
 	resPath.push_back(basePath + "Player2.bmp");
+	resPath.push_back(basePath + "die.bmp");
+	resPath.push_back(basePath + "wating.bmp");
+
 }
 
 void ResourceManager::InitBitMap(HDC hdc)

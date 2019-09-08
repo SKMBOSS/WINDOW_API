@@ -1,5 +1,6 @@
 #pragma once
 #include "CircusObject.h"
+#include <vector>
 
 enum PLAYER_STATE
 {
@@ -35,6 +36,8 @@ public:
 	virtual void Update();
 	virtual void Draw(HDC hdc);
 	virtual void Release();
+	virtual bool CollisionCheck(std::vector< CircusObject*>::iterator iter);
+	virtual void ReStart();
 public:
 	Player();
 	~Player();

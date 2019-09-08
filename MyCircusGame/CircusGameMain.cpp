@@ -59,11 +59,11 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 	case WM_CREATE:
 		hdc = GetDC(hWnd);
 		SetTimer(hWnd, 1, 10, NULL);
-		/****************더블버퍼********************/
+		
 		g_MemDC = CreateCompatibleDC(hdc);
 		g_hBitMap = CreateCompatibleBitmap(hdc, 512, 450);
 		g_hOld = (HBITMAP)SelectObject(g_MemDC, g_hBitMap);
-		/****************************************************/
+	
 		CircusGame::GetInstance()->Init(hWnd, g_MemDC);
 		ReleaseDC(hWnd, g_MemDC);
 		ReleaseDC(hWnd, hdc);

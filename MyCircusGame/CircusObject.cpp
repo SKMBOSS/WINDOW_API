@@ -32,3 +32,7 @@ int	 CircusObject::GetDirection()
 
 	else return 0;
 }
+
+void CircusObject::ReStart()
+{
+}

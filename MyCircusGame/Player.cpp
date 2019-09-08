@@ -22,7 +22,7 @@ void Player::Init()
 	m_speed = CircusObject::m_sScreenSpeed;
 	m_bOnAnimator = false;
 	m_bJump = false;
-	m_iMaxJumpCount = 60;
+	m_iMaxJumpCount = 70;
 	m_iJumpConut = m_iMaxJumpCount;
 }
 
@@ -31,7 +31,8 @@ void Player::Input(WPARAM wParam)
 	switch (wParam)
 	{
 	case VK_LEFT:
-		if (m_eState == PL_JUMPUP || m_eState == PL_JUMP_FRONT || m_eState == PL_JUMP_BACK)
+		if (m_eState == PL_JUMPUP || m_eState == PL_JUMP_FRONT 
+			|| m_eState == PL_JUMP_BACK || m_eState == PL_DIE)
 			break;
 		if (m_eState == PL_IDLE)
 		{
@@ -40,7 +41,8 @@ void Player::Input(WPARAM wParam)
 		m_eState = PL_BACK;
 		break;
 	case VK_RIGHT:
-		if (m_eState == PL_JUMPUP || m_eState == PL_JUMP_FRONT || m_eState == PL_JUMP_BACK)
+		if (m_eState == PL_JUMPUP || m_eState == PL_JUMP_FRONT 
+			|| m_eState == PL_JUMP_BACK || m_eState == PL_DIE)
 			break;
 		if (m_eState == PL_IDLE)
 		{
@@ -80,7 +82,8 @@ void Player::TerminateInput(WPARAM wParam)
 	{
 	case VK_LEFT:
 	case VK_RIGHT:
-		if (m_eState == PL_JUMPUP || m_eState == PL_JUMP_FRONT || m_eState == PL_JUMP_BACK)
+		if (m_eState == PL_JUMPUP || m_eState == PL_JUMP_FRONT 
+			|| m_eState == PL_JUMP_BACK || m_eState == PL_DIE)
 			break;
 		m_bOnAnimator = false;
 		m_eState = PL_IDLE;
@@ -136,16 +139,17 @@ void Player::Update()
 	else if (m_eState == PL_JUMPUP)
 	{
 		
-		if (m_iJumpConut >= 30)
+		if (m_iJumpConut >= 35)
 		{
 			m_Pos.y -= 3;
 		}
-		else if (m_iJumpConut < 30)
+		else if (m_iJumpConut < 35)
 		{
 			m_Pos.y += 3;
 			if (m_iJumpConut == 0)
 			{
 				m_eState = PL_IDLE;
+				m_pBitMap = ResourceManager::GetInstance()->GetBitMap(RES_TYPE_PLAYER_00);
 				if (GetKeyState(VK_RIGHT) < 0)
 					m_eState = PL_FRONT;
 				else if (GetKeyState(VK_LEFT) < 0)
@@ -161,18 +165,19 @@ void Player::Update()
 		if (m_Pos.x <= 5758 + 246 + 70)
 			CircusObject::MoveScreenRight();
 
-		if (m_iJumpConut >= 30)
+		if (m_iJumpConut >= 35)
 		{
 			m_Pos.y -= 3;
 			m_Pos.x += 2;
 		}
-		else if (m_iJumpConut < 30)
+		else if (m_iJumpConut < 35)
 		{
 			m_Pos.y += 3;
 			m_Pos.x += 2;
 			if (m_iJumpConut == 0)
 			{
 				m_eState = PL_IDLE;
+				m_pBitMap = ResourceManager::GetInstance()->GetBitMap(RES_TYPE_PLAYER_00);
 				if(GetKeyState(VK_RIGHT) < 0)
 					m_eState = PL_FRONT;
 				else if (GetKeyState(VK_LEFT) < 0)
@@ -188,18 +193,19 @@ void Player::Update()
 		if (m_Pos.x <= 5760 + 246 + 70)
 			CircusObject::MoveScreenLeft();
 
-		if (m_iJumpConut >= 30)
+		if (m_iJumpConut >= 35)
 		{
 			m_Pos.y -= 3;
 			m_Pos.x -= 2;
 		}
-		else if (m_iJumpConut < 30)
+		else if (m_iJumpConut < 35)
 		{
 			m_Pos.y += 3;
 			m_Pos.x -= 2;
 			if (m_iJumpConut == 0)
 			{
 				m_eState = PL_IDLE;
+				m_pBitMap = ResourceManager::GetInstance()->GetBitMap(RES_TYPE_PLAYER_00);
 				if (GetKeyState(VK_RIGHT) < 0)
 					m_eState = PL_FRONT;
 				else if (GetKeyState(VK_LEFT) < 0)
@@ -232,6 +238,13 @@ void Player::Draw(HDC hdc)
 	TCHAR szBuf4[128];
 	wsprintf(szBuf4, TEXT("64? :%d"), CircusObject::m_sScreenPosX % 64);
 	TextOut(hdc, 200, 180, szBuf4, lstrlen(szBuf4));
+
+	if (m_eState == PL_DIE)
+	{
+		TCHAR szBuf[128];
+		wsprintf(szBuf, TEXT("´ÔµÚÁü ¤»"));
+		TextOut(hdc, 200, 200, szBuf, lstrlen(szBuf));
+	}
 }
 
 void Player::Release()
@@ -240,3 +253,32 @@ void Player::Release()
 }
 
 
+bool Player::CollisionCheck(std::vector< CircusObject*>::iterator iter)
+{
+	RECT temp;
+	RECT playerRect = { m_Pos.x, m_Pos.y, m_Pos.x + 64, m_Pos.y + 64 };
+
+	if (IntersectRect(&temp, &(*iter)->GetCollisonBox(), &playerRect))
+	{
+		m_pBitMap = ResourceManager::GetInstance()->GetBitMap(RES_TYPE_PLAYER_DIE);
+		m_eState = PL_DIE;
+		return true;
+	}
+
+	return false;
+}
+
+void Player::ReStart()
+{
+	CircusObject::ReStart();
+	m_Pos.x = CircusObject::m_sScreenPosX+70;
+	m_Pos.y = 325;
+	m_pBitMap = ResourceManager::GetInstance()->GetBitMap(RES_TYPE_PLAYER_00);
+	m_inputStartTime = 0;
+	m_speed = CircusObject::m_sScreenSpeed;
+	m_bOnAnimator = false;
+	m_bJump = false;
+	m_iMaxJumpCount = 70;
+	m_iJumpConut = m_iMaxJumpCount;
+	m_eState = PL_IDLE;
+}

@@ -4,14 +4,11 @@
 #include "BitMap.h"
 #include <time.h>
 
+int FireRing::m_sFireRingNumber = 0;
 
 FireRing::FireRing()
 {
-	m_Pos.x = 500;
-	m_Pos.y = 182;
-	m_pBitMap = ResourceManager::GetInstance()->GetBitMap(RES_TYPE_ENEMY_00);
-
-	m_eState = FR_FRONT;
+	miThisNumber = m_sFireRingNumber++;
 }
 
 FireRing::~FireRing()
@@ -21,47 +18,56 @@ FireRing::~FireRing()
 
 void FireRing::Init()
 {
+	m_inputStartTime = GetTickCount();
+	m_bIsOnScreen = false;
+	m_Pos.x = 0;
+	m_Pos.y = 182;
+	m_pBitMap = ResourceManager::GetInstance()->GetBitMap(RES_TYPE_ENEMY_FIRE_0);
 }
 
 void FireRing::Input(WPARAM wParam)
 {
-	switch (wParam)
-	{
-	case VK_LEFT:
-		m_eState = FR_BACK;
-		break;
-	}
 }
 
 void FireRing::TerminateInput(WPARAM wParam)
 {
-	switch (wParam)
-	{
-	case VK_LEFT:
-	case VK_RIGHT:
-		m_eState = FR_FRONT;
-		break;
-	}
 }
 
 void FireRing::Update()
 {
-	if (m_eState == FR_FRONT)
+	if (m_bIsOnScreen)
 	{
+		if (GetTickCount() % 20 == 0)
+			m_pBitMap = ResourceManager::GetInstance()->GetBitMap(RES_TYPE_ENEMY_FIRE_1);
+		else if (GetTickCount() % 20 == 10)
+			m_pBitMap = ResourceManager::GetInstance()->GetBitMap(RES_TYPE_ENEMY_FIRE_0);
+
 		m_Pos.x -= 1;
-		if (m_Pos.x <= 2) m_Pos.x = 400;
-	}
 
-	else if (m_eState == FR_BACK)
+		if (m_Pos.x < CircusObject::m_sScreenPosX - 64)
+		{
+			m_bIsOnScreen = false;
+			m_inputStartTime = GetTickCount();
+		}
+	}
+	else
 	{
-		m_Pos.x += 1;
+		int iSpawnTime = rand() % 1000 + (2000 * miThisNumber);
+		if (GetTickCount() - m_inputStartTime  >= iSpawnTime)
+		{
+			m_Pos.x = CircusObject::m_sScreenPosX + 640* (miThisNumber+1);
+			m_bIsOnScreen = true;
+		}
 	}
-
 }
 
 void FireRing::Draw(HDC hdc)
 {
-	m_pBitMap->Draw(hdc, m_Pos.x, m_Pos.y);
+	if (m_bIsOnScreen && CircusObject::m_sScreenPosX <= 5500)
+	{
+		int iActualOutputX = m_Pos.x - CircusObject::m_sScreenPosX;
+		m_pBitMap->Draw(hdc, iActualOutputX, m_Pos.y);
+	}
 }
 
 void FireRing::Release()
@@ -69,3 +75,15 @@ void FireRing::Release()
 	SAFE_DELETE(m_pBitMap);
 }
 
+RECT FireRing::GetCollisonBox()
+{
+	SIZE size = m_pBitMap->GetSize();
+
+	RECT CB = { m_Pos.x+10 , m_Pos.y + size.cy-2, m_Pos.x + size.cx-10, m_Pos.y + size.cy };
+	return CB;
+}
+
+void FireRing::ReStart()
+{
+	Init();
+}
