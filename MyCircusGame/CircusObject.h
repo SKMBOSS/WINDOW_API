@@ -2,6 +2,14 @@
 #include <Windows.h>
 #include <vector>
 
+enum OBJECT_TAG
+{
+	TAG_FIRERING,
+	TAG_FIREJAR,
+	TAG_WINFLOOR
+
+};
+
 class BitMap;
 class CircusObject
 {
@@ -25,6 +33,7 @@ public:
 	virtual RECT GetCollisonBox() { RECT temp; return temp; }
 public:
 	virtual void ReStart() {};
+	virtual OBJECT_TAG GetTag() {};
 	
 public:
 	CircusObject();

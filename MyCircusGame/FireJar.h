@@ -18,8 +18,12 @@ public:
 public:
 	virtual RECT GetCollisonBox();
 	virtual void ReStart();
+	inline virtual OBJECT_TAG GetTag()
+	{
+		return TAG_FIRERING;
+	}
 public:
 	FireJar();
-	~FireJar();
+	virtual ~FireJar();
 };
 
