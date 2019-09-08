@@ -1,15 +1,13 @@
 #pragma once
 #include "CircusObject.h"
-
-class FireRing :
+class FireJar :
 	public CircusObject
-{private:
-	static int	m_sFireRingNumber;
+{
+private:
+	static int	m_sFireJarNumber;
 	int			miThisNumber;
 	POINT		m_Pos;
 	BitMap*		m_pBitMap;
-	bool		m_bIsOnScreen;
-	DWORD		m_inputStartTime;
 public:
 	virtual void Init();
 	virtual void Input(WPARAM wParam);
@@ -21,7 +19,7 @@ public:
 	virtual RECT GetCollisonBox();
 	virtual void ReStart();
 public:
-	FireRing();
-	~FireRing();
+	FireJar();
+	~FireJar();
 };
 

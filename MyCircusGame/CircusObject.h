@@ -20,9 +20,12 @@ public:
 	virtual void Update() = 0;
 	virtual void Draw(HDC hdc) = 0;
 	virtual void Release() = 0;
+public:
 	virtual bool CollisionCheck(std::vector< CircusObject*>::iterator iter) { return false; }
 	virtual RECT GetCollisonBox() { RECT temp; return temp; }
-	virtual void ReStart();
+public:
+	virtual void ReStart() {};
+	
 public:
 	CircusObject();
 	virtual ~CircusObject();

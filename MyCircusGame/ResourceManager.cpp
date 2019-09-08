@@ -60,6 +60,8 @@ void ResourceManager::InitResPath()
 
 	resPath.push_back(basePath + "enemy.bmp");
 	resPath.push_back(basePath + "enemy1.bmp");
+	resPath.push_back(basePath + "front.bmp");
+	resPath.push_back(basePath + "front2.bmp");
 
 	resPath.push_back(basePath + "Player0.bmp");
 	resPath.push_back(basePath + "Player1.bmp");

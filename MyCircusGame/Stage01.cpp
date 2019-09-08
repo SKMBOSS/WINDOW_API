@@ -6,6 +6,7 @@
 #include "Player.h"
 #include "BackGround.h"
 #include "FireRing.h"
+#include "FireJar.h"
 #include "Miter.h"
 #include "time.h"
 
@@ -24,7 +25,7 @@ void Stage01::Init(HWND hWnd, HDC hdc)
 	m_eState = STAGE01_PLAYING;
 	m_bWaiting = false;
 	m_DeathTime = 44444;
-	
+
 	for (int i = 0; i < 110; i++)
 	{
 		CircusObject* m_pBackGround = new BackGround();
@@ -38,10 +39,16 @@ void Stage01::Init(HWND hWnd, HDC hdc)
 		m_vecObj.push_back(pFireRing);
 	}
 
+	for (int i = 0; i < 6; i++)
+	{
+		CircusObject* pFireJar = new FireJar();
+		m_vecObj.push_back(pFireJar);
+	}
+
 	m_PlayerIter = m_vecObj.end();
 	CircusObject* pPlayer = new Player();
 	m_vecObj.push_back(pPlayer);
-	
+
 	CircusObject* pMiter = new Miter();
 	m_vecObj.push_back(pMiter);
 
@@ -68,17 +75,15 @@ void Stage01::Update()
 		for (auto iter = m_vecObj.begin(); iter != m_vecObj.end(); ++iter)
 			(*iter)->Update();
 
-		auto iter = m_PlayerIter;
-		for (int i = 0; i < 3; i++)
+		for (auto iter = m_FireStartIter; iter != m_PlayerIter; ++iter)
 		{
-			if ((*iter)->CollisionCheck(m_FireStartIter))
+			if ((*m_PlayerIter)->CollisionCheck(iter))
 			{
 				m_DeathTime = GetTickCount();
 				m_pScreenBitMap = ResourceManager::GetInstance()->GetBitMap(RES_TYPE_WAITING_SCENE);
 				m_bWaiting = true;
-				iter++;
 			}
-		}	
+		}
 	}
 
 	if (GetTickCount() - m_DeathTime >= 2000 && m_bWaiting)
@@ -87,13 +92,12 @@ void Stage01::Update()
 		m_bWaiting = false;
 		m_DeathTime = GetTickCount();
 	}
-		
+
 	if (GetTickCount() - m_DeathTime >= 2000 && m_eState == STAGE01_WATING)
 	{
 		(*m_PlayerIter)->ReStart();
-		auto iter = m_FireStartIter;
-		for (int i = 0; i < 3; i++)
-		(*iter++) ->ReStart();
+		for (auto iter = m_FireStartIter; iter != m_PlayerIter; ++iter)
+			(*iter)->ReStart();
 
 		m_eState = STAGE01_PLAYING;
 	}
@@ -102,7 +106,7 @@ void Stage01::Update()
 
 void Stage01::Draw(HDC hdc)
 {
-	
+
 	if (m_eState == STAGE01_PLAYING)
 	{
 		for (auto iter = m_vecObj.begin(); iter != m_vecObj.end(); ++iter)
@@ -110,8 +114,6 @@ void Stage01::Draw(HDC hdc)
 	}
 	else if (m_eState == STAGE01_WATING)
 		m_pScreenBitMap->Draw(hdc, 0, 0);
-	
-	
 }
 
 void Stage01::Release()

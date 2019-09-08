@@ -147,6 +147,7 @@
     <ClCompile Include="CircusGame.cpp" />
     <ClCompile Include="CircusGameMain.cpp" />
     <ClCompile Include="CircusObject.cpp" />
+    <ClCompile Include="FireJar.cpp" />
     <ClCompile Include="FireRing.cpp" />
     <ClCompile Include="Miter.cpp" />
     <ClCompile Include="Player.cpp" />
@@ -160,6 +161,7 @@
     <ClInclude Include="BitMap.h" />
     <ClInclude Include="CircusGame.h" />
     <ClInclude Include="CircusObject.h" />
+    <ClInclude Include="FireJar.h" />
     <ClInclude Include="FireRing.h" />
     <ClInclude Include="Macro.h" />
     <ClInclude Include="Miter.h" />

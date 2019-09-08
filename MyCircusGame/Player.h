@@ -36,6 +36,7 @@ public:
 	virtual void Update();
 	virtual void Draw(HDC hdc);
 	virtual void Release();
+public:
 	virtual bool CollisionCheck(std::vector< CircusObject*>::iterator iter);
 	virtual void ReStart();
 public:

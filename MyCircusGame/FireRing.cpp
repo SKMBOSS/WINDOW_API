@@ -55,8 +55,13 @@ void FireRing::Update()
 		int iSpawnTime = rand() % 1000 + (2000 * miThisNumber);
 		if (GetTickCount() - m_inputStartTime  >= iSpawnTime)
 		{
-			m_Pos.x = CircusObject::m_sScreenPosX + 640* (miThisNumber+1);
 			m_bIsOnScreen = true;
+			if (CircusObject::m_sScreenPosX <= 5500 - 640 * (2 -miThisNumber))
+			m_Pos.x = CircusObject::m_sScreenPosX + 640 * (miThisNumber+1);
+
+			else if (m_Pos.x >= 5500)
+				m_Pos.x = -100;
+			else m_Pos.x = 0;
 		}
 	}
 }
