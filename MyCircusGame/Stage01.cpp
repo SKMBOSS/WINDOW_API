@@ -51,38 +51,20 @@ void Stage01::Update()
 	{
 		for (auto iter = m_vecObj.begin(); iter != m_vecObj.end(); ++iter)
 			(*iter)->Update();
-
-		for (auto iter = m_FireStartIter; iter != m_PlayerIter; ++iter)
-		{
-			OBJECT_TAG objTag = (*m_PlayerIter)->CollisionCheck(iter);
-			if (objTag == TAG_ENEMY)
-			{
-				m_DeathTime = GetTickCount();
-				m_pScreenBitMap = ResourceManager::GetInstance()->GetBitMap(RES_TYPE_WAITING_SCENE);
-				m_bWaiting = true;
-			}
-			else if (objTag == TAG_WINFLOOR)
-			{
-				m_DeathTime = GetTickCount();
-				m_eState = STAGE01_END;
-			}
-		}
+		CollisionCheckForState();
 	}
 	if (m_eState == STAGE01_END)
 	{
 		for (auto iter = m_vecObj.begin(); iter != m_FireStartIter; ++iter)
 			(*iter)->Win(GetTickCount() - m_DeathTime);
-
 		(*m_PlayerIter)->Win(GetTickCount() - m_DeathTime);
 	}
-
 	if (GetTickCount() - m_DeathTime >= 2000 && m_bWaiting)
 	{
 		m_eState = STAGE01_WATING;
 		m_bWaiting = false;
 		m_DeathTime = GetTickCount();
 	}
-
 	if (GetTickCount() - m_DeathTime >= 2000 && m_eState == STAGE01_WATING)
 	{
 		(*m_PlayerIter)->ReStart();
@@ -118,12 +100,11 @@ void Stage01::Release()
 
 void Stage01::CircusObjectMake()
 {
-	for (int i = 0; i < 10; i++)
+	for (int i = 0; i < 120; i++)
 	{
 		CircusObject* m_pBackGround = new BackGround();
 		m_vecObj.push_back(m_pBackGround);
 	}
-
 	m_FireStartIter = m_vecObj.end();
 	for (int i = 0; i < 3; i++)
 	{
@@ -144,9 +125,48 @@ void Stage01::CircusObjectMake()
 	CircusObject* pPlayer = new Player();
 	m_vecObj.push_back(pPlayer);
 
+	m_ScoreBoardIter = m_vecObj.end();
 	CircusObject* pMiter = new Miter();
 	m_vecObj.push_back(pMiter);
 
 	CircusObject* pScoreBoard = new ScoreBoard();
 	m_vecObj.push_back(pScoreBoard);
+}
+
+void Stage01::CollisionCheckForState()
+{
+	for (auto iter = m_FireStartIter; iter != m_PlayerIter; ++iter)
+	{
+		OBJECT_TAG objTag = (*m_PlayerIter)->CollisionCheck(iter);
+		if (objTag == TAG_ENEMY)
+		{
+			m_DeathTime = GetTickCount();
+			m_pScreenBitMap = ResourceManager::GetInstance()->GetBitMap(RES_TYPE_WAITING_SCENE);
+			m_bWaiting = true;
+		}
+		else if (objTag == TAG_WINFLOOR)
+		{
+			m_DeathTime = GetTickCount();
+			m_eState = STAGE01_END;
+		}
+	}
+}
+
+void Stage01::CollisionCheckForScore()
+{
+	for (auto iter = m_FireStartIter; iter != m_PlayerIter; ++iter)
+	{
+		OBJECT_TAG objTag = (*m_PlayerIter)->CollisionCheck(iter);
+		if (objTag == TAG_ENEMY)
+		{
+			m_DeathTime = GetTickCount();
+			m_pScreenBitMap = ResourceManager::GetInstance()->GetBitMap(RES_TYPE_WAITING_SCENE);
+			m_bWaiting = true;
+		}
+		else if (objTag == TAG_WINFLOOR)
+		{
+			m_DeathTime = GetTickCount();
+			m_eState = STAGE01_END;
+		}
+	}
 }

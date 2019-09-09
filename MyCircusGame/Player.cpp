@@ -298,7 +298,6 @@ OBJECT_TAG Player::CollisionCheck(std::vector< CircusObject*>::iterator iter)
 		}
 		return cObj;
 	}
-
 	return TAG_OBJECT;
 }
 

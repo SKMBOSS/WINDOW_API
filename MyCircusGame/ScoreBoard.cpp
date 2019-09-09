@@ -20,6 +20,9 @@ void ScoreBoard::Init()
 	m_BonusTime = GetTickCount();
 	m_pBitMap = ResourceManager::GetInstance()->GetBitMap(RES_TYPE_SCORE_BOARD);
 
+	m_iScore = 0;
+	SetDigitNumberBitMap(m_iScore, m_pScore, 6);
+
 	m_iBonus = 5010;
 	SetDigitNumberBitMap(m_iBonus, m_pBonus, 4);
 }
@@ -44,10 +47,11 @@ void ScoreBoard::Draw(HDC hdc)
 {
 	m_pBitMap->Draw(hdc, m_Pos.x, m_Pos.y);
 
+	for (int i = 0; i < 6; i++)
+		m_pScore[i]->Draw(hdc, (m_Pos.x + 60) + 14 * (i), 30);
+
 	for (int i = 0; i < 4; i++)
-	{
 		m_pBonus[i]->Draw(hdc, (m_Pos.x + 269) + 14 * (i), 45);
-	}
 }
 
 void ScoreBoard::Release()

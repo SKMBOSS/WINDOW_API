@@ -7,6 +7,9 @@ class ScoreBoard :
 private:
 	POINT		m_Pos;
 	BitMap*		m_pBitMap;
+	//현재스코어
+	int			m_iScore;
+	BitMap*		m_pScore[6];
 	//보너스
 	int			m_iBonus;
 	DWORD		m_BonusTime;

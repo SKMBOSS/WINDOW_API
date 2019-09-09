@@ -16,16 +16,20 @@ class Stage01 :
 {
 private:
 	HWND									m_hWnd;
-	std::vector< CircusObject*>				m_vecObj;
-	std::vector< CircusObject*>::iterator   m_FireStartIter;
-	std::vector< CircusObject*>::iterator   m_WinFloorIter;
-	std::vector< CircusObject*>::iterator	m_PlayerIter;
 	DWORD									m_DeathTime;
 	STAGE01_STATE							m_eState;
 	BitMap*									m_pScreenBitMap;
 	bool									m_bWaiting;
+	std::vector< CircusObject*>				m_vecObj;
+	std::vector< CircusObject*>::iterator   m_FireStartIter;
+	std::vector< CircusObject*>::iterator   m_WinFloorIter;
+	std::vector< CircusObject*>::iterator	m_PlayerIter;
+	std::vector< CircusObject*>::iterator	m_ScoreBoardIter;
+	
 public:
 	void CircusObjectMake();
+	void CollisionCheckForState();
+	void CollisionCheckForScore();
 public:
 	virtual void Init(HWND hWnd, HDC hdc);
 	virtual void Input(WPARAM wParam);
