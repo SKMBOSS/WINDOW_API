@@ -139,7 +139,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="BitMap.cpp" />
+    <ClCompile Include="MapEditor.cpp" />
     <ClCompile Include="MapEditorMain.cpp" />
+    <ClCompile Include="ResourceManager.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="BitMap.h" />
+    <ClInclude Include="Macro.h" />
+    <ClInclude Include="MapEditor.h" />
+    <ClInclude Include="ResourceManager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
