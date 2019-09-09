@@ -1,11 +1,9 @@
 #pragma once
 #include "CircusObject.h"
-class FireJar :
+class WinFloor :
 	public CircusObject
 {
 private:
-	static int	m_sFireJarNumber;
-	int			miThisNumber;
 	POINT		m_Pos;
 	BitMap*		m_pBitMap;
 public:
@@ -17,13 +15,11 @@ public:
 	virtual void Release();
 public:
 	virtual RECT GetCollisonBox();
-	virtual void ReStart();
 	inline virtual OBJECT_TAG GetTag()
 	{
-		return TAG_ENEMY;
+		return TAG_WINFLOOR;
 	}
 public:
-	FireJar();
-	virtual ~FireJar();
+	WinFloor();
+	~WinFloor();
 };
-

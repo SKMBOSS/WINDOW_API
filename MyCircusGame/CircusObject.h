@@ -4,10 +4,9 @@
 
 enum OBJECT_TAG
 {
-	TAG_FIRERING,
-	TAG_FIREJAR,
+	TAG_OBJECT,
+	TAG_ENEMY,
 	TAG_WINFLOOR
-
 };
 
 class BitMap;
@@ -29,11 +28,12 @@ public:
 	virtual void Draw(HDC hdc) = 0;
 	virtual void Release() = 0;
 public:
-	virtual bool CollisionCheck(std::vector< CircusObject*>::iterator iter) { return false; }
+	virtual OBJECT_TAG CollisionCheck(std::vector< CircusObject*>::iterator iter) { return TAG_OBJECT; }
 	virtual RECT GetCollisonBox() { RECT temp; return temp; }
 public:
 	virtual void ReStart() {};
-	virtual OBJECT_TAG GetTag() {};
+	virtual OBJECT_TAG GetTag() { return TAG_OBJECT; };
+	virtual void Win(DWORD time) {};
 	
 public:
 	CircusObject();

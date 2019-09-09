@@ -84,3 +84,11 @@ int BackGround::GetWholeBackGroundSizeX()
 {
 	return GetThisBackGroundSizeX() * (m_sBackGroundNumber+1);
 }
+
+void BackGround::Win(DWORD time)
+{
+	if (time % 10 == 0)
+		m_pTopBitMap = ResourceManager::GetInstance()->GetBitMap(RES_TYPE_BACK_NORMAL2);
+	else if (time % 10 == 5)
+		m_pTopBitMap = ResourceManager::GetInstance()->GetBitMap(RES_TYPE_BACK_NORMAL);
+}

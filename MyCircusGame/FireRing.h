@@ -22,7 +22,7 @@ public:
 	virtual void ReStart();
 	inline virtual OBJECT_TAG GetTag() 
 	{
-		return TAG_FIRERING;
+		return TAG_ENEMY;
 	}
 public:
 	FireRing();

@@ -56,17 +56,22 @@ void ResourceManager::InitResPath()
 	resPath.push_back(basePath + "back.bmp");
 	resPath.push_back(basePath + "back_deco.bmp");
 	resPath.push_back(basePath + "back_normal.bmp");
+	resPath.push_back(basePath + "back_normal2.bmp");
 	resPath.push_back(basePath + "miter.bmp");
 
 	resPath.push_back(basePath + "enemy.bmp");
 	resPath.push_back(basePath + "enemy1.bmp");
 	resPath.push_back(basePath + "front.bmp");
 	resPath.push_back(basePath + "front2.bmp");
+	resPath.push_back(basePath + "end.bmp");
 
 	resPath.push_back(basePath + "Player0.bmp");
 	resPath.push_back(basePath + "Player1.bmp");
 	resPath.push_back(basePath + "Player2.bmp");
+	resPath.push_back(basePath + "win.bmp");
+	resPath.push_back(basePath + "win2.bmp");
 	resPath.push_back(basePath + "die.bmp");
+	resPath.push_back(basePath + "scoreboard.bmp");
 	resPath.push_back(basePath + "wating.bmp");
 
 }

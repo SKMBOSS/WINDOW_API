@@ -24,6 +24,8 @@ public:
 	virtual void Draw(HDC hdc);
 	virtual void Release();
 public:
+	virtual void Win(DWORD time);
+public:
 	BackGround();
 	virtual ~BackGround();
 };

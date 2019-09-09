@@ -28,6 +28,7 @@ private:
 	int				m_iJumpConut;
 	int				m_iMaxJumpCount;
 	bool			m_bJump;
+	bool			m_bWin;
 
 public:
 	virtual void Init();
@@ -37,8 +38,9 @@ public:
 	virtual void Draw(HDC hdc);
 	virtual void Release();
 public:
-	virtual bool CollisionCheck(std::vector< CircusObject*>::iterator iter);
+	virtual OBJECT_TAG CollisionCheck(std::vector< CircusObject*>::iterator iter);
 	virtual void ReStart();
+	virtual void Win(DWORD time);
 public:
 	Player();
 	~Player();

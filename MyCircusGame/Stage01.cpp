@@ -7,7 +7,9 @@
 #include "BackGround.h"
 #include "FireRing.h"
 #include "FireJar.h"
+#include "WinFloor.h"
 #include "Miter.h"
+#include "ScoreBoard.h"
 #include "time.h"
 
 Stage01::Stage01()
@@ -26,32 +28,7 @@ void Stage01::Init(HWND hWnd, HDC hdc)
 	m_bWaiting = false;
 	m_DeathTime = 44444;
 
-	for (int i = 0; i < 110; i++)
-	{
-		CircusObject* m_pBackGround = new BackGround();
-		m_vecObj.push_back(m_pBackGround);
-	}
-
-	m_FireStartIter = m_vecObj.end();
-	for (int i = 0; i < 3; i++)
-	{
-		CircusObject* pFireRing = new FireRing();
-		m_vecObj.push_back(pFireRing);
-	}
-
-	for (int i = 0; i < 6; i++)
-	{
-		CircusObject* pFireJar = new FireJar();
-		m_vecObj.push_back(pFireJar);
-	}
-
-	m_PlayerIter = m_vecObj.end();
-	CircusObject* pPlayer = new Player();
-	m_vecObj.push_back(pPlayer);
-
-	CircusObject* pMiter = new Miter();
-	m_vecObj.push_back(pMiter);
-
+	CircusObjectMake();
 	for (auto iter = m_vecObj.begin(); iter != m_vecObj.end(); ++iter)
 		(*iter)->Init();
 }
@@ -77,13 +54,26 @@ void Stage01::Update()
 
 		for (auto iter = m_FireStartIter; iter != m_PlayerIter; ++iter)
 		{
-			if ((*m_PlayerIter)->CollisionCheck(iter))
+			OBJECT_TAG objTag = (*m_PlayerIter)->CollisionCheck(iter);
+			if (objTag == TAG_ENEMY)
 			{
 				m_DeathTime = GetTickCount();
 				m_pScreenBitMap = ResourceManager::GetInstance()->GetBitMap(RES_TYPE_WAITING_SCENE);
 				m_bWaiting = true;
 			}
+			else if (objTag == TAG_WINFLOOR)
+			{
+				m_DeathTime = GetTickCount();
+				m_eState = STAGE01_END;
+			}
 		}
+	}
+	if (m_eState == STAGE01_END)
+	{
+		for (auto iter = m_vecObj.begin(); iter != m_FireStartIter; ++iter)
+			(*iter)->Win(GetTickCount() - m_DeathTime);
+
+		(*m_PlayerIter)->Win(GetTickCount() - m_DeathTime);
 	}
 
 	if (GetTickCount() - m_DeathTime >= 2000 && m_bWaiting)
@@ -107,7 +97,7 @@ void Stage01::Update()
 void Stage01::Draw(HDC hdc)
 {
 
-	if (m_eState == STAGE01_PLAYING)
+	if (m_eState == STAGE01_PLAYING || STAGE01_END)
 	{
 		for (auto iter = m_vecObj.begin(); iter != m_vecObj.end(); ++iter)
 			(*iter)->Draw(hdc);
@@ -124,4 +114,39 @@ void Stage01::Release()
 		SAFE_DELETE(*iter);
 	}
 	m_vecObj.clear();
+}
+
+void Stage01::CircusObjectMake()
+{
+	for (int i = 0; i < 10; i++)
+	{
+		CircusObject* m_pBackGround = new BackGround();
+		m_vecObj.push_back(m_pBackGround);
+	}
+
+	m_FireStartIter = m_vecObj.end();
+	for (int i = 0; i < 3; i++)
+	{
+		CircusObject* pFireRing = new FireRing();
+		m_vecObj.push_back(pFireRing);
+	}
+	for (int i = 0; i < 6; i++)
+	{
+		CircusObject* pFireJar = new FireJar();
+		m_vecObj.push_back(pFireJar);
+	}
+
+	m_WinFloorIter = m_vecObj.end();
+	CircusObject* pWinFloor = new WinFloor();
+	m_vecObj.push_back(pWinFloor);
+
+	m_PlayerIter = m_vecObj.end();
+	CircusObject* pPlayer = new Player();
+	m_vecObj.push_back(pPlayer);
+
+	CircusObject* pMiter = new Miter();
+	m_vecObj.push_back(pMiter);
+
+	CircusObject* pScoreBoard = new ScoreBoard();
+	m_vecObj.push_back(pScoreBoard);
 }

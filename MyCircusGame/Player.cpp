@@ -22,17 +22,21 @@ void Player::Init()
 	m_speed = CircusObject::m_sScreenSpeed;
 	m_bOnAnimator = false;
 	m_bJump = false;
+	m_bWin = false;
 	m_iMaxJumpCount = 70;
 	m_iJumpConut = m_iMaxJumpCount;
 }
 
 void Player::Input(WPARAM wParam)
 {
+	if (m_eState == PL_DIE || m_eState == PL_WIN)
+		return;
+
 	switch (wParam)
 	{
 	case VK_LEFT:
 		if (m_eState == PL_JUMPUP || m_eState == PL_JUMP_FRONT 
-			|| m_eState == PL_JUMP_BACK || m_eState == PL_DIE)
+			|| m_eState == PL_JUMP_BACK)
 			break;
 		if (m_eState == PL_IDLE)
 		{
@@ -42,7 +46,7 @@ void Player::Input(WPARAM wParam)
 		break;
 	case VK_RIGHT:
 		if (m_eState == PL_JUMPUP || m_eState == PL_JUMP_FRONT 
-			|| m_eState == PL_JUMP_BACK || m_eState == PL_DIE)
+			|| m_eState == PL_JUMP_BACK)
 			break;
 		if (m_eState == PL_IDLE)
 		{
@@ -78,12 +82,15 @@ void Player::Input(WPARAM wParam)
 
 void Player::TerminateInput(WPARAM wParam)
 {
+	if (m_eState == PL_DIE || m_eState == PL_WIN)
+		return;
+
 	switch (wParam)
 	{
 	case VK_LEFT:
 	case VK_RIGHT:
 		if (m_eState == PL_JUMPUP || m_eState == PL_JUMP_FRONT 
-			|| m_eState == PL_JUMP_BACK || m_eState == PL_DIE)
+			|| m_eState == PL_JUMP_BACK)
 			break;
 		m_bOnAnimator = false;
 		m_eState = PL_IDLE;
@@ -215,6 +222,18 @@ void Player::Update()
 		}
 		m_iJumpConut--;
 	}
+	/*else if (m_eState == PL_WIN)
+	{
+		if ((GetTickCount() - m_inputStartTime) % 20 == 0)
+		{
+			m_pBitMap = ResourceManager::GetInstance()->GetBitMap(RES_TYPE_PLAYER_03);
+		}
+	
+		else if ((GetTickCount() - m_inputStartTime) % 20 == 10)
+		{
+			m_pBitMap = ResourceManager::GetInstance()->GetBitMap(RES_TYPE_PLAYER_04);
+		}
+	}*/
 }
 
 void Player::Draw(HDC hdc)
@@ -223,7 +242,7 @@ void Player::Draw(HDC hdc)
 
 	m_pBitMap->Draw(hdc, iActualOutputX, m_Pos.y);
 
-	TCHAR szBuf[128];
+	/*TCHAR szBuf[128];
 	wsprintf(szBuf, TEXT("ÇÃ·¹ÀÌ¾î :%d"), m_Pos.x);
 	TextOut(hdc, 200, 120, szBuf, lstrlen(szBuf));
 
@@ -245,6 +264,13 @@ void Player::Draw(HDC hdc)
 		wsprintf(szBuf, TEXT("´ÔµÚÁü ¤»"));
 		TextOut(hdc, 200, 200, szBuf, lstrlen(szBuf));
 	}
+
+	if (m_eState == PL_WIN)
+	{
+		TCHAR szBuf[128];
+		wsprintf(szBuf, TEXT("´ÔÀÌ±è ¤» %d"), m_inputStartTime);
+		TextOut(hdc, 200, 200, szBuf, lstrlen(szBuf));
+	}*/
 }
 
 void Player::Release()
@@ -253,19 +279,35 @@ void Player::Release()
 }
 
 
-bool Player::CollisionCheck(std::vector< CircusObject*>::iterator iter)
+OBJECT_TAG Player::CollisionCheck(std::vector< CircusObject*>::iterator iter)
 {
 	RECT temp;
 	RECT playerRect = { m_Pos.x, m_Pos.y, m_Pos.x + 64, m_Pos.y + 64 };
 
 	if (IntersectRect(&temp, &(*iter)->GetCollisonBox(), &playerRect))
 	{
-		m_pBitMap = ResourceManager::GetInstance()->GetBitMap(RES_TYPE_PLAYER_DIE);
-		m_eState = PL_DIE;
-		return true;
+		OBJECT_TAG cObj = (*iter)->GetTag();
+		if (cObj == TAG_ENEMY)
+		{
+			m_eState = PL_DIE;
+			m_pBitMap = ResourceManager::GetInstance()->GetBitMap(RES_TYPE_PLAYER_DIE);
+		}
+		else if (cObj == TAG_WINFLOOR && !m_bWin)
+		{
+			m_bWin = true;
+		}
+		return cObj;
 	}
 
-	return false;
+	return TAG_OBJECT;
+}
+
+void Player::Win(DWORD time)
+{
+	if (time % 20 == 0)
+		m_pBitMap = ResourceManager::GetInstance()->GetBitMap(RES_TYPE_PLAYER_03);
+	else if (time % 20 == 10)
+		m_pBitMap = ResourceManager::GetInstance()->GetBitMap(RES_TYPE_PLAYER_04);
 }
 
 void Player::ReStart()

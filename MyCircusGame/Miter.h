@@ -15,7 +15,6 @@ private:
 	POINT			m_Pos;
 	MITER_STATE		m_eState;
 	BitMap*			m_pBitMap;
-
 	BitMap*			m_pNumber[3];
 	int				m_iMiter;
 
@@ -26,6 +25,9 @@ public:
 	virtual void Update();
 	virtual void Draw(HDC hdc);
 	virtual void Release();
+public:
+	void SetDigitNumberBitMap(int num, BitMap* arrBitMap[], int size);
+	BitMap* GetNumberBitMap(int num);
 public:
 	Miter();
 	~Miter();

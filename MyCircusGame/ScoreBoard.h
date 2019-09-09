@@ -1,13 +1,17 @@
 #pragma once
 #include "CircusObject.h"
-class FireJar :
+
+class ScoreBoard :
 	public CircusObject
 {
 private:
-	static int	m_sFireJarNumber;
-	int			miThisNumber;
 	POINT		m_Pos;
 	BitMap*		m_pBitMap;
+	//º¸³Ê½º
+	int			m_iBonus;
+	DWORD		m_BonusTime;
+	BitMap*		m_pBonus[4];
+	
 public:
 	virtual void Init();
 	virtual void Input(WPARAM wParam);
@@ -15,15 +19,9 @@ public:
 	virtual void Update();
 	virtual void Draw(HDC hdc);
 	virtual void Release();
+
 public:
-	virtual RECT GetCollisonBox();
-	virtual void ReStart();
-	inline virtual OBJECT_TAG GetTag()
-	{
-		return TAG_ENEMY;
-	}
-public:
-	FireJar();
-	virtual ~FireJar();
+	ScoreBoard();
+	~ScoreBoard();
 };
 
