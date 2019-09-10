@@ -1,15 +1,11 @@
 #include <Windows.h>
-#include <string>
-#include <fstream>
-#include <vector>
-#include "BitMap.h"
+#include "MapEditor.h"
 
-using namespace std;
+//#pragma comment (lib, "msimg32.lib")
 
-#define ID_EDIT 100
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
 HINSTANCE g_hInst;
-LPCTSTR lpszClass = TEXT("BattleCityMapEditor");
+LPCTSTR lpszClass = TEXT("맵에디터");
 
 int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmdParam, int nCmdShow)
 {
@@ -20,7 +16,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmd
 
 	WndClass.cbClsExtra = 0;
 	WndClass.cbWndExtra = 0;
-	WndClass.hbrBackground = (HBRUSH)GetStockObject(WHITE_BRUSH);
+	WndClass.hbrBackground = (HBRUSH)GetStockObject(LTGRAY_BRUSH);
 	WndClass.hCursor = LoadCursor(NULL, IDC_ARROW);
 	WndClass.hIcon = LoadIcon(NULL, IDI_APPLICATION);
 	WndClass.hInstance = hInstance;
@@ -43,85 +39,45 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmd
 	return (int)Message.wParam;
 }
 
-HWND hEdit;
-ifstream inFile;
-vector<BitMap*> vecBoard;
-string filename = "왜안돼";
-string szBUF = "";
+HDC g_MemDC;
+HBITMAP g_hBitMap;
+HBITMAP g_hOld;
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 {
 	HDC hdc;
 	PAINTSTRUCT ps;
-
-	OPENFILENAME OFN;
-	char str[256];
-	char lpastrfile[MAX_PATH] = "";
-	memset(&OFN, 0, sizeof(OPENFILENAME));
-	OFN.lStructSize = sizeof(OPENFILENAME);
-	OFN.hwndOwner = hWnd;
-	OFN.lpstrFilter = "Every File(*.*)\0*.*\0Text File\0*.txt;*.ini\0";
-	OFN.lpstrFile = lpastrfile;
-	OFN.nMaxFile = 256;
-	OFN.lpstrInitialDir = "c:\\";
-
-	TCHAR szBuf[128];
-	
-	wsprintf(szBuf, TEXT("님뒤짐 ㅋ"));
+	POINT pt;
 
 	switch (iMessage)
 	{
 	case WM_CREATE:
 		hdc = GetDC(hWnd);
 		SetTimer(hWnd, 1, 10, NULL);
-
-		CreateWindow(TEXT("button"), TEXT("LOAD"), WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON,
-			20, 20, 100, 25, hWnd, (HMENU)0, g_hInst, NULL);
-		CreateWindow(TEXT("button"), TEXT("Me Two"), WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON,
-			20, 50, 100, 25, hWnd, (HMENU)1, g_hInst, NULL);
+		g_MemDC = CreateCompatibleDC(hdc);
+		g_hBitMap = CreateCompatibleBitmap(hdc, 13 * 33, 25 * 17);
+		g_hOld = (HBITMAP)SelectObject(g_MemDC, g_hBitMap);
+		MapEditor::GetInstance()->Init(hWnd, g_MemDC);
+		ReleaseDC(hWnd, g_MemDC);
 		ReleaseDC(hWnd, hdc);
 		return 0;
-	case WM_COMMAND:
-		switch (LOWORD(wParam))
-		{
-		case 0:
-			if (GetSaveFileName(&OFN) != 0)
-			{
-				filename = OFN.lpstrFile;
-				wsprintf(str, "%s", OFN.lpstrFile);
-				MessageBox(hWnd, filename.c_str(), "파일 열기 성공", MB_OK);
-				
-				inFile.open(filename);
-
-
-			}
-			break;
-		case 1:
-			if (GetSaveFileName(&OFN) != 0)
-			{
-				wsprintf(str, "%s 파일을 선택했습니다.", OFN.lpstrFile);
-				MessageBox(hWnd, str, "파일 열기 성공", MB_OK);
-			}
-			MessageBox(hWnd, "Second Button Clicked", "Button", MB_OK);
-			break;
-		}
-		return 0;
 	case WM_TIMER:
-		if (!inFile.eof())
-		{
-			inFile >> szBUF;
-		}
-		InvalidateRect(hWnd, NULL, FALSE);
+		MapEditor::GetInstance()->Update();
 		return 0;
-	case WM_PAINT:
+	case WM_LBUTTONDOWN:
+		pt.x = LOWORD(lParam);
+		pt.y = HIWORD(lParam);
+		MapEditor::GetInstance()->Input(pt);
+		return 0;
+	case WM_RBUTTONDOWN:
+		pt.x = LOWORD(lParam);
+		pt.y = HIWORD(lParam);
+		MapEditor::GetInstance()->InputR(pt);
+		return 0;
+	case  WM_PAINT:
 		hdc = BeginPaint(hWnd, &ps);
-		BeginPaint(hWnd, &ps);
-		
-	
-		TextOut(hdc, 200, 200, szBuf, lstrlen(szBuf));
-		TextOut(hdc, 200, 300, filename.c_str(), filename.length());
-		TextOut(hdc, 200, 400, szBUF.c_str(), szBUF.length());
-
+		MapEditor::GetInstance()->Draw(g_MemDC);
+		BitBlt(hdc, 0+20, 0+20, 13*33+20, 25*17+20, g_MemDC, 0, 0, SRCCOPY);
 		EndPaint(hWnd, &ps);
 		return 0;
 	case WM_DESTROY:

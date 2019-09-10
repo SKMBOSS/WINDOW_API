@@ -41,6 +41,8 @@ void ResourceManager::InitResPath()
 
 	string basePath = "Resource\\BattleCity\\";
 
+	resPath.push_back(basePath + "default.bmp");
+	resPath.push_back(basePath + "block00.bmp");
 	resPath.push_back(basePath + "block01.bmp");
 	resPath.push_back(basePath + "block02.bmp");
 	resPath.push_back(basePath + "block03.bmp");

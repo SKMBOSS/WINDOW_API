@@ -6,6 +6,7 @@ using namespace std;
 
 enum RES_TYPE
 {
+	RES_TYPE_DEFAULT,
 	RES_TYPE_BLOCK_00,//벽돌
 	RES_TYPE_BLOCK_01,//위벽돌
 	RES_TYPE_BLOCK_02,//왼벽돌
