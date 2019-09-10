@@ -20,6 +20,11 @@ enum BLOCK_TYPE
 	BLOCK_ICE,
 	BLOCK_FOREST,
 	BLOCK_WATER,
+
+	BLOCK_NORMAL_BOT_LEFT,
+	BLOCK_NORMAL_BOT_RIGHT,
+
+	BLOCK_LIFE
 };
 
 class BitMap;
@@ -27,18 +32,21 @@ class Block
 {
 public :
 	static BLOCK_TYPE	m_SelectBlockType;
-private:
 	static int			m_sBlockNumber;
+private:
 	int					miThisNumber;
 	POINT				m_Pos;
 	BitMap*				m_pBitMap;
+	bool				m_bNoCLickZone;
+	BLOCK_TYPE			m_eState;
 public:
 	void Init();
 	void Input(POINT pt);
 	void InputR(POINT pt);
-	void Update();
 	void Draw(HDC hdc);
-	void Release();
+	BLOCK_TYPE GetType();
+	void SetBitMap(int type);
+	
 public:
 	Block();
 	virtual ~Block();

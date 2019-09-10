@@ -2,7 +2,6 @@
 #include <Windows.h>
 #include <vector>
 #include <string>
-#include <fstream>
 using namespace std;
 
 class Block;
@@ -11,6 +10,7 @@ class MapEditor
 {
 private:
 	static MapEditor* m_sThis;
+	
 public:
 	static MapEditor* GetInstance();
 private:
@@ -23,6 +23,7 @@ public:
 	void Update();
 	void Draw(HDC hdc);
 	void Release();
+	void LoadData(string fileName);
 	void SaveData(string fileName);
 
 private:

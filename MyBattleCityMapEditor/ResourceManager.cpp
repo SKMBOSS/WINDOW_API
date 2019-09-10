@@ -57,7 +57,14 @@ void ResourceManager::InitResPath()
 
 	resPath.push_back(basePath + "Tile\\block_ice.bmp");
 	resPath.push_back(basePath + "Tile\\block_forest.bmp");
-	resPath.push_back(basePath + "Tile\\block_water.bmp");
+	resPath.push_back(basePath + "Tile\\block_water.bmp"); 
+
+	resPath.push_back(basePath + "Tile\\block_normal_bottom_left.bmp");
+	resPath.push_back(basePath + "Tile\\block_normal_bottom_right.bmp");
+
+	resPath.push_back(basePath + "Tile\\block_life.bmp");
+
+
 }
 
 void ResourceManager::InitBitMap(HDC hdc)

@@ -28,7 +28,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmd
 	RegisterClass(&WndClass);
 
 	hWnd = CreateWindow(lpszClass, lpszClass, WS_OVERLAPPEDWINDOW,
-		CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT,
+		CW_USEDEFAULT, CW_USEDEFAULT, 650, 600,
 		NULL, (HMENU)NULL, hInstance, NULL);
 	ShowWindow(hWnd, nCmdShow);
 
@@ -59,12 +59,12 @@ HBITMAP g_hOld;
 #define ID_R12 112
 #define ID_R13 113
 
-#define SAVE_BUTTON 0
-#define LOAD_BUTTON 1
+#define LOAD_BUTTON 0
+#define SAVE_BUTTON 1
+
 HWND r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, r11, r12, r13;
 
 char messageStr[256];
-char fileName[256];
 char lpastrfile[MAX_PATH] = "";
 
 //zeroMemory(&OFN, sizeof(OPENFILENAME)));
@@ -90,7 +90,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 		hdc = GetDC(hWnd);
 		SetTimer(hWnd, 1, 10, NULL);
 		g_MemDC = CreateCompatibleDC(hdc);
-		g_hBitMap = CreateCompatibleBitmap(hdc, 13 * 32, 17 * 32);
+		g_hBitMap = CreateCompatibleBitmap(hdc, 13 * 32, 13 * 32);
 		g_hOld = (HBITMAP)SelectObject(g_MemDC, g_hBitMap);
 		MapEditor::GetInstance()->Init(hWnd, g_MemDC);
 		ReleaseDC(hWnd, g_MemDC);
@@ -155,9 +155,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 			505, 55 + 300+30, 50, 30, hWnd, (HMENU)ID_R13, g_hInst, NULL);
 
 		CreateWindow(TEXT("button"), TEXT("LOAD"), WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON,
-			23, 32 * 17 + 20+20, 100, 30, hWnd, (HMENU)0, g_hInst, NULL);
+			23, 32 * 13 + 20+20, 100, 30, hWnd, (HMENU)0, g_hInst, NULL);
 		CreateWindow(TEXT("button"), TEXT("SAVE"), WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON,
-			20+10*32-5, 32 * 17 + 20 + 20, 100, 30, hWnd, (HMENU)1, g_hInst, NULL);
+			20+10*32-5, 32 * 13 + 20 + 20, 100, 30, hWnd, (HMENU)1, g_hInst, NULL);
 
 		SendMessage(r1, BM_SETCHECK, BST_CHECKED, 0);
 		return 0;
@@ -205,26 +205,25 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 			case ID_R13:
 				Block::m_SelectBlockType = BLOCK_WATER;
 				break;
-
-			case SAVE_BUTTON:
-				if (GetSaveFileName(&OFN) != 0)
-				{
-					wsprintf(messageStr, "%s 파일을 선택했습니다.", OFN.lpstrFile);
-					MessageBox(hWnd, messageStr, "파일 열기 성공", MB_OK);
-
-
-				}
-				break;
-
-
 			case LOAD_BUTTON:
 				if (GetSaveFileName(&OFN) != 0)
 				{
 					wsprintf(messageStr, "%s 파일을 선택했습니다.", OFN.lpstrFile);
 					MessageBox(hWnd, messageStr, "파일 저장 성공", MB_OK);
+
+					MapEditor::GetInstance()->LoadData(OFN.lpstrFile);
+					
 				}
 				break;
+			case SAVE_BUTTON:
+				if (GetSaveFileName(&OFN) != 0)
+				{
+					wsprintf(messageStr, "%s 파일을 선택했습니다.", OFN.lpstrFile);
+					MessageBox(hWnd, messageStr, "파일 선택 성공", MB_OK);
 
+					MapEditor::GetInstance()->SaveData(OFN.lpstrFile);
+				}
+				break;
 			}
 		}
 		return 0;
@@ -244,7 +243,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 	case  WM_PAINT:
 		hdc = BeginPaint(hWnd, &ps);
 		MapEditor::GetInstance()->Draw(g_MemDC);
-		BitBlt(hdc, 0+20, 0+20, 13*32+20, 25*32+20, g_MemDC, 0, 0, SRCCOPY);
+		BitBlt(hdc, 0+20, 0+20, 13*32+20, 13*32+20, g_MemDC, 0, 0, SRCCOPY);
 		EndPaint(hWnd, &ps);
 		return 0;
 	case WM_DESTROY:
