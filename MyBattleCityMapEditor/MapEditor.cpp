@@ -4,6 +4,7 @@
 #include "Block.h"
 #include "Macro.h"
 
+
 MapEditor* MapEditor::m_sThis = nullptr;
 
 MapEditor::MapEditor()
@@ -50,7 +51,7 @@ void MapEditor::InputR(POINT pt)
 
 void MapEditor::Update()
 {
-	RECT rt = { 0 + 20, 0 + 20, 13 * 32 + 20, 25 * 32 + 20 };
+	RECT rt = { 0 + 20, 0 + 20, 13 * 32 + 20, 17 * 32 + 20 };
 	InvalidateRect(m_hWnd, &rt, FALSE);
 }
 
@@ -65,4 +66,9 @@ void MapEditor::Release()
 	ResourceManager::GetInstance()->Release();
 	//SceneManager::GetInstance()->Release();
 	SAFE_DELETE(m_sThis);
+}
+
+void MapEditor::SaveData(string fileName)
+{
+	//
 }

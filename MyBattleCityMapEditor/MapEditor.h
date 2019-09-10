@@ -1,7 +1,8 @@
 #pragma once
 #include <Windows.h>
 #include <vector>
-
+#include <string>
+#include <fstream>
 using namespace std;
 
 class Block;
@@ -22,6 +23,8 @@ public:
 	void Update();
 	void Draw(HDC hdc);
 	void Release();
+	void SaveData(string fileName);
+
 private:
 	MapEditor();
 public:

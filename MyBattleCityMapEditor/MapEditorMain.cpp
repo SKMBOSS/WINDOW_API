@@ -211,8 +211,12 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 				{
 					wsprintf(messageStr, "%s 파일을 선택했습니다.", OFN.lpstrFile);
 					MessageBox(hWnd, messageStr, "파일 열기 성공", MB_OK);
+
+
 				}
 				break;
+
+
 			case LOAD_BUTTON:
 				if (GetSaveFileName(&OFN) != 0)
 				{
