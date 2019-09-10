@@ -50,7 +50,8 @@ void MapEditor::InputR(POINT pt)
 
 void MapEditor::Update()
 {
-	InvalidateRect(m_hWnd, NULL, FALSE);
+	RECT rt = { 0 + 20, 0 + 20, 13 * 32 + 20, 25 * 32 + 20 };
+	InvalidateRect(m_hWnd, &rt, FALSE);
 }
 
 void MapEditor::Draw(HDC hdc)

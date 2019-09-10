@@ -4,12 +4,12 @@
 #include "BitMap.h"
 
 int Block::m_sBlockNumber = 0;
-BLOCK_TYPE Block::m_SelectBlockType = BLOCK_00;
+BLOCK_TYPE Block::m_SelectBlockType = BLOCK_NORMAL_FULL;
 
 Block::Block()
 {
 	miThisNumber = m_sBlockNumber++;
-	m_pBitMap = ResourceManager::GetInstance()->GetBitMap(DEFAULT);
+	m_pBitMap = ResourceManager::GetInstance()->GetBitMap(BLOCK_DEFAULT);
 }
 
 Block::~Block()
@@ -43,7 +43,7 @@ void Block::InputR(POINT pt)
 
 	if (PtInRect(&rc, pt))
 	{
-		m_pBitMap = ResourceManager::GetInstance()->GetBitMap(DEFAULT);
+		m_pBitMap = ResourceManager::GetInstance()->GetBitMap(BLOCK_DEFAULT);
 	}
 }
 

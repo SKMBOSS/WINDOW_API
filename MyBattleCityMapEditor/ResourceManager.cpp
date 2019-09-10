@@ -41,22 +41,23 @@ void ResourceManager::InitResPath()
 
 	string basePath = "Resource\\BattleCity\\";
 
-	resPath.push_back(basePath + "default.bmp");
-	resPath.push_back(basePath + "block00.bmp");
-	resPath.push_back(basePath + "block01.bmp");
-	resPath.push_back(basePath + "block02.bmp");
-	resPath.push_back(basePath + "block03.bmp");
-	resPath.push_back(basePath + "block04.bmp");
-	resPath.push_back(basePath + "block05.bmp");
-	resPath.push_back(basePath + "block06.bmp");
-	resPath.push_back(basePath + "block07.bmp");
-	resPath.push_back(basePath + "block08.bmp");
-	resPath.push_back(basePath + "block09.bmp");
-	resPath.push_back(basePath + "block10.bmp");
-	resPath.push_back(basePath + "block11.bmp");
-	resPath.push_back(basePath + "block12.bmp");
-	resPath.push_back(basePath + "block13.bmp");
-	resPath.push_back(basePath + "block14.bmp");
+	resPath.push_back(basePath + "Tile\\block_default.bmp");
+
+	resPath.push_back(basePath + "Tile\\block_normal_full.bmp");
+	resPath.push_back(basePath + "Tile\\block_normal_top.bmp");
+	resPath.push_back(basePath + "Tile\\block_normal_bottom.bmp");
+	resPath.push_back(basePath + "Tile\\block_normal_left.bmp");
+	resPath.push_back(basePath + "Tile\\block_normal_right.bmp");
+
+	resPath.push_back(basePath + "Tile\\block_metal_full.bmp");
+	resPath.push_back(basePath + "Tile\\block_metal_top.bmp");
+	resPath.push_back(basePath + "Tile\\block_metal_bottom.bmp");
+	resPath.push_back(basePath + "Tile\\block_metal_left.bmp");
+	resPath.push_back(basePath + "Tile\\block_metal_right.bmp");
+
+	resPath.push_back(basePath + "Tile\\block_ice.bmp");
+	resPath.push_back(basePath + "Tile\\block_forest.bmp");
+	resPath.push_back(basePath + "Tile\\block_water.bmp");
 }
 
 void ResourceManager::InitBitMap(HDC hdc)

@@ -5,6 +5,7 @@
 using namespace std;
 
 class Block;
+class BitMap;
 class MapEditor
 {
 private:
