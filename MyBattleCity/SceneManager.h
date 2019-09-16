@@ -5,7 +5,7 @@
 enum SCENE_STATE
 {
 	TITLE,
-	STAGE_01
+	STAGE
 };
 
 class Scene;
@@ -28,7 +28,7 @@ public:
 private:
 	void InitSceneContainer();
 public:
-	void Init(HWND hWnd, HDC hdc);
+	void Init();
 	void Update(float fElapseTime);
 	void Render(HDC hdc);
 	void Release();

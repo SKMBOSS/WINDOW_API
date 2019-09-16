@@ -25,6 +25,12 @@
     <Filter Include="소스 파일\Scene">
       <UniqueIdentifier>{57ffcdba-8688-4a39-a9b4-b34069246784}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\BC_Object">
+      <UniqueIdentifier>{0c4cebc3-f1ca-4b04-ae28-51402d347fba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\BC_Object\Tile">
+      <UniqueIdentifier>{276bb009-2873-49d2-b3d7-c1dfe27caf64}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ResourceManager.h">
@@ -45,8 +51,20 @@
     <ClInclude Include="SceneManager.h">
       <Filter>소스 파일\Manager</Filter>
     </ClInclude>
-    <ClInclude Include="Stage01.h">
+    <ClInclude Include="Stage.h">
       <Filter>소스 파일\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Tile.h">
+      <Filter>소스 파일\BC_Object\Tile</Filter>
+    </ClInclude>
+    <ClInclude Include="Brick.h">
+      <Filter>소스 파일\BC_Object\Tile</Filter>
+    </ClInclude>
+    <ClInclude Include="Metal.h">
+      <Filter>소스 파일\BC_Object\Tile</Filter>
+    </ClInclude>
+    <ClInclude Include="Global.h">
+      <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -68,8 +86,17 @@
     <ClCompile Include="SceneManager.cpp">
       <Filter>소스 파일\Manager</Filter>
     </ClCompile>
-    <ClCompile Include="Stage01.cpp">
+    <ClCompile Include="Stage.cpp">
       <Filter>소스 파일\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Tile.cpp">
+      <Filter>소스 파일\BC_Object\Tile</Filter>
+    </ClCompile>
+    <ClCompile Include="Brick.cpp">
+      <Filter>소스 파일\BC_Object\Tile</Filter>
+    </ClCompile>
+    <ClCompile Include="Metal.cpp">
+      <Filter>소스 파일\BC_Object\Tile</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -6,8 +6,9 @@ using namespace std;
 
 enum RES_TYPE
 {
+	RES_BG_GAME,
+	RES_BG_MAP,
 	//tile(16 *16)
-	RES_TILE_EMPTY,
 	RES_TILE_BRICK,
 	RES_TILE_METAL,
 	RES_TILE_ICE,

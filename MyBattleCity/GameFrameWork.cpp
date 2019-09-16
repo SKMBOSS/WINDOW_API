@@ -20,8 +20,8 @@ void GameFrameWork::Init(HWND hWnd)
 	m_hMemDC = CreateCompatibleDC(hdc);
 	m_hBitmap = CreateCompatibleBitmap(hdc, 1024, 768);
 	m_hOld = (HBITMAP)SelectObject(m_hMemDC, m_hBitmap);
-	ResourceManager::GetInstance()->Init(hdc);
-	SceneManager::GetInstance()->Init(hWnd, hdc);
+	ResourceManager::GetInstance()->Init(m_hMemDC);
+	SceneManager::GetInstance()->Init();
 	ReleaseDC(hWnd, hdc);
 }
 
@@ -32,6 +32,7 @@ void GameFrameWork::Update()
 	m_LastTime = std::chrono::system_clock::now();
 
 	SceneManager::GetInstance()->Update(m_fElapseTime);
+	
 }
 
 void GameFrameWork::Render()

@@ -141,21 +141,28 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="BitMap.h" />
+    <ClInclude Include="Brick.h" />
     <ClInclude Include="GameFrameWork.h" />
+    <ClInclude Include="Global.h" />
     <ClInclude Include="Macro.h" />
+    <ClInclude Include="Metal.h" />
     <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManager.h" />
-    <ClInclude Include="Stage01.h" />
+    <ClInclude Include="Stage.h" />
+    <ClInclude Include="Tile.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BitMap.cpp" />
+    <ClCompile Include="Brick.cpp" />
     <ClCompile Include="GameFrame.cpp" />
     <ClCompile Include="GameFrameWork.cpp" />
+    <ClCompile Include="Metal.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneManager.cpp" />
-    <ClCompile Include="Stage01.cpp" />
+    <ClCompile Include="Stage.cpp" />
+    <ClCompile Include="Tile.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

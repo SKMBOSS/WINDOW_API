@@ -41,8 +41,10 @@ void ResourceManager::InitResPath()
 
 	string basePath = "Resource\\";
 	string tile = basePath + "tile\\";
+	string backGround = basePath + "backGround\\";
+	resPath.push_back(backGround + "_game_back.bmp");
+	resPath.push_back(backGround + "_map_back.bmp");
 
-	resPath.push_back(tile + "_empty.bmp");
 	resPath.push_back(tile + "_brick.bmp");
 	resPath.push_back(tile + "_metal.bmp");
 	resPath.push_back(tile + "_ice.bmp");

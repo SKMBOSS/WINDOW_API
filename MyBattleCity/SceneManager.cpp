@@ -1,6 +1,6 @@
 #include "SceneManager.h"
 #include "Scene.h"
-#include "Stage01.h"
+#include "Stage.h"
 #include "Macro.h"
 using namespace std;
 
@@ -26,7 +26,7 @@ SceneManager* SceneManager::GetInstance()
 void SceneManager::InitSceneContainer()
 {
 	//sceneContainer.insert(make_pair(SCENE_STATE::INTRO, new Intro));
-	sceneContainer.insert(make_pair(SCENE_STATE::STAGE_01, new Stage01));
+	sceneContainer.insert(make_pair(SCENE_STATE::STAGE, new Stage));
 }
 
 void SceneManager::ChangeScene(SCENE_STATE state)
@@ -36,16 +36,14 @@ void SceneManager::ChangeScene(SCENE_STATE state)
 
 	GetCurrentScene()->Release();
 	currentSceneState = state;
-	GetCurrentScene()->Init(m_hWnd, m_hMemDC);
+	GetCurrentScene()->Init();
 }
 
-void SceneManager::Init(HWND hWnd, HDC hdc)
+void SceneManager::Init()
 {
-	m_hWnd = hWnd;
-	m_hMemDC = hdc;
 	InitSceneContainer();
-	currentSceneState = SCENE_STATE::STAGE_01;
-	GetCurrentScene()->Init(m_hWnd, m_hMemDC);
+	currentSceneState = SCENE_STATE::STAGE;
+	GetCurrentScene()->Init();
 }
 
 void SceneManager::Update(float fElapseTime)
