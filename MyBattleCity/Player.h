@@ -41,8 +41,9 @@ private:
 	float		  m_BulletPosY;
 	bool		  m_BulletGoing;
 	RECT		  m_BulletCollisionRECT;
-
 	void		  UpdateBullet(float fElapseTime);
+	bool		  BulletCollisionCheck();
+
 public:
 	void SetStartInfo();
 	void UpdatePos(float fElapseTime);

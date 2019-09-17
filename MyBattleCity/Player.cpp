@@ -48,6 +48,19 @@ void Player::SetStartInfo()
 	m_startInputTime = 0;
 }
 
+bool Player::BulletCollisionCheck()
+{
+	for (auto iter = m_listTile->begin(); iter != m_listTile->end(); ++iter)
+	{
+		RECT temp;
+		if (IntersectRect(&temp, &(*iter)->GetCollisionRECT(), &m_BulletCollisionRECT))
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
 void Player::UpdateBullet(float fElapseTime)
 {
 	if (m_BulletGoing)
@@ -85,6 +98,10 @@ void Player::UpdateBullet(float fElapseTime)
 		default:
 			break;
 		}
+
+		m_BulletCollisionRECT = { (LONG)m_BulletPosX, (LONG)m_BulletPosY, (LONG)m_BulletPosX + 16, (LONG)m_BulletPosX + 16 };
+		if(BulletCollisionCheck())
+			m_BulletGoing = false;
 	}
 }
 
