@@ -14,17 +14,16 @@ enum TANK_STATE
 };
 
 class BitMap;
-class TileMap;
+class Tile;
 class Player
 {
 private:
 	BitMap*		 m_pBitmap;
-	float		 m_posX;
-	float		 m_posY;
+	POINT		 m_pos;
 	RECT		 m_collisionRECT;
 	TANK_STATE	 m_eState;
 	DWORD		 m_startInputTime;
-	TileMap*     m_pTileMap;
+	list<Tile*>*  m_listTile;
 	
 public:
 	void SetStartInfo();
@@ -33,12 +32,13 @@ public:
 	void OperateInput();
 	bool CollisionCheck();
 public:
-	void Init(TileMap* pTileMap);
+	void Init();
 	void Update(float fElapseTime);
 	void Render();
 	void Release();
 public:
 	Player();
+	Player(list<Tile*>* listTile);
 	~Player();
 };
 
