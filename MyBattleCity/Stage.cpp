@@ -1,19 +1,18 @@
 #include "Stage.h"
+#include "Global.h"
 #include "Macro.h"
-#include "Tile.h"
-#include "Brick.h"
-#include "Metal.h"
 #include <fstream>
 #include <iostream>
 #include "BitMap.h"
 #include "ResourceManager.h"
-#include "Global.h"
+#include "Tile.h"
+#include "Brick.h"
+#include "Metal.h"
 #include "Base.h"
 #include "Player.h"
 
 Stage::Stage()
 {
-
 }
 
 Stage::~Stage()
@@ -24,9 +23,7 @@ void Stage::Init()
 {
 	m_BackGround = ResourceManager::GetInstance()->GetBitMap(RES_BG_GAME);
 	m_mapBackGround = ResourceManager::GetInstance()->GetBitMap(RES_BG_MAP);
-
 	LoadTile();
-
 	m_pPlayer = new Player(&m_listTile);
 }
 

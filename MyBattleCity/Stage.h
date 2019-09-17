@@ -38,7 +38,6 @@ class Stage :
 	public Scene
 {
 private:
-	HWND			m_hWnd;
 	list<Tile*>		m_listTile;
 	BitMap*			m_BackGround;
 	BitMap*			m_mapBackGround;

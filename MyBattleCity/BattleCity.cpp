@@ -1,19 +1,19 @@
-#include "GameFrameWork.h"
+#include "BattleCity.h"
 #include "ResourceManager.h"
 #include "SceneManager.h"
 #include <math.h>
 #include <stdio.h>
 
-GameFrameWork::GameFrameWork()
+BattleCity::BattleCity()
 {
 	m_LastTime = std::chrono::system_clock::now();
 }
 
-GameFrameWork::~GameFrameWork()
+BattleCity::~BattleCity()
 {
 }
 
-void GameFrameWork::Init(HWND hWnd)
+void BattleCity::Init(HWND hWnd)
 {
 	m_hWnd = hWnd;
 	HDC hdc = GetDC(hWnd);
@@ -25,7 +25,7 @@ void GameFrameWork::Init(HWND hWnd)
 	ReleaseDC(hWnd, hdc);
 }
 
-void GameFrameWork::Update()
+void BattleCity::Update()
 {
 	std::chrono::duration<float> sec = std::chrono::system_clock::now() - m_LastTime;
 	m_fElapseTime = sec.count();
@@ -35,7 +35,7 @@ void GameFrameWork::Update()
 	
 }
 
-void GameFrameWork::Render()
+void BattleCity::Render()
 {
 	HDC hdc = GetDC(m_hWnd);
 	SceneManager::GetInstance()->Render();
@@ -43,8 +43,10 @@ void GameFrameWork::Render()
 	ReleaseDC(m_hWnd, hdc);
 }
 
-void GameFrameWork::Release()
+void BattleCity::Release()
 {
+	SceneManager::GetInstance()->Release();
+	ResourceManager::GetInstance()->Release();
 	SelectObject(m_hMemDC, m_hOld);
 	DeleteObject(m_hBitmap);
 	DeleteDC(m_hMemDC);

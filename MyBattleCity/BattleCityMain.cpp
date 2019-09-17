@@ -1,11 +1,11 @@
 #include <Windows.h>
-#include "GameFrameWork.h"
+#include "BattleCity.h"
 
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
 HINSTANCE g_hInst;
 HWND hWnd;
-LPCTSTR lpszClass = TEXT("GameFrameWork");
-GameFrameWork g_GameFrame;
+LPCTSTR lpszClass = TEXT("BattleCity");
+BattleCity g_GameFrame;
 
 int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmdParam, int nCmdShow)
 {

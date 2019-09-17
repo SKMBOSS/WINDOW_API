@@ -34,6 +34,9 @@
     <Filter Include="소스 파일\BC_Object\Tank">
       <UniqueIdentifier>{c217e169-259f-44d1-b218-5d49b42f78d9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\BC_Object\Bullet">
+      <UniqueIdentifier>{21f82c30-6244-4841-9280-c017436255cf}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ResourceManager.h">
@@ -41,9 +44,6 @@
     </ClInclude>
     <ClInclude Include="BitMap.h">
       <Filter>소스 파일\BitMap</Filter>
-    </ClInclude>
-    <ClInclude Include="GameFrameWork.h">
-      <Filter>소스 파일\FrameWork</Filter>
     </ClInclude>
     <ClInclude Include="Macro.h">
       <Filter>헤더 파일</Filter>
@@ -75,6 +75,9 @@
     <ClInclude Include="Player.h">
       <Filter>소스 파일\BC_Object\Tank</Filter>
     </ClInclude>
+    <ClInclude Include="BattleCity.h">
+      <Filter>소스 파일\FrameWork</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ResourceManager.cpp">
@@ -82,12 +85,6 @@
     </ClCompile>
     <ClCompile Include="BitMap.cpp">
       <Filter>소스 파일\BitMap</Filter>
-    </ClCompile>
-    <ClCompile Include="GameFrame.cpp">
-      <Filter>소스 파일\FrameWork</Filter>
-    </ClCompile>
-    <ClCompile Include="GameFrameWork.cpp">
-      <Filter>소스 파일\FrameWork</Filter>
     </ClCompile>
     <ClCompile Include="Scene.cpp">
       <Filter>소스 파일\Scene</Filter>
@@ -112,6 +109,12 @@
     </ClCompile>
     <ClCompile Include="Player.cpp">
       <Filter>소스 파일\BC_Object\Tank</Filter>
+    </ClCompile>
+    <ClCompile Include="BattleCity.cpp">
+      <Filter>소스 파일\FrameWork</Filter>
+    </ClCompile>
+    <ClCompile Include="BattleCityMain.cpp">
+      <Filter>소스 파일\FrameWork</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -43,6 +43,7 @@ void ResourceManager::InitResPath()
 	string tile = basePath + "tile\\";
 	string backGround = basePath + "backGround\\";
 	string tank = basePath + "tank\\";
+	string bullet = basePath + "bullet\\";
 
 	resPath.push_back(backGround + "_game_back.bmp");
 	resPath.push_back(backGround + "_map_back.bmp");
@@ -63,6 +64,12 @@ void ResourceManager::InitResPath()
 	resPath.push_back(tank + "_yellow_tank_left_01.bmp");
 	resPath.push_back(tank + "_yellow_tank_right_00.bmp");
 	resPath.push_back(tank + "_yellow_tank_right_01.bmp");
+
+	resPath.push_back(bullet + "_bullet_up.bmp");
+	resPath.push_back(bullet + "_bullet_down.bmp");
+	resPath.push_back(bullet + "_bullet_left.bmp");
+	resPath.push_back(bullet + "_bullet_right.bmp");
+
 
 	/*resPath.push_back(tank + "_gray_tank_up_00.bmp");
 	resPath.push_back(tank + "_gray_tank_up_01.bmp");

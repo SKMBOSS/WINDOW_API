@@ -3,9 +3,7 @@
 #include <chrono>
 using namespace std;
 
-#define FPS			60.0f
-
-class GameFrameWork
+class BattleCity
 {
 private:
 	HWND		m_hWnd;
@@ -20,7 +18,7 @@ public:
 	void Render();
 	void Release();
 public:
-	GameFrameWork();
-	~GameFrameWork();
+	BattleCity();
+	~BattleCity();
 };
 
