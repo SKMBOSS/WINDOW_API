@@ -2,6 +2,7 @@
 #include "BitMap.h"
 #include "ResourceManager.h"
 
+
 Metal::Metal()
 {
 }

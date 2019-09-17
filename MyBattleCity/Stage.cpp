@@ -27,7 +27,7 @@ void Stage::Init()
 
 	LoadTile();
 
-	m_pPlayer = new Player();
+	m_pPlayer = new Player(&m_listTile);
 }
 
 void Stage::Update(float fElapseTime)

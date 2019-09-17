@@ -3,10 +3,16 @@
 #include "BitMap.h"
 #include "ResourceManager.h"
 #include <time.h>
+#include "Tile.h"
 
 Player::Player()
 {
+}
+
+Player::Player(list<Tile*>* listTile)
+{
 	SetStartInfo();
+	m_listTile = listTile;
 }
 
 Player::~Player()
@@ -24,7 +30,6 @@ void Player::Render()
 {
 	
 	m_pBitmap->RenderCheck(m_pos.x, m_pos.y);
-	m_pBitmap->RenderRECT(m_collisionRECT);
 	m_pBitmap->Render(m_pos.x + 20, m_pos.y + 20);
 }
 
@@ -33,7 +38,7 @@ void Player::SetStartInfo()
 	m_pBitmap = ResourceManager::GetInstance()->GetBitMap(RES_TANK_PLAYER1_UP_00);
 	m_pos.x = TILE4_SIZE * 4 + TILE1_SIZE;
 	m_pos.y = TILE4_SIZE * 12;
-	m_collisionRECT = { m_pos.x, m_pos.y, m_pos.x + TILE4_SIZE, m_pos.y + TILE4_SIZE };
+	m_collisionRECT = { m_pos.x+2, m_pos.y+2, m_pos.x + TILE4_SIZE-2, m_pos.y + TILE4_SIZE-2 };
 	m_eState = TANK_IDLE;
 	m_startInputTime = 0;
 }
@@ -86,27 +91,38 @@ void Player::UpdatePos(float fElapseTime)
 		break;
 	case TANK_UP:
 		m_pos.y -= TILE4_SIZE * fElapseTime;
+		m_collisionRECT = { m_pos.x + 2, m_pos.y + 2, m_pos.x + TILE4_SIZE - 2, m_pos.y + TILE4_SIZE - 2 };
+		if (CollisionCheck())
+			m_pos.y += 1;
 		break;
 	case TANK_DOWN:
 		if (m_pos.y == TILE4_SIZE * (TILE4_COL - 1))
 			break;
 		m_pos.y += TILE4_SIZE * 3 * fElapseTime;
+		m_collisionRECT = { m_pos.x + 2, m_pos.y + 2, m_pos.x + TILE4_SIZE - 2, m_pos.y + TILE4_SIZE - 2 };
+		if (CollisionCheck())
+			m_pos.y -= 1;
+		
 		break;
 	case TANK_LEFT:
 		m_pos.x -= TILE4_SIZE * fElapseTime;
+		m_collisionRECT = { m_pos.x + 2, m_pos.y + 2, m_pos.x + TILE4_SIZE - 2, m_pos.y + TILE4_SIZE - 2 };
+		if (CollisionCheck())
+			m_pos.x += 1;
 		break;
 	case TANK_RIGHT:
 		if (m_pos.x == TILE4_SIZE * (TILE4_ROW - 1))
 			break;
 		m_pos.x += TILE4_SIZE * 3 * fElapseTime;
+		m_collisionRECT = { m_pos.x + 2, m_pos.y + 2, m_pos.x + TILE4_SIZE - 2, m_pos.y + TILE4_SIZE - 2 };
+		if (CollisionCheck())
+			m_pos.x -= 1;
 		break;
 	default:
 		break;
 	}
-
-	m_collisionRECT = { m_pos.x, m_pos.y, m_pos.x + TILE4_SIZE, m_pos.y + TILE4_SIZE };
+	m_collisionRECT = { m_pos.x + 2, m_pos.y + 2, m_pos.x + TILE4_SIZE - 2, m_pos.y + TILE4_SIZE - 2 };
 }
-
 void Player::UpdateBitMap()
 {
 	switch (m_eState)
@@ -140,4 +156,17 @@ void Player::UpdateBitMap()
 	default:
 		break;
 	}
+}
+
+bool Player::CollisionCheck()
+{
+	for (auto iter = m_listTile->begin(); iter != m_listTile->end(); ++iter)
+	{
+		RECT temp;
+		if (IntersectRect(&temp, &(*iter)->GetCollisionRECT(), &m_collisionRECT))
+		{
+			return true;
+		}
+	}
+	return false;
 }

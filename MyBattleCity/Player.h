@@ -1,5 +1,8 @@
 #pragma once
 #include <Windows.h>
+#include <list>
+
+using namespace std;
 
 enum TANK_STATE
 {
@@ -11,6 +14,7 @@ enum TANK_STATE
 };
 
 class BitMap;
+class Tile;
 class Player
 {
 private:
@@ -19,12 +23,14 @@ private:
 	RECT		 m_collisionRECT;
 	TANK_STATE	 m_eState;
 	DWORD		 m_startInputTime;
+	list<Tile*>*  m_listTile;
 	
 public:
 	void SetStartInfo();
 	void UpdatePos(float fElapseTime);
 	void UpdateBitMap();
 	void OperateInput();
+	bool CollisionCheck();
 public:
 	void Init();
 	void Update(float fElapseTime);
@@ -32,6 +38,7 @@ public:
 	void Release();
 public:
 	Player();
+	Player(list<Tile*>* listTile);
 	~Player();
 };
 
