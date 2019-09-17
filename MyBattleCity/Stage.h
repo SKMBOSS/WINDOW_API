@@ -31,21 +31,17 @@ enum TILE_TYPE_FOR_LOAD
 	TILE_LIFE
 };
 
-class Tile;
+class TileMap;
 class BitMap;
 class Player;
 class Stage :
 	public Scene
 {
 private:
-	HWND			m_hWnd;
-	list<Tile*>		m_listTile;
+	TileMap*		m_pTileMap;
+	Player*			m_pPlayer;
 	BitMap*			m_BackGround;
 	BitMap*			m_mapBackGround;
-	Player*			m_pPlayer;
-
-public:
-	void LoadTile();
 public:
 	virtual void Init();
 	virtual void Update(float fElapseTime);
