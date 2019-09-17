@@ -28,17 +28,16 @@ void Player::Update(float fElapseTime)
 
 void Player::Render()
 {
-	
-	m_pBitmap->RenderCheck(m_pos.x, m_pos.y);
-	m_pBitmap->Render(m_pos.x + 20, m_pos.y + 20);
+	m_pBitmap->RenderCheck(m_posX, m_posY);
+	m_pBitmap->Render(m_posX + 20, m_posY + 20);
 }
 
 void Player::SetStartInfo()
 {
 	m_pBitmap = ResourceManager::GetInstance()->GetBitMap(RES_TANK_PLAYER1_UP_00);
-	m_pos.x = TILE4_SIZE * 4 + TILE1_SIZE;
-	m_pos.y = TILE4_SIZE * 12;
-	m_collisionRECT = { m_pos.x+2, m_pos.y+2, m_pos.x + TILE4_SIZE-2, m_pos.y + TILE4_SIZE-2 };
+	m_posX = TILE4_SIZE * 4 + TILE1_SIZE;
+	m_posY = TILE4_SIZE * 12;
+	m_collisionRECT = { (LONG)m_posX + 1, (LONG)m_posY + 1, (LONG)m_posX + TILE4_SIZE - 1, (LONG)m_posY + TILE4_SIZE - 1 };
 	m_eState = TANK_IDLE;
 	m_startInputTime = 0;
 }
@@ -90,38 +89,41 @@ void Player::UpdatePos(float fElapseTime)
 	case TANK_IDLE:
 		break;
 	case TANK_UP:
-		m_pos.y -= TILE4_SIZE * fElapseTime;
-		m_collisionRECT = { m_pos.x + 2, m_pos.y + 2, m_pos.x + TILE4_SIZE - 2, m_pos.y + TILE4_SIZE - 2 };
+		if ((LONG)m_posY ==0)
+			break;
+		m_posY -= TILE4_SIZE * fElapseTime * 2;
+		m_collisionRECT = { (LONG)m_posX + 1, (LONG)m_posY + 1, (LONG)m_posX + TILE4_SIZE - 1, (LONG)m_posY + TILE4_SIZE - 1 };
 		if (CollisionCheck())
-			m_pos.y += 1;
+			m_posY += TILE4_SIZE * fElapseTime * 2;
 		break;
 	case TANK_DOWN:
-		if (m_pos.y == TILE4_SIZE * (TILE4_COL - 1))
+		if ((LONG)m_posY == TILE4_SIZE * (TILE4_COL - 1))
 			break;
-		m_pos.y += TILE4_SIZE * 3 * fElapseTime;
-		m_collisionRECT = { m_pos.x + 2, m_pos.y + 2, m_pos.x + TILE4_SIZE - 2, m_pos.y + TILE4_SIZE - 2 };
+		m_posY += TILE4_SIZE * fElapseTime * 2;
+		m_collisionRECT = { (LONG)m_posX + 1, (LONG)m_posY + 1, (LONG)m_posX + TILE4_SIZE - 1, (LONG)m_posY + TILE4_SIZE - 1 };
 		if (CollisionCheck())
-			m_pos.y -= 1;
-		
+			m_posY -= TILE4_SIZE * fElapseTime * 2;;
 		break;
 	case TANK_LEFT:
-		m_pos.x -= TILE4_SIZE * fElapseTime;
-		m_collisionRECT = { m_pos.x + 2, m_pos.y + 2, m_pos.x + TILE4_SIZE - 2, m_pos.y + TILE4_SIZE - 2 };
+		if ((LONG)m_posX == 0)
+			break;
+		m_posX -= TILE4_SIZE * fElapseTime * 2;
+		m_collisionRECT = { (LONG)m_posX + 1, (LONG)m_posY + 1, (LONG)m_posX + TILE4_SIZE - 1, (LONG)m_posY + TILE4_SIZE - 1 };
 		if (CollisionCheck())
-			m_pos.x += 1;
+			m_posX += TILE4_SIZE * fElapseTime * 2;;
 		break;
 	case TANK_RIGHT:
-		if (m_pos.x == TILE4_SIZE * (TILE4_ROW - 1))
+		if ((LONG)m_posX == TILE4_SIZE * (TILE4_ROW - 1))
 			break;
-		m_pos.x += TILE4_SIZE * 3 * fElapseTime;
-		m_collisionRECT = { m_pos.x + 2, m_pos.y + 2, m_pos.x + TILE4_SIZE - 2, m_pos.y + TILE4_SIZE - 2 };
+		m_posX += TILE4_SIZE * fElapseTime * 2;
+		m_collisionRECT = { (LONG)m_posX + 1, (LONG)m_posY + 1, (LONG)m_posX + TILE4_SIZE - 1, (LONG)m_posY + TILE4_SIZE - 1 };
 		if (CollisionCheck())
-			m_pos.x -= 1;
+			m_posX -= TILE4_SIZE * fElapseTime * 2;
 		break;
 	default:
 		break;
 	}
-	m_collisionRECT = { m_pos.x + 2, m_pos.y + 2, m_pos.x + TILE4_SIZE - 2, m_pos.y + TILE4_SIZE - 2 };
+	m_collisionRECT = { (LONG)m_posX + 1, (LONG)m_posY + 1, (LONG)m_posX + TILE4_SIZE - 1, (LONG)m_posY + TILE4_SIZE - 1 };
 }
 void Player::UpdateBitMap()
 {

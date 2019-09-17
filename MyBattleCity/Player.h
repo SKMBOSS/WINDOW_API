@@ -19,7 +19,8 @@ class Player
 {
 private:
 	BitMap*		 m_pBitmap;
-	POINT		 m_pos;
+	float		 m_posX;
+	float		 m_posY;
 	RECT		 m_collisionRECT;
 	TANK_STATE	 m_eState;
 	DWORD		 m_startInputTime;
