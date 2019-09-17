@@ -15,7 +15,7 @@ void Tile::SetPos(int x, int y)
 	m_pos.y = y;
 }
 
-void Tile::Render(HDC hdc)
+void Tile::Render()
 {
-	m_pBitmap->Render(hdc, m_pos.x +20, m_pos.y +20);
+	m_pBitmap->Render(m_pos.x +20, m_pos.y +20);
 }

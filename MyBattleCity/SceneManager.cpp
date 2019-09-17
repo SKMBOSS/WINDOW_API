@@ -51,9 +51,9 @@ void SceneManager::Update(float fElapseTime)
 	GetCurrentScene()->Update(fElapseTime);
 }
 
-void SceneManager::Render(HDC hdc)
+void SceneManager::Render()
 {
-	GetCurrentScene()->Render(hdc);
+	GetCurrentScene()->Render();
 }
 
 void SceneManager::Release()

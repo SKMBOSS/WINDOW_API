@@ -33,6 +33,7 @@ enum TILE_TYPE_FOR_LOAD
 
 class Tile;
 class BitMap;
+class Player;
 class Stage :
 	public Scene
 {
@@ -41,12 +42,14 @@ private:
 	list<Tile*>		m_listTile;
 	BitMap*			m_BackGround;
 	BitMap*			m_mapBackGround;
+	Player*			m_pPlayer;
+
 public:
 	void LoadTile();
 public:
 	virtual void Init();
 	virtual void Update(float fElapseTime);
-	virtual void Render(HDC hdc);
+	virtual void Render();
 	virtual void Release();
 
 public:

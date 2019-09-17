@@ -38,7 +38,7 @@ void GameFrameWork::Update()
 void GameFrameWork::Render()
 {
 	HDC hdc = GetDC(m_hWnd);
-	SceneManager::GetInstance()->Render(m_hMemDC);
+	SceneManager::GetInstance()->Render();
 	BitBlt(hdc, 0, 0, 1024, 768, m_hMemDC, 0, 0, SRCCOPY);
 	ReleaseDC(m_hWnd, hdc);
 }

@@ -21,7 +21,7 @@ void Metal::SetPos(int x, int y)
 	Tile::SetPos(x, y);
 }
 
-void Metal::Render(HDC hdc)
+void Metal::Render()
 {
-	Tile::Render(hdc);
+	Tile::Render();
 }

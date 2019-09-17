@@ -8,6 +8,8 @@
 #include "BitMap.h"
 #include "ResourceManager.h"
 #include "Global.h"
+#include "Base.h"
+#include "Player.h"
 
 Stage::Stage()
 {
@@ -24,19 +26,24 @@ void Stage::Init()
 	m_mapBackGround = ResourceManager::GetInstance()->GetBitMap(RES_BG_MAP);
 
 	LoadTile();
+
+	m_pPlayer = new Player();
 }
 
 void Stage::Update(float fElapseTime)
 {
+	m_pPlayer->Update(fElapseTime);
 }
 
-void Stage::Render(HDC hdc)
+void Stage::Render()
 {
-	m_BackGround->Render(hdc, 0, 0);
-	m_mapBackGround->Render(hdc, 20, 20);
+	m_BackGround->Render(0, 0);
+	m_mapBackGround->Render(20, 20);
 
 	for (auto iter = m_listTile.begin(); iter != m_listTile.end(); iter++)
-		(*iter)->Render(hdc);
+		(*iter)->Render();
+
+	m_pPlayer->Render();
 }
 
 void Stage::Release()
@@ -46,6 +53,8 @@ void Stage::Release()
 		SAFE_DELETE(*iter);
 	}
 	m_listTile.clear();
+
+	SAFE_DELETE(m_pPlayer);
 }
 
 void Stage::LoadTile()
@@ -140,6 +149,9 @@ void Stage::LoadTile()
 				m_listTile.push_back(upRight);
 				m_listTile.push_back(downRight);
 				break;
+			case TILE_LIFE:
+				upLeft = new Base(j * TILE4_SIZE, i * TILE4_SIZE);
+				m_listTile.push_back(upLeft);
 			case TILE_DEFAULT:
 			default:
 				break;

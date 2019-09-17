@@ -31,6 +31,9 @@
     <Filter Include="소스 파일\BC_Object\Tile">
       <UniqueIdentifier>{276bb009-2873-49d2-b3d7-c1dfe27caf64}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\BC_Object\Tank">
+      <UniqueIdentifier>{c217e169-259f-44d1-b218-5d49b42f78d9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ResourceManager.h">
@@ -66,6 +69,12 @@
     <ClInclude Include="Global.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="Base.h">
+      <Filter>소스 파일\BC_Object\Tile</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>소스 파일\BC_Object\Tank</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ResourceManager.cpp">
@@ -97,6 +106,12 @@
     </ClCompile>
     <ClCompile Include="Metal.cpp">
       <Filter>소스 파일\BC_Object\Tile</Filter>
+    </ClCompile>
+    <ClCompile Include="Base.cpp">
+      <Filter>소스 파일\BC_Object\Tile</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>소스 파일\BC_Object\Tank</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

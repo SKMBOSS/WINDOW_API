@@ -21,8 +21,8 @@ void Brick::SetPos(int x, int y)
 	Tile::SetPos(x, y);
 }
 
-void Brick::Render(HDC hdc)
+void Brick::Render()
 {
-	Tile::Render(hdc);
+	Tile::Render();
 }
 

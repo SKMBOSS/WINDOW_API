@@ -42,6 +42,8 @@ void ResourceManager::InitResPath()
 	string basePath = "Resource\\";
 	string tile = basePath + "tile\\";
 	string backGround = basePath + "backGround\\";
+	string tank = basePath + "tank\\";
+
 	resPath.push_back(backGround + "_game_back.bmp");
 	resPath.push_back(backGround + "_map_back.bmp");
 
@@ -50,6 +52,26 @@ void ResourceManager::InitResPath()
 	resPath.push_back(tile + "_ice.bmp");
 	resPath.push_back(tile + "_bush.bmp");
 	resPath.push_back(tile + "_water.bmp");
+	resPath.push_back(tile + "_base.bmp"); 
+	resPath.push_back(tile + "_base_broken.bmp");
+
+	resPath.push_back(tank + "_yellow_tank_up_00.bmp");
+	resPath.push_back(tank + "_yellow_tank_up_01.bmp");
+	resPath.push_back(tank + "_yellow_tank_down_00.bmp");
+	resPath.push_back(tank + "_yellow_tank_down_01.bmp");
+	resPath.push_back(tank + "_yellow_tank_left_00.bmp");
+	resPath.push_back(tank + "_yellow_tank_left_01.bmp");
+	resPath.push_back(tank + "_yellow_tank_right_00.bmp");
+	resPath.push_back(tank + "_yellow_tank_right_01.bmp");
+
+	/*resPath.push_back(tank + "_gray_tank_up_00.bmp");
+	resPath.push_back(tank + "_gray_tank_up_01.bmp");
+	resPath.push_back(tank + "_gray_tank_down_00.bmp");
+	resPath.push_back(tank + "_gray_tank_down_01.bmp");
+	resPath.push_back(tank + "_gray_tank_left_00.bmp");
+	resPath.push_back(tank + "_gray_tank_left_01.bmp");
+	resPath.push_back(tank + "_gray_tank_right_00.bmp");
+	resPath.push_back(tank + "_gray_tank_right_01.bmp");*/
 }
 
 void ResourceManager::InitBitMap(HDC hdc)

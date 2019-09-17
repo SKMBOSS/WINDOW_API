@@ -1,15 +1,14 @@
 #pragma once
 #include "Tile.h"
-
-class Metal :
+class Base :
 	public Tile
 {
 public:
 	virtual void SetPos(int x, int y);
 	virtual void Render();
 public:
-	Metal();
-	Metal(int x, int y);
-	virtual ~Metal();
+	Base();
+	Base(int x, int y);
+	~Base();
 };
 

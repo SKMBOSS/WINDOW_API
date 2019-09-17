@@ -30,7 +30,7 @@ private:
 public:
 	void Init();
 	void Update(float fElapseTime);
-	void Render(HDC hdc);
+	void Render();
 	void Release();
 private:
 	SceneManager();

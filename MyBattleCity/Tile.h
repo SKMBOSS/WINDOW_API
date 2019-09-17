@@ -9,7 +9,7 @@ protected:
 	POINT	m_pos;
 public:
 	virtual void SetPos(int x, int y);
-	virtual void Render(HDC hdc);
+	virtual void Render();
 public:
 	Tile();
 	virtual ~Tile();
