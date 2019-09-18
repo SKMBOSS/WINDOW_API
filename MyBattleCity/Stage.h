@@ -34,6 +34,7 @@ enum TILE_TYPE_FOR_LOAD
 class Tile;
 class BitMap;
 class Player;
+class Enemy;
 class Stage :
 	public Scene
 {
@@ -42,6 +43,7 @@ private:
 	BitMap*			m_BackGround;
 	BitMap*			m_mapBackGround;
 	Player*			m_pPlayer;
+	Enemy*			m_pEnemy;
 
 public:
 	void LoadTile();

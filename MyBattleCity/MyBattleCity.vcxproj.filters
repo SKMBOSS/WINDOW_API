@@ -78,6 +78,9 @@
     <ClInclude Include="BattleCity.h">
       <Filter>소스 파일\FrameWork</Filter>
     </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>소스 파일\BC_Object\Tank</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ResourceManager.cpp">
@@ -115,6 +118,9 @@
     </ClCompile>
     <ClCompile Include="BattleCityMain.cpp">
       <Filter>소스 파일\FrameWork</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>소스 파일\BC_Object\Tank</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -10,6 +10,7 @@
 #include "Metal.h"
 #include "Base.h"
 #include "Player.h"
+#include "Enemy.h"
 
 Stage::Stage()
 {
@@ -25,11 +26,13 @@ void Stage::Init()
 	m_mapBackGround = ResourceManager::GetInstance()->GetBitMap(RES_BG_MAP);
 	LoadTile();
 	m_pPlayer = new Player(&m_listTile);
+	m_pEnemy = new Enemy(&m_listTile);
 }
 
 void Stage::Update(float fElapseTime)
 {
 	m_pPlayer->Update(fElapseTime);
+	m_pEnemy->Update(fElapseTime);
 }
 
 void Stage::Render()
@@ -41,6 +44,7 @@ void Stage::Render()
 		(*iter)->Render();
 
 	m_pPlayer->Render();
+	m_pEnemy->Render();
 }
 
 void Stage::Release()

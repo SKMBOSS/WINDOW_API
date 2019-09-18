@@ -146,6 +146,7 @@
     <ClInclude Include="BitMap.h" />
     <ClInclude Include="Brick.h" />
     <ClInclude Include="BattleCity.h" />
+    <ClInclude Include="Enemy.h" />
     <ClInclude Include="Global.h" />
     <ClInclude Include="Macro.h" />
     <ClInclude Include="Metal.h" />
@@ -162,6 +163,7 @@
     <ClCompile Include="Brick.cpp" />
     <ClCompile Include="BattleCityMain.cpp" />
     <ClCompile Include="BattleCity.cpp" />
+    <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Metal.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
