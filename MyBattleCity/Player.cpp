@@ -14,6 +14,7 @@ Player::Player(list<Tile*>* listTile)
 	SetStartInfo();
 	m_listTile = listTile;
 	m_BulletGoing = false;
+	m_BulletEffectOn = false;
 }
 
 Player::~Player()
@@ -26,6 +27,19 @@ void Player::Update(float fElapseTime)
 	UpdatePos(fElapseTime);
 	UpdateBitMap();
 	UpdateBullet(fElapseTime);
+
+	if (m_startEffectTime)
+	{
+		if (GetTickCount() - m_startEffectTime >= 0)
+			m_pBulletEffectBitMap = ResourceManager::GetInstance()->GetBitMap(RES_EFFECT_EXPLOSION_00);
+		if(GetTickCount() - m_startEffectTime >= 50)
+			m_pBulletEffectBitMap = ResourceManager::GetInstance()->GetBitMap(RES_EFFECT_EXPLOSION_01);
+		if (GetTickCount() - m_startEffectTime >= 100)
+			m_pBulletEffectBitMap = ResourceManager::GetInstance()->GetBitMap(RES_EFFECT_EXPLOSION_02);
+
+		if (GetTickCount() - m_startEffectTime >= 150)
+			m_startEffectTime = false;
+	}
 }
 
 void Player::Render()
@@ -35,6 +49,9 @@ void Player::Render()
 
 	if (m_BulletGoing)
 		m_pBulletBitMap->Render(m_BulletPosX + 20, m_BulletPosY + 20);
+
+	if(m_startEffectTime)
+		m_pBulletEffectBitMap->Render(m_BulletEffectPosX + 20, m_BulletEffectPosY + 20);
 }
 
 void Player::SetStartInfo()
@@ -48,110 +65,9 @@ void Player::SetStartInfo()
 	m_startInputTime = 0;
 }
 
-bool Player::BulletCollisionCheck()
-{
-	for (auto iter = m_listTile->begin(); iter != m_listTile->end(); ++iter)
-	{
-		RECT temp;
-		if (IntersectRect(&temp, &(*iter)->GetCollisionRECT(), &m_BulletCollisionRECT))
-		{
-			return true;
-		}
-	}
-	return false;
-}
-
-void Player::UpdateBullet(float fElapseTime)
-{
-	if (m_BulletGoing)
-	{
-		switch (m_eBUlletState)
-		{
-		case BULLET_UP:
-			if ((LONG)m_BulletPosY <= 0)
-			{
-				m_BulletGoing = false;
-			}
-			m_BulletPosY -= 200 * fElapseTime;
-			break;
-		case BULLET_DOWN:
-			if ((LONG)m_BulletPosY >= TILE4_SIZE * (TILE4_ROW-1)+16)
-			{
-				m_BulletGoing = false;
-			}
-			m_BulletPosY += 200 * fElapseTime;
-			break;
-		case BULLET_LEFT:
-			if ((LONG)m_BulletPosX <= 0)
-			{
-				m_BulletGoing = false;
-			}
-			m_BulletPosX -= 200 * fElapseTime;
-			break;
-		case BULLET_RIGHT:
-			if ((LONG)m_BulletPosX >= TILE4_SIZE * (TILE4_ROW-1)+16)
-			{
-				m_BulletGoing = false;
-			}
-			m_BulletPosX += 200 * fElapseTime;
-			break;
-		default:
-			break;
-		}
-
-		m_BulletCollisionRECT = { (LONG)m_BulletPosX, (LONG)m_BulletPosY, (LONG)m_BulletPosX + 16, (LONG)m_BulletPosX + 16 };
-		if(BulletCollisionCheck())
-			m_BulletGoing = false;
-	}
-}
-
 void Player::OperateInput()
 {
-	if (GetKeyState(VK_SPACE) & 0x8000)
-	{
-		switch (m_eBUlletState)
-		{
-		case BULLET_UP:
-			if (!m_BulletGoing)
-			{
-				m_pBulletBitMap = ResourceManager::GetInstance()->GetBitMap(RES_BULLET_UP);
-				m_BulletPosX = m_posX + 8;
-				m_BulletPosY = m_posY;
-				m_BulletGoing = true;
-			}
-			break;
-		case BULLET_DOWN:
-			if (!m_BulletGoing)
-			{
-				m_pBulletBitMap = ResourceManager::GetInstance()->GetBitMap(RES_BULLET_DOWN);
-				m_BulletPosX = m_posX + 8;
-				m_BulletPosY = m_posY + 16;
-				m_BulletGoing = true;
-			}
-			break;
-		case BULLET_LEFT:
-			if (!m_BulletGoing)
-			{
-				m_pBulletBitMap = ResourceManager::GetInstance()->GetBitMap(RES_BULLET_LEFT);
-				m_BulletPosX = m_posX;
-				m_BulletPosY = m_posY+8;
-				m_BulletGoing = true;
-			}
-			break;
-		case BULLET_RIGHT:
-			if (!m_BulletGoing)
-			{
-				m_pBulletBitMap = ResourceManager::GetInstance()->GetBitMap(RES_BULLET_RIGHT);
-				m_BulletPosX = m_posX + 8;
-				m_BulletPosY = m_posY + 8;
-				m_BulletGoing = true;
-			}
-			break;
-		default:
-			break;
-		}
-	}
-
+	BulletInput();
 	//Å°´­¸²
 	if (GetKeyState(VK_UP) & 0x8000)
 	{
@@ -190,12 +106,11 @@ void Player::OperateInput()
 		m_pBitmap = ResourceManager::GetInstance()->GetBitMap(RES_TANK_PLAYER1_RIGHT_00);
 	}
 	//Å°¶À
-	else if (GetAsyncKeyState(VK_LEFT) & 0x0001 || GetAsyncKeyState(VK_RIGHT) & 0x0001 ||
-		GetAsyncKeyState(VK_UP) & 0x0001 || GetAsyncKeyState(VK_DOWN) & 0x0001)
+	else if (!GetAsyncKeyState(VK_LEFT) & 0x0001 || !GetAsyncKeyState(VK_RIGHT) & 0x0001 ||
+		!GetAsyncKeyState(VK_UP) & 0x0001 || !GetAsyncKeyState(VK_DOWN) & 0x0001)
 	{
 		m_eState = TANK_IDLE;
 	}
-
 }
 
 void Player::UpdatePos(float fElapseTime)
@@ -241,6 +156,7 @@ void Player::UpdatePos(float fElapseTime)
 	}
 	m_collisionRECT = { (LONG)m_posX + 1, (LONG)m_posY + 1, (LONG)m_posX + TILE4_SIZE - 1, (LONG)m_posY + TILE4_SIZE - 1 };
 }
+
 void Player::UpdateBitMap()
 {
 	switch (m_eState)
@@ -287,4 +203,132 @@ bool Player::CollisionCheck()
 		}
 	}
 	return false;
+}
+
+void Player::BulletInput()
+{
+	if (GetKeyState(VK_SPACE) & 0x8000)
+	{
+		m_eBUlletState2 = m_eBUlletState;
+		switch (m_eBUlletState)
+		{
+		case BULLET_UP:
+			if (!m_BulletGoing)
+			{
+				m_pBulletBitMap = ResourceManager::GetInstance()->GetBitMap(RES_BULLET_UP);
+				m_BulletPosX = m_posX + 8;
+				m_BulletPosY = m_posY;
+				m_BulletGoing = true;
+			}
+			break;
+		case BULLET_DOWN:
+			if (!m_BulletGoing)
+			{
+				m_pBulletBitMap = ResourceManager::GetInstance()->GetBitMap(RES_BULLET_DOWN);
+				m_BulletPosX = m_posX + 8;
+				m_BulletPosY = m_posY + 16;
+				m_BulletGoing = true;
+			}
+			break;
+		case BULLET_LEFT:
+			if (!m_BulletGoing)
+			{
+				m_pBulletBitMap = ResourceManager::GetInstance()->GetBitMap(RES_BULLET_LEFT);
+				m_BulletPosX = m_posX;
+				m_BulletPosY = m_posY + 8;
+				m_BulletGoing = true;
+			}
+			break;
+		case BULLET_RIGHT:
+			if (!m_BulletGoing)
+			{
+				m_pBulletBitMap = ResourceManager::GetInstance()->GetBitMap(RES_BULLET_RIGHT);
+				m_BulletPosX = m_posX + 8;
+				m_BulletPosY = m_posY + 8;
+				m_BulletGoing = true;
+			}
+			break;
+		default:
+			break;
+		}
+	}
+}
+
+void Player::UpdateBullet(float fElapseTime)
+{
+	if (m_BulletGoing)
+	{
+		switch (m_eBUlletState2)
+		{
+		case BULLET_UP:
+			if ((LONG)m_BulletPosY <= 0)
+			{
+				m_startEffectTime = GetTickCount();
+				m_BulletEffectOn = true;
+				m_BulletEffectPosX = m_BulletPosX - 8;
+				m_BulletEffectPosY = m_BulletPosY - 4;
+				m_BulletGoing = false;
+			}
+			m_BulletPosY -= 200 * fElapseTime;
+			break;
+		case BULLET_DOWN:
+			if ((LONG)m_BulletPosY >= TILE4_SIZE * (TILE4_ROW - 1) + 16)
+			{
+				m_startEffectTime = GetTickCount();
+				m_BulletEffectOn = true;
+				m_BulletEffectPosX = m_BulletPosX - 8;
+				m_BulletEffectPosY = m_BulletPosY - 4;
+				m_BulletGoing = false;
+			}
+			m_BulletPosY += 200 * fElapseTime;
+			break;
+		case BULLET_LEFT:
+			if ((LONG)m_BulletPosX <= 0)
+			{
+				m_startEffectTime = GetTickCount();
+				m_BulletEffectOn = true;
+				m_BulletEffectPosX = m_BulletPosX - 8;
+				m_BulletEffectPosY = m_BulletPosY - 4;
+				m_BulletGoing = false;
+			}
+			m_BulletPosX -= 200 * fElapseTime;
+			break;
+		case BULLET_RIGHT:
+			if ((LONG)m_BulletPosX >= TILE4_SIZE * (TILE4_ROW - 1) + 16)
+			{
+				m_startEffectTime = GetTickCount();
+				m_BulletEffectOn = true;
+				m_BulletEffectPosX = m_BulletPosX - 8;
+				m_BulletEffectPosY = m_BulletPosY - 4;
+				m_BulletGoing = false;
+			}
+			m_BulletPosX += 200 * fElapseTime;
+			break;
+		default:
+			break;
+		}
+		m_BulletCollisionRECT = { (LONG)m_BulletPosX, (LONG)m_BulletPosY, (LONG)m_BulletPosX + 16, (LONG)m_BulletPosY +16 };
+		BulletCollisionCheck();
+	}
+}
+
+void Player::BulletCollisionCheck()
+{
+	RECT temp;
+	for (auto iter = m_listTile->begin(); iter != m_listTile->end(); ++iter)
+	{
+		if (IntersectRect(&temp, &(*iter)->GetCollisionRECT(), &m_BulletCollisionRECT))
+		{
+			if (m_BulletGoing)
+			{
+				m_startEffectTime = GetTickCount();
+				m_BulletEffectOn = true;
+				m_BulletEffectPosX = m_BulletPosX - 8;
+				m_BulletEffectPosY = m_BulletPosY - 4;
+
+				m_BulletGoing = false;
+			}
+			m_listTile->erase(iter);
+		}
+	}
 }

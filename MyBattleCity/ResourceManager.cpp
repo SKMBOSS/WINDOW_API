@@ -44,6 +44,7 @@ void ResourceManager::InitResPath()
 	string backGround = basePath + "backGround\\";
 	string tank = basePath + "tank\\";
 	string bullet = basePath + "bullet\\";
+	string effect = basePath + "effect\\";
 
 	resPath.push_back(backGround + "_game_back.bmp");
 	resPath.push_back(backGround + "_map_back.bmp");
@@ -70,7 +71,9 @@ void ResourceManager::InitResPath()
 	resPath.push_back(bullet + "_bullet_left.bmp");
 	resPath.push_back(bullet + "_bullet_right.bmp");
 
-
+	resPath.push_back(effect + "_explosion_00.bmp");
+	resPath.push_back(effect + "_explosion_01.bmp");
+	resPath.push_back(effect + "_explosion_02.bmp");
 	/*resPath.push_back(tank + "_gray_tank_up_00.bmp");
 	resPath.push_back(tank + "_gray_tank_up_01.bmp");
 	resPath.push_back(tank + "_gray_tank_down_00.bmp");

@@ -37,12 +37,20 @@ private:
 
 	BitMap*		  m_pBulletBitMap;
 	BULLET_STATE  m_eBUlletState;
+	BULLET_STATE  m_eBUlletState2;
 	float		  m_BulletPosX;
 	float		  m_BulletPosY;
 	bool		  m_BulletGoing;
 	RECT		  m_BulletCollisionRECT;
+	void		  BulletInput();
 	void		  UpdateBullet(float fElapseTime);
-	bool		  BulletCollisionCheck();
+	void		  BulletCollisionCheck();
+
+	BitMap*		  m_pBulletEffectBitMap;
+	float		  m_BulletEffectPosX;
+	float		  m_BulletEffectPosY;
+	bool		  m_BulletEffectOn;
+	DWORD		  m_startEffectTime;
 
 public:
 	void SetStartInfo();
