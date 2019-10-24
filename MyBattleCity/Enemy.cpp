@@ -71,7 +71,7 @@ void Enemy::OperateInput()
 {
 	BulletInput();
 	//Å°´­¸²
-	int iKey;
+	int iKey = 99;
 	if(GetTickCount() % 100 ==0)
 		iKey = rand() % 5;
 
